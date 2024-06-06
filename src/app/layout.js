@@ -1,6 +1,7 @@
 import { Kumbh_Sans, Roboto } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
+import Navbar from "@/components/Navbar/Navbar";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 const kumbhSans = Kumbh_Sans({
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         />
       </Head>
       <body className={`${roboto.className} ${kumbhSans.variable}`}>
+        <Navbar />
         {children}
       </body>
     </html>

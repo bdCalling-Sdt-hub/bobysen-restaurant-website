@@ -1,6 +1,6 @@
 "use client";
 
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"; // change regex to allow only chars or digits
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,14 +32,16 @@ export default function OtpForm() {
 
       <div className="grid w-full items-center gap-1.5">
         <Label
-          htmlFor="email"
+          htmlFor="otp"
           className="mb-2 block font-semibold text-primary-secondary-1"
         >
           OTP
         </Label>
         <InputOTP
-          maxLength={6}
+          maxLength={5}
           pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+          id="otp"
+          name="otp"
           {...register("otp", { required: true })}
         >
           <InputOTPGroup>
