@@ -1,14 +1,15 @@
+import React from "react";
 import Image from "next/image";
 import circles from "/public/login/circle-lines.png";
 import flowers from "/public/login/bg-flowers.png";
-import ForgotPassForm from "@/components/ForgotPassForm/ForgotPassForm";
+import OtpForm from "@/components/OtpEnterForm/OtpEnterForm";
 
 export const metadata = {
-  title: "Forgot Password | Bookable",
-  description: "Password is forgotten",
+  title: "Enter OTP | Bookable",
+  description: "Enter your OTP",
 };
 
-export default function ForgotPassword() {
+export default function OtpEnter() {
   return (
     <div className="relative z-10 flex h-screen items-center justify-center">
       {/* background images */}
@@ -24,7 +25,7 @@ export default function ForgotPassword() {
       />
 
       <div className="container z-10 flex h-[65vh] items-center justify-center rounded-xl border-[2px] border-[#5882c12b] shadow-lg md:mx-auto md:w-[85%] lg:shadow">
-        <ForgotPassForm />
+        <OtpForm />
       </div>
     </div>
   );

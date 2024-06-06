@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-export default function ForgotPassForm() {
+export default function SetNewPassForm() {
   const {
     register,
     handleSubmit,
@@ -21,25 +21,45 @@ export default function ForgotPassForm() {
       className="container mx-auto sm:w-[65%] md:w-[55%] lg:w-[45%]"
     >
       <h3 className="mb-12 text-2xl font-bold text-primary-secondary-1">
-        Forgot Password ?
+        Set New Password
       </h3>
 
       <div className="grid w-full items-center gap-1.5">
         <Label
-          htmlFor="email"
+          htmlFor="newPassword"
           className="mb-2 block font-semibold text-primary-secondary-1"
         >
-          Email
+          Enter New Password
         </Label>
         <Input
-          type="email"
-          id="email"
-          {...register("email", { required: true })}
+          type="password"
+          id="newPassword"
+          {...register("newPassword", { required: true })}
           className="border border-primary-secondary-1 text-primary-black"
         />
-        {errors.email && (
+        {errors.newPassword && (
           <p className={cn("font-kumbh-sans text-primary-secondary-1")}>
-            Email is required
+            New Password is required
+          </p>
+        )}
+      </div>
+
+      <div className="mt-8 grid w-full items-center gap-1.5">
+        <Label
+          htmlFor="confirmPassword"
+          className="mb-2 block font-semibold text-primary-secondary-1"
+        >
+          Confirm Password
+        </Label>
+        <Input
+          type="password"
+          id="confirmPassword"
+          {...register("confirmPassword", { required: true })}
+          className="border border-primary-secondary-1 text-primary-black"
+        />
+        {errors.confirmPassword && (
+          <p className={cn("font-kumbh-sans text-primary-secondary-1")}>
+            Confirm Password is required
           </p>
         )}
       </div>

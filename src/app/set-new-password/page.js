@@ -1,10 +1,15 @@
-import React from "react";
 import Image from "next/image";
 import circles from "/public/login/circle-lines.png";
 import flowers from "/public/login/bg-flowers.png";
-import OtpForm from "@/components/OtpForm/OtpForm";
+import ForgotPassForm from "@/components/ForgotPassForm/ForgotPassForm";
+import SetNewPassForm from "@/components/SetNewPassForm/SetNewPassForm";
 
-export default function LoginOtp() {
+export const metadata = {
+  title: "Set New Password | Bookable",
+  description: "A new password is set",
+};
+
+export default function SetNewPassword() {
   return (
     <div className="relative z-10 flex h-screen items-center justify-center">
       {/* background images */}
@@ -20,7 +25,7 @@ export default function LoginOtp() {
       />
 
       <div className="container z-10 flex h-[65vh] items-center justify-center rounded-xl border-[2px] border-[#5882c12b] shadow-lg md:mx-auto md:w-[85%] lg:shadow">
-        <OtpForm />
+        <SetNewPassForm />
       </div>
     </div>
   );

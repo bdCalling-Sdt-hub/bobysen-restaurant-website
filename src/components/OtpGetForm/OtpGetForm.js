@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-export default function ForgotPassForm() {
+export default function OtpGetForm() {
   const {
     register,
     handleSubmit,
@@ -21,7 +21,7 @@ export default function ForgotPassForm() {
       className="container mx-auto sm:w-[65%] md:w-[55%] lg:w-[45%]"
     >
       <h3 className="mb-12 text-2xl font-bold text-primary-secondary-1">
-        Forgot Password ?
+        Get OTP in your email
       </h3>
 
       <div className="grid w-full items-center gap-1.5">
