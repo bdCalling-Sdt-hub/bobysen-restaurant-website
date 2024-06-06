@@ -1,5 +1,16 @@
+import Hero from "@/components/Hero/Hero";
 import Image from "next/image";
 
+export const metadata = {
+  title: "Home | bookatable",
+  description:
+    "A restaurant table booking platform that enables diners to customize their booking by requesting a specific table location or view.",
+};
+
 export default function Home() {
-  return <main className="pt-[160px]"></main>;
+  return (
+    <div className="pt-[160px]">
+      <Hero />
+    </div>
+  );
 }

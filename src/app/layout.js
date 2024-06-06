@@ -2,6 +2,9 @@ import { Kumbh_Sans, Roboto } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
 import Navbar from "@/components/Navbar/Navbar";
+import Image from "next/image";
+import circle from "/public/home/circle.png";
+import flowers from "/public/home/flowers.png";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 const kumbhSans = Kumbh_Sans({
@@ -20,9 +23,23 @@ export default function RootLayout({ children }) {
           type="image/x-icon"
         />
       </Head>
-      <body className={`${roboto.className} ${kumbhSans.variable}`}>
+      <body className={`${roboto.className} ${kumbhSans.variable} max-w-8xl`}>
         <Navbar />
-        {children}
+        {/* background effects */}
+        <div className="relative">
+          <Image
+            src={circle}
+            alt="bg-effect circle"
+            className="absolute left-0 top-0 -z-10"
+          />
+          <Image
+            src={flowers}
+            alt="bg-effect flowers"
+            className="absolute right-0 top-0 -z-10"
+          />
+        </div>
+
+        <main className="z-10">{children}</main>
       </body>
     </html>
   );
