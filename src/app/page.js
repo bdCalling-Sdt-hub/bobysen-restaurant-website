@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero/Hero";
 import ExploreRestaurants from "@/components/HomeSections/ExploreRestaurants/ExploreRestaurants";
+import Services from "@/components/HomeSections/Services/Services";
 import Image from "next/image";
 
 export const metadata = {
@@ -13,6 +14,7 @@ export default function Home() {
     <div className="pt-[160px]">
       <Hero />
       <ExploreRestaurants />
+      <Services />
     </div>
   );
 }

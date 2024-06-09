@@ -29,7 +29,7 @@ export default function ExploreRestaurants() {
       </div>
 
       {/* TODO: Load Card Data from database */}
-      <div className="mt-10 grid grid-cols-1 gap-y-10 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-0">
+      <div className="mt-10 grid grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-5 md:gap-y-5 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-0">
         {Array.from({ length: 3 }).map((_, idx) => (
           <RestaurantCard key={idx} />
         ))}

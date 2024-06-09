@@ -10,7 +10,6 @@ import Image from "next/image";
 import restaurant1 from "/public/ExploreRestaurants/restaurant-1.png";
 import star from "/public/ExploreRestaurants/star.png";
 import locationIcon from "/public/ExploreRestaurants/location.svg";
-import styles from "./RestaurantCard.module.css";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -19,7 +18,11 @@ export default function RestaurantCard({ card }) {
   return (
     <Card>
       <CardHeader>
-        <Image src={restaurant1} alt="restaurant 1" className="mb-2 block" />
+        <Image
+          src={restaurant1}
+          alt="restaurant 1"
+          className="mx-auto mb-2 block"
+        />
         <div className="flex justify-between">
           <h3 className="text-3xl font-bold text-primary-secondary-1">
             Trattoria dall&apos;Oste
@@ -37,12 +40,7 @@ export default function RestaurantCard({ card }) {
         </div>
       </CardHeader>
       <CardContent>
-        <p
-          className={cn(
-            "font-kumbh-sans text-sm text-primary-secondary-2",
-            styles.cardDesc,
-          )}
-        >
+        <p className="font-kumbh-sans text-sm text-primary-secondary-2">
           Featuring seasonal and sustainable seafood that is flown in fresh
           daily, our chef-driven menu proves that no matter when you’re dining,
           seafood can be truly exceptional.
