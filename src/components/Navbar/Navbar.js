@@ -5,15 +5,16 @@ import logo from "/public/home/logo.png";
 import orange from "/public/home/orange.png";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
-    <div className="absolute left-0 top-[50px] w-full">
+    <div className="absolute left-0 top-[30px] z-[9999] w-full">
       <div className="container flex max-h-[100px] items-center justify-between">
         {/* left */}
-        <div className="w-[30%] lg:w-[12%]">
+        <Link href="/" className="w-[30%] lg:w-[12%]">
           <Image src={logo} alt="logo" className="max-h-[100px] w-full" />
-        </div>
+        </Link>
 
         {/* right */}
         <div className="flex items-center gap-x-1 lg:max-w-max lg:gap-x-5">

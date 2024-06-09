@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
           <Image
             src={circle}
             alt="bg-effect circle"
-            className="absolute -left-[50%] top-0 -z-10 lg:left-0"
+            className="absolute -left-[50%] top-0 -z-10 lg:-left-[2%]"
           />
           <Image
             src={flowers}
