@@ -53,7 +53,7 @@ export default function SliderCard() {
 
         {/* card footer */}
         {/* TODO: Add relevant link */}
-        <Link href="/book-table" className="w-full rounded-xl">
+        <Link href="/restaurant/1" className="w-full rounded-xl">
           <Button className="w-full bg-primary-secondary-3 font-kumbh-sans font-bold text-primary-white">
             Book a table
           </Button>

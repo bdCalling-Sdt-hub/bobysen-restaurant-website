@@ -55,7 +55,7 @@ export default function RestaurantCard({ card }) {
       </CardContent>
       <CardFooter>
         {/* TODO: Add relevant link */}
-        <Link href="/book-table" className="w-full rounded-xl">
+        <Link href={`/restaurant/1`} className="w-full rounded-xl">
           <Button
             className="w-full bg-primary-secondary-3 font-kumbh-sans font-bold text-primary-white"
             size="lg"

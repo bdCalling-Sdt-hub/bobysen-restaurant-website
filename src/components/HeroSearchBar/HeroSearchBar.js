@@ -74,7 +74,7 @@ export default function HeroSearchBar() {
       <div
         className="absolute right-[2%] top-[9%] cursor-pointer lg:right-[1%]"
         role="button"
-        onClick={() => router.push("/all-restaurant")}
+        onClick={() => router.push("/all-restaurants")}
       >
         <Image src={searchIcon} alt="search icon" />
       </div>
