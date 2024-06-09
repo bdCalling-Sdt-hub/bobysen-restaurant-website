@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero/Hero";
 import ExploreRestaurants from "@/components/HomeSections/ExploreRestaurants/ExploreRestaurants";
+import RestaurantsSlider from "@/components/HomeSections/RestaurantsSlider/RestaurantsSlider";
 import Services from "@/components/HomeSections/Services/Services";
 import Image from "next/image";
 
@@ -15,6 +16,7 @@ export default function Home() {
       <Hero />
       <ExploreRestaurants />
       <Services />
+      <RestaurantsSlider />
     </div>
   );
 }
