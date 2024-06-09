@@ -16,7 +16,7 @@ import { Button } from "../ui/button";
 
 export default function RestaurantCard({ card }) {
   return (
-    <Card>
+    <Card className="shadow">
       <CardHeader>
         <Image
           src={restaurant1}

@@ -29,7 +29,7 @@ export default function RestaurantsSlider() {
 
         {/* right */}
         <Link
-          href="/all-restaurant"
+          href="/all-restaurants"
           className="flex items-center gap-x-2 border-b-2 border-transparent hover:border-b-2 hover:border-y-primary-secondary-2"
         >
           <p className="font-kumbh-sans">See All</p>
