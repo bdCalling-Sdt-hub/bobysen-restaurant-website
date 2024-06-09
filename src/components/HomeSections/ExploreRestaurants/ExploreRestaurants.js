@@ -8,7 +8,7 @@ export default function ExploreRestaurants() {
     <section className="container my-[60px]">
       <div className="flex items-center justify-between">
         {/* left */}
-        <div className="lg:w-1/2">
+        <div className="w-1/2">
           <h1 className="font-bold text-primary-secondary-1">
             Explore{" "}
             <span className="text-primary-secondary-3">Top Restaurants</span>
@@ -29,7 +29,7 @@ export default function ExploreRestaurants() {
       </div>
 
       {/* TODO: Load Card Data from database */}
-      <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 lg:gap-x-10">
+      <div className="mt-10 grid grid-cols-1 gap-y-10 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-0">
         {Array.from({ length: 3 }).map((_, idx) => (
           <RestaurantCard key={idx} />
         ))}
