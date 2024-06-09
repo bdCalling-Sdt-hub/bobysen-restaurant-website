@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function DownloadApp() {
   return (
-    <section className="container relative z-10 flex items-center gap-x-8">
+    <section className="container relative z-10 flex flex-col-reverse items-center gap-x-8 gap-y-12 lg:flex-row lg:gap-y-0">
       {/* left */}
       <div className="lg:w-1/2">
         <h1 className="font-bold text-primary-secondary-1">
@@ -41,7 +41,7 @@ export default function DownloadApp() {
       <Image
         src={arrow}
         alt="arrow icon"
-        className="absolute -top-[8%] right-[35%] -z-10"
+        className="absolute -top-[8%] right-[35%] -z-10 hidden lg:block"
       />
     </section>
   );

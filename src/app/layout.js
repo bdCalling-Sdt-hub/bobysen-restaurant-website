@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import Image from "next/image";
 import circle from "/public/home/circle.png";
 import flowers from "/public/home/flowers.png";
+import Footer from "@/components/Footer/Footer";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 const kumbhSans = Kumbh_Sans({
@@ -40,6 +41,8 @@ export default function RootLayout({ children }) {
         </div>
 
         <main className="z-10">{children}</main>
+
+        <Footer />
       </body>
     </html>
   );

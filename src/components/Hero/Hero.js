@@ -24,7 +24,7 @@ export default function Hero() {
         </div>
 
         {/* right */}
-        <div className="w-[60%] lg:w-[50%]">
+        <div className="w-[75%] lg:w-[50%]">
           <Image src={coffeeShop} alt="coffee shop" className="w-[90%]" />
         </div>
       </div>
