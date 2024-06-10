@@ -16,7 +16,8 @@ const pathVariants = {
     pathLength: 1,
     opacity: 1,
     transition: {
-      duration: 1.2,
+      delay: 0.5,
+      duration: 1.4,
       ease: "easeInOut",
     },
   },
@@ -29,7 +30,7 @@ const leftDivVariants = {
   animate: {
     opacity: 1,
     transition: {
-      duration: 1.2,
+      duration: 1,
       ease: "easeInOut",
       when: "beforeChildren",
       staggerChildren: 0.3,
@@ -74,7 +75,7 @@ export default function Hero() {
           className="w-[75%] lg:w-[50%]"
           initial={{ x: "100vw" }}
           animate={{ x: 0 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
+          transition={{ delay: 0.4, duration: 1.5, ease: "easeInOut" }}
         >
           <Image src={coffeeShop} alt="coffee shop" className="w-[90%]" />
         </motion.div>
@@ -97,7 +98,7 @@ export default function Hero() {
           fill="#8ABA51"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.3, duration: 0.6, ease: "easeIn" }}
+          transition={{ delay: 1.7, duration: 0.6, ease: "easeIn" }}
         />
         <motion.path
           d="M572.677 231.939C548.176 175.474 460.817 45.3579 410.481 117.563C366.046 181.305 527.14 270.869 528.276 117.002C529.411 -36.8647 208.913 -38.3163 25.9171 119.395"
