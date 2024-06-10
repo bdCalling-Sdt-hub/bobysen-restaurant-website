@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="mt-20 bg-primary-black py-10">
+    <div className="mt-20 bg-primary-black py-10">
       <div className="container flex flex-col justify-between lg:flex-row">
         {/* left */}
         <div className="lg:w-[50%]">
@@ -55,14 +55,20 @@ export default function Footer() {
           <Link href={"#"} className="font-kumbh-sans text-primary-white">
             About Us
           </Link>
-          <Link href={"#"} className="font-kumbh-sans text-primary-white">
+          <Link
+            href={"/privacy-policy"}
+            className="font-kumbh-sans text-primary-white"
+          >
             Privacy Policy
           </Link>
-          <Link href={"#"} className="font-kumbh-sans text-primary-white">
+          <Link
+            href={"/terms-of-use"}
+            className="font-kumbh-sans text-primary-white"
+          >
             Terms of Use
           </Link>
         </div>
       </div>
-    </footer>
+    </div>
   );
 }

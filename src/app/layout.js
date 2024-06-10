@@ -17,14 +17,9 @@ const kumbhSans = Kumbh_Sans({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Head>
-        <link
-          rel="shortcut icon"
-          href="/public/favicon.ico"
-          type="image/x-icon"
-        />
-      </Head>
-      <body className={`${roboto.className} ${kumbhSans.variable} max-w-8xl`}>
+      <body
+        className={`${roboto.className} ${kumbhSans.variable} max-w-8xl flex min-h-screen flex-col`}
+      >
         <Navbar />
         {/* background effects */}
         <div className="relative">
@@ -40,9 +35,11 @@ export default function RootLayout({ children }) {
           />
         </div>
 
-        <main className="z-10">{children}</main>
+        <main className="z-10 flex-grow">{children}</main>
 
-        <Footer />
+        <footer>
+          <Footer />
+        </footer>
       </body>
     </html>
   );

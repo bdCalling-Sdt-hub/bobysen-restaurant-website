@@ -20,7 +20,7 @@ export default function RestaurantsSlider() {
         <div className="w-1/2">
           <h1 className="font-bold text-primary-secondary-1">
             Explore{" "}
-            <span className="text-primary-secondary-3">Top Restaurants</span>
+            <span className="text-primary-secondary-3">Restaurants</span>
           </h1>
           <p className="mt-4 font-kumbh-sans text-xl text-primary-secondary-2 lg:w-[40%]">
             Check your city Near by Restaurant
@@ -37,23 +37,23 @@ export default function RestaurantsSlider() {
         </Link>
       </div>
       <Carousel>
-        <CarouselContent>
-          <CarouselItem className="md:basis-1/2">
+        <CarouselContent className="-ml-8">
+          <CarouselItem className="pl-8 md:basis-1/2">
             <SliderCard />
           </CarouselItem>
-          <CarouselItem className="md:basis-1/2">
+          <CarouselItem className="pl-8 md:basis-1/2">
             <SliderCard />
           </CarouselItem>
-          <CarouselItem className="md:basis-1/2">
+          <CarouselItem className="pl-8 md:basis-1/2">
             <SliderCard />
           </CarouselItem>
-          <CarouselItem className="md:basis-1/2">
+          <CarouselItem className="pl-8 md:basis-1/2">
             <SliderCard />
           </CarouselItem>
         </CarouselContent>
         <div>
-          <CarouselPrevious className="-left-6 lg:-left-12" />
-          <CarouselNext className="-right-6 lg:-right-12" />
+          <CarouselPrevious className="-left-6 bg-primary-secondary-3 text-primary-white lg:-left-12" />
+          <CarouselNext className="-right-6 bg-primary-secondary-3 text-primary-white lg:-right-12" />
         </div>
       </Carousel>
     </section>

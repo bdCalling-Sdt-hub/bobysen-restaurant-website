@@ -1,8 +1,14 @@
+// "use client";
+
 import RestaurantImageSlider from "./_components/RestaurantImageSlider/RestaurantImageSlider";
 import { Separator } from "@/components/ui/separator";
 import menuIcon from "/public/DynamicRestaurant/charm_menu-hamburger.png";
 import eventIcon from "/public/DynamicRestaurant/event.png";
 import bookIcon from "/public/DynamicRestaurant/image 4.png";
+import usersIcon from "/public/DynamicRestaurant/users.png";
+import calenderIcon from "/public/DynamicRestaurant/calendar.png";
+import foodMenuIcon from "/public/DynamicRestaurant/menu.png";
+import successfulIcon from "/public/DynamicRestaurant/succesful.png";
 import locationIcon from "/public/DynamicRestaurant/Location_icon_ic.png";
 import arrow from "/public/DynamicRestaurant/trending-up.png";
 import starIcon from "/public/DynamicRestaurant/Star 1.png";
@@ -21,8 +27,18 @@ import {
 } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
 import styles from "./DynamicRestaurant.module.css";
-import { cn } from "@/lib/utils";
 import FeedbackCard from "./_components/FeedbackCard/FeedbackCard";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { cn } from "@/lib/utils";
 
 export const metadata = {
   title: "Book your Table | Bookatable",
@@ -30,7 +46,6 @@ export const metadata = {
 
 export default function DynamicRestaurant({ params }) {
   // TODO: Use dynamic data from database
-
   const { id } = params;
 
   return (
@@ -38,7 +53,7 @@ export default function DynamicRestaurant({ params }) {
       {/* Restaurant Details Section */}
       <section className="grid grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-10 md:gap-y-0">
         {/* left */}
-        <div className="bg-primary-white-light relative rounded-xl p-4 shadow">
+        <div className="relative rounded-xl bg-primary-white-light p-4 shadow">
           <RestaurantImageSlider />
 
           <div className="mt-5">
@@ -78,6 +93,8 @@ export default function DynamicRestaurant({ params }) {
                     Show Menu
                   </p>
                 </div>
+
+                {/* Filters */}
               </div>
 
               {/* Inner Right */}
@@ -98,17 +115,57 @@ export default function DynamicRestaurant({ params }) {
             </div>
           </div>
 
-          <Button
-            className="absolute -bottom-2 left-1/2 w-[96%] -translate-x-1/2 -translate-y-1/2 bg-primary-secondary-2 text-primary-white"
-            size="lg"
-          >
-            Book Now
-          </Button>
+          {/* Book Now Modal */}
+          <AlertDialog>
+            <AlertDialogTrigger className="absolute -bottom-2 left-1/2 w-[96%] -translate-x-1/2 -translate-y-1/2 rounded bg-primary-secondary-2 py-2 text-primary-white">
+              Book Now
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  <Image
+                    src={successfulIcon}
+                    alt="booking successful marker"
+                    className="mx-auto block"
+                  />
+                  <h4 className="my-3 text-center text-2xl text-primary-secondary-1">
+                    Table Booked Successfully
+                  </h4>
+                </AlertDialogTitle>
+                <Separator className="bg-primary-secondary-1" />
+                <AlertDialogDescription>
+                  <div className="mx-auto my-5 w-3/4 space-y-3">
+                    <div className="flex items-center gap-x-4 font-kumbh-sans">
+                      <Image src={calenderIcon} alt="calendar icon" />
+                      <p className="text-xl">17 December 2022 | 12:15 PM</p>
+                    </div>
+                    <div className="flex items-center gap-x-4 font-kumbh-sans">
+                      <Image src={usersIcon} alt="users icon" />
+                      <p className="text-xl">2 Guests</p>
+                    </div>
+                  </div>
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter className="mx-auto w-max">
+                <AlertDialogAction className="flex items-center gap-x-3 bg-primary-secondary-3 px-5 py-6 text-lg font-bold text-primary-white">
+                  <Image src={foodMenuIcon} alt="food menu icon" />
+                  <span>Show Menu</span>
+                </AlertDialogAction>
+              </AlertDialogFooter>
+              <Separator className="bg-primary-secondary-1" />
+
+              <p className="text-justify font-kumbh-sans text-primary-white-dark">
+                Your table is reserved! Since you reserved your table with Dine
+                in Florida, your will automatically receive 2% off your bill
+                when you pay
+              </p>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
 
         {/* right */}
         <div className="space-y-2">
-          <div className="bg-primary-white-light rounded-xl p-4 shadow">
+          <div className="rounded-xl bg-primary-white-light p-4 shadow">
             <h3 className="text-center font-kumbh-sans text-lg font-semibold text-primary-secondary-1">
               Here to Find
             </h3>
@@ -118,13 +175,12 @@ export default function DynamicRestaurant({ params }) {
               width={"100%"}
               height="250"
               style={{ border: 0 }}
-              allowfullscreen=""
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
 
-          <div className="bg-primary-white-light rounded-xl p-4 shadow">
+          <div className="rounded-xl bg-primary-white-light p-4 shadow">
             <h3 className="text-center font-kumbh-sans text-lg font-semibold text-primary-secondary-1">
               Opening Hours
             </h3>
