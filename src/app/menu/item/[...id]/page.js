@@ -10,7 +10,7 @@ export default function FoodItem() {
   return (
     <div className="container flex flex-col items-center gap-x-10 pb-24 pt-[180px] lg:flex-row">
       {/* left */}
-      <div className="lg:w-[30%]">
+      <div className="w-full lg:w-[30%]">
         <Image
           src={foodItemPic}
           alt="Picture of the food item"
@@ -19,7 +19,7 @@ export default function FoodItem() {
       </div>
 
       {/* right */}
-      <div className="lg:w-[60%]">
+      <div className="mt-16 w-full lg:mt-0 lg:w-[60%]">
         {/* title */}
         <h1 className="text-primary-black">Chicken Curry Masala</h1>
 
@@ -52,7 +52,7 @@ export default function FoodItem() {
           </p>
         </div>
 
-        <div className="mt-8 flex items-stretch justify-between gap-x-5 lg:w-[65%]">
+        <div className="mt-8 flex flex-col items-stretch gap-x-5 space-y-5 lg:w-[65%] lg:flex-row lg:justify-between lg:space-y-0">
           {/* left */}
           <div className="flex h-[50px] items-center">
             <div

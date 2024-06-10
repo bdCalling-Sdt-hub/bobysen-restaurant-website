@@ -17,7 +17,7 @@ const pathVariants = {
     opacity: 1,
     transition: {
       delay: 0.5,
-      duration: 1.4,
+      duration: 1.7,
       ease: "easeInOut",
     },
   },
@@ -98,14 +98,14 @@ export default function Hero() {
           fill="#8ABA51"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.7, duration: 0.6, ease: "easeIn" }}
+          transition={{ delay: 2.1, duration: 0.6, ease: "easeIn" }}
         />
         <motion.path
           d="M572.677 231.939C548.176 175.474 460.817 45.3579 410.481 117.563C366.046 181.305 527.14 270.869 528.276 117.002C529.411 -36.8647 208.913 -38.3163 25.9171 119.395"
           stroke="#8ABA51"
-          stroke-width="2"
-          stroke-linejoin="round"
-          stroke-dasharray="8 8"
+          strokeWidth="2"
+          strokeLinejoin="round"
+          strokeDasharray="8 8"
           variants={pathVariants}
         />
       </motion.svg>
