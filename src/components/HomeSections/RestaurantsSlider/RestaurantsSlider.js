@@ -50,6 +50,9 @@ export default function RestaurantsSlider() {
           <CarouselItem className="pl-8 md:basis-1/2">
             <SliderCard />
           </CarouselItem>
+          <CarouselItem className="pl-8 md:basis-1/2">
+            <SliderCard />
+          </CarouselItem>
         </CarouselContent>
         <div>
           <CarouselPrevious className="-left-6 bg-primary-secondary-3 text-primary-white lg:-left-12" />

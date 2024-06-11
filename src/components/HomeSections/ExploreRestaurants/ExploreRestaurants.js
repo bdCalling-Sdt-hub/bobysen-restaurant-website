@@ -2,6 +2,13 @@ import Link from "next/link";
 import rightArrow from "/public/ExploreRestaurants/rightArrow.png";
 import Image from "next/image";
 import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export default function ExploreRestaurants() {
   return (
@@ -29,10 +36,20 @@ export default function ExploreRestaurants() {
       </div>
 
       {/* TODO: Load Card Data from database */}
-      <div className="mt-10 grid grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-5 md:gap-y-5 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-0">
-        {Array.from({ length: 3 }).map((_, idx) => (
-          <RestaurantCard key={idx} />
-        ))}
+      <div className="mt-10">
+        <Carousel>
+          <CarouselContent className="-ml-8">
+            {Array.from({ length: 9 }).map((_, idx) => (
+              <CarouselItem key={idx} className="pl-8 md:basis-1/3">
+                <RestaurantCard />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div>
+            <CarouselPrevious className="-left-6 bg-primary-secondary-3 text-primary-white lg:-left-12" />
+            <CarouselNext className="-right-6 bg-primary-secondary-3 text-primary-white lg:-right-12" />
+          </div>
+        </Carousel>
       </div>
     </section>
   );

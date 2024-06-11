@@ -4,8 +4,9 @@ import Image from "next/image";
 import foodPic from "/public/dashboard-user/favorite/foodPic.png";
 import { Button } from "@/components/ui/button";
 import StarRatings from "react-star-ratings";
+import Link from "next/link";
 
-export default function FavoriteCard() {
+export default function FavoriteCard({ id }) {
   return (
     <div className="rounded-3xl border p-3">
       <Image src={foodPic} alt="food pic" />
@@ -21,8 +22,11 @@ export default function FavoriteCard() {
 
       <StarRatings rating={5} starRatedColor="#F5BE32" starDimension="30px" />
       <br />
-      <Button className="mt-4 w-[75%] rounded-3xl bg-primary-secondary-2 font-kumbh-sans text-primary-white">
-        Show Details
+      <Button
+        className="mt-4 w-[75%] rounded-3xl bg-primary-secondary-2 font-kumbh-sans text-primary-white"
+        asChild
+      >
+        <Link href={`/dashboard/user/favorite/${id}`}>Show Details</Link>
       </Button>
     </div>
   );

@@ -11,11 +11,9 @@ export default function UserFavorites() {
       <h1>Favorite</h1>
 
       <div className="mt-10 grid grid-cols-1 gap-y-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-x-10 lg:gap-y-16">
-        <FavoriteCard />
-        <FavoriteCard />
-        <FavoriteCard />
-        <FavoriteCard />
-        <FavoriteCard />
+        {Array.from({ length: 10 }).map((_, idx) => (
+          <FavoriteCard key={idx} id={idx} />
+        ))}
       </div>
     </div>
   );

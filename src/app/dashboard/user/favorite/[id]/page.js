@@ -9,10 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-export default function FoodItem() {
-  // TODO: Use dynamic data
-
+export default function DynamicFavoriteItem() {
   return (
     <div className="container flex flex-col items-center gap-x-10 pb-24 pt-[180px] lg:flex-row">
       {/* left */}
@@ -56,49 +53,6 @@ export default function FoodItem() {
             patty that is cooked to perfection and topped with melted American
             cheese, lettuce, tomato, pickles, and onions.
           </p>
-        </div>
-
-        <div className="mt-8 flex flex-col items-stretch gap-x-5 space-y-5 lg:w-[65%] lg:flex-row lg:justify-between lg:space-y-0">
-          {/* left */}
-          <div className="flex h-[50px] items-center">
-            <div
-              role="button"
-              className="rounded-0 flex h-[50px] items-center justify-center rounded-l-lg border-2 border-r-0 border-primary-secondary-2 bg-transparent px-3 text-primary-black hover:border-transparent hover:bg-red-400 hover:text-primary-white"
-            >
-              <Minus />
-            </div>
-            <Input
-              className="h-[50px] w-[120px] border-2 border-primary-secondary-2 text-center text-2xl outline-0"
-              style={{ borderRadius: "0" }}
-              defaultValue={0}
-              id="cartQuantityInput"
-            />
-            <div
-              role="button"
-              className="rounded-0 flex h-[50px] items-center justify-center rounded-r-lg border-2 border-l-0 border-transparent bg-primary-secondary-3 px-3 text-3xl text-primary-white"
-            >
-              <Plus />
-            </div>
-          </div>
-
-          {/* right */}
-          <Button className="h-[50px] bg-primary-secondary-2 px-10 font-kumbh-sans text-lg text-primary-white">
-            Add to Cart
-          </Button>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger
-                className="h-[50px] rounded-lg border border-primary-secondary-2 px-3 hover:bg-gray-300/30"
-                variant="outline"
-              >
-                <Heart />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Add to Favorite</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
         </div>
       </div>
     </div>
