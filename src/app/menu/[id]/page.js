@@ -9,9 +9,9 @@ import {
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useState } from "react";
-import FoodItemCard from "./_components/FoodItemCard";
+import FoodItemCard from "../_components/FoodItemCard";
 
-export default function Menu() {
+export default function DynamicMenu() {
   // TODO: load menu categories from database
   const menuCategories = [
     "Pizza",

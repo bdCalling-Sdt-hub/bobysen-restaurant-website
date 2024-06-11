@@ -91,9 +91,11 @@ export default function DynamicRestaurant({ params }) {
 
                 <div className="flex items-start gap-2">
                   <Image src={bookIcon} alt="calendar icon" />
-                  <p className="border-b-2 border-b-primary-secondary-2 text-primary-secondary-1">
-                    Show Menu
-                  </p>
+                  <Link href={`/menu/${id}`}>
+                    <p className="border-b-2 border-b-primary-secondary-2 text-primary-secondary-1 transition-all duration-300 ease-in-out hover:border-b-primary-secondary-1">
+                      Show Menu
+                    </p>
+                  </Link>
                 </div>
 
                 {/* Filters */}
@@ -149,7 +151,7 @@ export default function DynamicRestaurant({ params }) {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter className="mx-auto w-max">
-                <Link href="/menu">
+                <Link href={`/menu/${id}`}>
                   <AlertDialogAction className="flex items-center gap-x-3 bg-primary-secondary-3 px-5 py-6 text-lg font-bold text-primary-white">
                     <Image src={foodMenuIcon} alt="food menu icon" />
                     <span>Show Menu</span>

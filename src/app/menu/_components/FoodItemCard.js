@@ -34,7 +34,19 @@ export default function FoodItemCard({ cardData }) {
         <p className="mb-3 text-2xl font-medium">
           ${parseFloat(price).toFixed(2)}
         </p>
-        <StarRatings rating={5} starRatedColor="#F5BE32" starDimension="30px" />
+
+        <div className="flex items-center gap-x-4">
+          <StarRatings
+            rating={4.5}
+            starRatedColor="#F5BE32"
+            starDimension="22px"
+            starSpacing="6px"
+          />
+          <div className="flex items-center gap-2 pt-2 font-kumbh-sans text-lg font-bold">
+            <h4 className="text-[#F5BE32]">4.5</h4>
+            <span className="text-primary-secondary-1">(10)</span>
+          </div>
+        </div>
       </CardContent>
       <CardFooter>
         <Button

@@ -23,10 +23,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import CartCard from "@/app/cart/_components/CartCard";
 import OrderCard from "./OrderCard";
+import Link from "next/link";
 
 export default function OrdersTable({ status }) {
   // TODO: Use dynamic table data
-  console.log(status);
 
   return (
     <div className="container mt-12">
@@ -98,8 +98,11 @@ export default function OrdersTable({ status }) {
               </TableCell>
               {status === "Completed" && (
                 <TableCell className="font-kumbh-sans text-primary-black">
-                  <Button variant="outline">
-                    <MessageSquareText className="mr-2 h-4 w-4" /> Share Review
+                  <Button variant="outline" asChild>
+                    <Link href="/dashboard/user/review">
+                      <MessageSquareText className="mr-2 h-4 w-4" /> Share
+                      Review
+                    </Link>
                   </Button>
                 </TableCell>
               )}

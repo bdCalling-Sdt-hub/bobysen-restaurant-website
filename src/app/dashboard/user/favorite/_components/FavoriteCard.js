@@ -20,8 +20,19 @@ export default function FavoriteCard({ id }) {
         atque nihil?
       </p>
 
-      <StarRatings rating={5} starRatedColor="#F5BE32" starDimension="30px" />
-      <br />
+      <div className="flex items-center gap-x-4">
+        <StarRatings
+          rating={4.5}
+          starRatedColor="#F5BE32"
+          starDimension="22px"
+          starSpacing="6px"
+        />
+        <div className="flex items-center gap-2 pt-2 font-kumbh-sans text-lg font-bold">
+          <h4 className="text-[#F5BE32]">4.5</h4>
+          <span className="text-primary-secondary-1">(10)</span>
+        </div>
+      </div>
+
       <Button
         className="mt-4 w-[75%] rounded-3xl bg-primary-secondary-2 font-kumbh-sans text-primary-white"
         asChild

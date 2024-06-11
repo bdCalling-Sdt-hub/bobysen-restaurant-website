@@ -13,7 +13,7 @@ export const metadata = {
 
 export default function Login() {
   return (
-    <div className="relative z-10 flex h-screen items-center justify-center">
+    <div className="relative z-10 flex h-screen items-center justify-center pt-[50px]">
       {/* background images */}
       <Image
         src={circles}
