@@ -7,7 +7,7 @@ import StarRatings from "react-star-ratings";
 
 export default function FavoriteCard() {
   return (
-    <div>
+    <div className="rounded-3xl border p-3">
       <Image src={foodPic} alt="food pic" />
       <h3 className="mb-3 mt-4 text-3xl font-semibold text-primary-secondary-1">
         Spinach & Mushroom
@@ -22,7 +22,7 @@ export default function FavoriteCard() {
       <StarRatings rating={5} starRatedColor="#F5BE32" starDimension="30px" />
       <br />
       <Button className="mt-4 w-[75%] rounded-3xl bg-primary-secondary-2 font-kumbh-sans text-primary-white">
-        Order Now
+        Show Details
       </Button>
     </div>
   );

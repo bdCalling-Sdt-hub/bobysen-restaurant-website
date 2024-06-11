@@ -36,7 +36,7 @@ export default function HeroSearchBar() {
           type="text"
           onChange={(e) => setLocation(e.target.value)}
           defaultValue={"Location"}
-          className="h-full w-full rounded-l-3xl bg-primary-secondary-3 pl-[25%] font-kumbh-sans text-primary-white outline-none lg:pl-10"
+          className="h-full w-full rounded-l-3xl border-2 border-transparent bg-primary-secondary-3 pl-[25%] font-kumbh-sans text-primary-white outline-none focus:border-2 focus:border-black lg:pl-10"
           onFocus={() => setIsLocationFocused(true)}
           onBlur={() => setIsLocationFocused(false)}
         />

@@ -12,12 +12,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import StarRatings from "react-star-ratings";
 
 export default function FoodItemCard({ cardData }) {
   const { id, name, price } = cardData;
 
   return (
-    <Card className="border-0 bg-transparent text-primary-secondary-1 shadow-none">
+    <Card className="rounded-3xl border bg-transparent text-primary-secondary-1 shadow-none">
       <CardHeader>
         <CardTitle>
           <Image src={foodPic} alt={`${name}`} className="mb-3 block" />
@@ -30,7 +31,10 @@ export default function FoodItemCard({ cardData }) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-2xl font-medium">${parseFloat(price).toFixed(2)}</p>
+        <p className="mb-3 text-2xl font-medium">
+          ${parseFloat(price).toFixed(2)}
+        </p>
+        <StarRatings rating={5} starRatedColor="#F5BE32" starDimension="30px" />
       </CardContent>
       <CardFooter>
         <Button

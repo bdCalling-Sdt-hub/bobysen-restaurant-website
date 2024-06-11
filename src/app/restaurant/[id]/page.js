@@ -37,8 +37,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
+import { CircleX } from "lucide-react";
 
 export const metadata = {
   title: "Book your Table | Bookatable",
@@ -116,7 +118,7 @@ export default function DynamicRestaurant({ params }) {
           </div>
 
           {/* Book Now Modal */}
-          <AlertDialog>
+          <AlertDialog className="relative">
             <AlertDialogTrigger className="absolute -bottom-2 left-1/2 w-[96%] -translate-x-1/2 -translate-y-1/2 rounded bg-primary-secondary-2 py-2 text-primary-white">
               Book Now
             </AlertDialogTrigger>
@@ -147,10 +149,15 @@ export default function DynamicRestaurant({ params }) {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter className="mx-auto w-max">
-                <AlertDialogAction className="flex items-center gap-x-3 bg-primary-secondary-3 px-5 py-6 text-lg font-bold text-primary-white">
-                  <Image src={foodMenuIcon} alt="food menu icon" />
-                  <span>Show Menu</span>
-                </AlertDialogAction>
+                <Link href="/menu">
+                  <AlertDialogAction className="flex items-center gap-x-3 bg-primary-secondary-3 px-5 py-6 text-lg font-bold text-primary-white">
+                    <Image src={foodMenuIcon} alt="food menu icon" />
+                    <span>Show Menu</span>
+                  </AlertDialogAction>
+                </Link>
+                <AlertDialogCancel className="absolute right-0 top-0 border-0">
+                  <CircleX />
+                </AlertDialogCancel>
               </AlertDialogFooter>
               <Separator className="bg-primary-secondary-1" />
 

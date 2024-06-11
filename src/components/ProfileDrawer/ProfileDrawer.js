@@ -7,6 +7,7 @@ import logoutIcon from "/public/profileDrawer/logout.png";
 import { cn } from "@/lib/utils";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function ProfileDrawer({ openState, setOpenState }) {
   return (
@@ -31,6 +32,10 @@ export default function ProfileDrawer({ openState, setOpenState }) {
         )}
       >
         <div className="mx-auto max-w-max">
+          {/* <Avatar>
+            <AvatarImage src={profilePic} />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar> */}
           <Image
             src={profilePic}
             alt="profile picture"
@@ -41,14 +46,20 @@ export default function ProfileDrawer({ openState, setOpenState }) {
 
         {/* menu */}
         <div className="mt-12">
-          <Link href={"#"} className="flex items-center gap-x-6">
+          <Link
+            href="/dashboard/user/profile"
+            className="flex items-center gap-x-6"
+          >
             <Image src={userIcon} alt="user icon" />
             <h3 className="font-kumbh-sans text-xl">Personal Details</h3>
           </Link>
 
           <Separator className="my-4 bg-primary-secondary-3" />
 
-          <Link href={"#"} className="flex items-center gap-x-6">
+          <Link
+            href="/dashboard/user/orders"
+            className="flex items-center gap-x-6"
+          >
             <Image src={historyIcon} alt="booking history icon" />
             <h3 className="font-kumbh-sans text-xl">Booking History</h3>
           </Link>
@@ -56,7 +67,7 @@ export default function ProfileDrawer({ openState, setOpenState }) {
           <Separator className="my-4 bg-primary-secondary-3" />
 
           <Link
-            href={"/dashboard/user/favorite"}
+            href="/dashboard/user/favorite"
             className="flex items-center gap-x-6"
           >
             <Image src={favoriteIcon} alt="favorite icon" />
