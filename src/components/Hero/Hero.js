@@ -30,7 +30,7 @@ const leftDivVariants = {
   animate: {
     opacity: 1,
     transition: {
-      duration: 1,
+      duration: 0.7,
       ease: "easeInOut",
       when: "beforeChildren",
       staggerChildren: 0.3,
@@ -73,9 +73,9 @@ export default function Hero() {
         {/* right */}
         <motion.div
           className="w-[75%] lg:w-[50%]"
-          initial={{ x: "100vw" }}
-          animate={{ x: 0 }}
-          transition={{ delay: 0.4, duration: 1.5, ease: "easeInOut" }}
+          initial={{ x: "12vw", opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.8, duration: 1.7, ease: "easeInOut" }}
         >
           <Image src={coffeeShop} alt="coffee shop" className="w-[90%]" />
         </motion.div>
