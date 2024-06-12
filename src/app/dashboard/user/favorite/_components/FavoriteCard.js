@@ -5,6 +5,13 @@ import foodPic from "/public/dashboard-user/favorite/foodPic.png";
 import { Button } from "@/components/ui/button";
 import StarRatings from "react-star-ratings";
 import Link from "next/link";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Heart } from "lucide-react";
 
 export default function FavoriteCard({ id }) {
   return (
@@ -33,12 +40,28 @@ export default function FavoriteCard({ id }) {
         </div>
       </div>
 
-      <Button
-        className="mt-4 w-[75%] rounded-3xl bg-primary-secondary-2 font-kumbh-sans text-primary-white"
-        asChild
-      >
-        <Link href={`/dashboard/user/favorite/${id}`}>Show Details</Link>
-      </Button>
+      <div className="flex items-center justify-between gap-x-4">
+        <Button
+          className="mt-4 flex-grow rounded-3xl bg-primary-secondary-2 font-kumbh-sans text-primary-white"
+          asChild
+        >
+          <Link href={`/dashboard/user/favorite/${id}`}>Show Details</Link>
+        </Button>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger
+              className="mt-4 rounded-full bg-primary-secondary-2 px-3 py-2 hover:bg-gray-700"
+              variant="outline"
+            >
+              <Heart className="stroke-primary-white" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Remove from Favorite</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
     </div>
   );
 }
