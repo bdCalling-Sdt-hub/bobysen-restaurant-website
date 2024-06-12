@@ -47,7 +47,10 @@ export default function LoginForm() {
             Password
           </Label>
           {/* TODO: Add relevant Link */}
-          <Link href="#" className="text-primary-secondary-1 opacity-[90%]">
+          <Link
+            href="/forgot-password"
+            className="text-primary-secondary-1 opacity-[90%]"
+          >
             Forgot Password?
           </Link>
         </div>
