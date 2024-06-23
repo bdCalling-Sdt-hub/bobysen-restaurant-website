@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ProfileDrawer from "../ProfileDrawer/ProfileDrawer";
 import { useState } from "react";
+import AuthBasedButton from "./_components/AuthBasedButton";
 
 export default function Navbar() {
-  const [profileDrawerOpenState, setProfileDrawerOpenState] = useState(false);
-
   return (
     <div className="absolute left-0 top-[30px] z-[9999] w-full">
       <div className="container flex max-h-[100px] items-center justify-between">
@@ -26,21 +25,14 @@ export default function Navbar() {
           >
             Download App
           </Button>
-          <Button
+
+          {/* Auth Based Button */}
+          <AuthBasedButton
             className="h-[40px] w-[90px] rounded-xl border border-primary-secondary-1 bg-transparent text-xs font-semibold text-primary-secondary-1 hover:bg-primary-secondary-1 hover:text-primary-white lg:h-[40px] lg:w-[140px] lg:text-base"
             style={{ boxShadow: "0px 3px 0px #334A55" }}
-            onClick={() => setProfileDrawerOpenState(!profileDrawerOpenState)}
-          >
-            My Profile
-          </Button>
+          />
         </div>
       </div>
-
-      {/* Profile Drawer */}
-      <ProfileDrawer
-        openState={profileDrawerOpenState}
-        setOpenState={setProfileDrawerOpenState}
-      />
     </div>
   );
 }

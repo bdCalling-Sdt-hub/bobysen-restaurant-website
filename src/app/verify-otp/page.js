@@ -5,8 +5,8 @@ import flowers from "/public/login/bg-flowers.png";
 import OtpForm from "@/components/OtpEnterForm/OtpEnterForm";
 
 export const metadata = {
-  title: "Enter OTP | Bookable",
-  description: "Enter your OTP",
+  title: "Verify OTP | Bookable",
+  description: "Enter user's login otp to verify identity",
 };
 
 export default function OtpEnter() {

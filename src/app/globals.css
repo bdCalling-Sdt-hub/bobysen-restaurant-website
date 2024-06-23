@@ -79,3 +79,11 @@
     @apply text-4xl font-bold text-primary-black;
   }
 }
+.swal2-title {
+  font-size: 30px !important;
+}
+.swal2-html-container {
+  font-size: 18px !important;
+  text-align: center !important;
+  font-weight: 500 !important;
+}

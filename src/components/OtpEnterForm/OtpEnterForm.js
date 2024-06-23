@@ -11,24 +11,23 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 export default function OtpForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [otp, setOtp] = useState("");
 
-  const onSubmit = (data) => console.log(data);
+  const verifyOtp = () => {};
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="container mx-auto sm:w-[65%] md:w-[55%] lg:w-[45%]"
-    >
-      <h3 className="mb-12 text-2xl font-bold text-primary-secondary-1">
-        Put OTP here
-      </h3>
+    <form className="container mx-auto sm:w-[65%] md:w-[55%] lg:w-[45%]">
+      <div className="mb-7">
+        <h3 className="text-2xl font-bold text-primary-secondary-1">
+          Put OTP here
+        </h3>
+        <p className="mt-2 font-medium text-primary-secondary-2">
+          OTP expires in 3 minutes
+        </p>
+      </div>
 
       <div className="grid w-full items-center gap-1.5">
         <Label
@@ -41,8 +40,7 @@ export default function OtpForm() {
           maxLength={5}
           pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
           id="otp"
-          name="otp"
-          {...register("otp", { required: true })}
+          onChange={(value) => setOtp(value)}
         >
           <InputOTPGroup>
             <InputOTPSlot
@@ -72,14 +70,13 @@ export default function OtpForm() {
             />
           </InputOTPGroup>
         </InputOTP>
-        {errors.otp && (
-          <p className={cn("font-kumbh-sans text-primary-secondary-1")}>
-            Please enter your one-time password
-          </p>
-        )}
       </div>
 
-      <Button className="mt-8 h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white">
+      <Button
+        disabled={otp?.length < 5}
+        className="mt-8 h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white"
+        onClick={verifyOtp}
+      >
         Submit
       </Button>
     </form>
