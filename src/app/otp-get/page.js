@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import circles from "/public/login/circle-lines.png";
 import flowers from "/public/login/bg-flowers.png";
-import OtpForm from "@/components/OtpEnterForm/OtpEnterForm";
+import OtpEnterForm from "@/components/OtpEnterForm/OtpEnterForm";
 import OtpGetForm from "@/components/OtpGetForm/OtpGetForm";
 
 export const metadata = {

@@ -2,7 +2,6 @@ import tableImg from "/public/login/group.png";
 import logo from "/public/login/logo.png";
 import circles from "/public/login/circle-lines.png";
 import flowers from "/public/login/bg-flowers.png";
-import LoginForm from "@/components/LoginForm/LoginForm";
 import Image from "next/image";
 import SignUpForm from "@/components/SignUpForm/SignUpForm";
 

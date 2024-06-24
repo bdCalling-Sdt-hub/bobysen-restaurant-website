@@ -11,7 +11,7 @@ import eyeOffIcon from "/public/signUp/eyeOffIcon.svg";
 import Image from "next/image";
 import { useState } from "react";
 import { useSignUpMutation } from "@/redux/api/authApi";
-import { Success_model } from "@/utils/modalHook";
+import { Error_Modal, Success_model } from "@/utils/modalHook";
 import { useRouter } from "next/navigation";
 import LoadingButton from "../LoadingButton/LoadingButton";
 import { setToLocalStorage } from "@/utils/local-storage";
@@ -46,12 +46,15 @@ export default function SignUpForm() {
         });
 
         // set otp to local-storage
-        setToLocalStorage("token", res?.data?.token);
+        setToLocalStorage("signUpToken", res?.data?.token);
 
         router.push("/verify-otp");
       }
     } catch (error) {
-      console.error(error);
+      Error_Modal(
+        error?.data?.message.charAt(0).toUpperCase() +
+          error?.data?.message.slice(1),
+      );
     }
   };
 

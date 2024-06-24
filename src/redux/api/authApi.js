@@ -15,10 +15,41 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.auth],
     }),
 
-    // verifyOtp:
+    login: builder.mutation({
+      query: (data) => ({
+        url: "/auth/login",
+        method: "POST",
+        data,
+      }),
+      invalidatesTags: [tagTypes.auth],
+    }),
+
+    verifyOtp: builder.mutation({
+      query: (data) => ({
+        url: "/otp/verify-otp",
+        method: "POST",
+        data,
+      }),
+
+      invalidatesTags: [tagTypes.otp],
+    }),
+
+    getSingleUser: builder.query({
+      query: () => ({
+        url: "/users",
+        method: "GET",
+      }),
+
+      providesTags: [tagTypes.users],
+    }),
   }),
 
   overrideExisting: true,
 });
 
-export const { useSignUpMutation } = authApi;
+export const {
+  useSignUpMutation,
+  useVerifyOtpMutation,
+  useLoginMutation,
+  useGetSingleUserQuery,
+} = authApi;

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import circles from "/public/login/circle-lines.png";
 import flowers from "/public/login/bg-flowers.png";
-import OtpForm from "@/components/OtpEnterForm/OtpEnterForm";
+import OtpEnterForm from "@/components/OtpEnterForm/OtpEnterForm";
 
 export const metadata = {
   title: "Verify OTP | Bookable",
@@ -25,7 +25,7 @@ export default function OtpEnter() {
       />
 
       <div className="container z-10 flex h-[65vh] items-center justify-center rounded-xl border-[2px] border-[#5882c12b] shadow-lg md:mx-auto md:w-[85%] lg:shadow">
-        <OtpForm />
+        <OtpEnterForm />
       </div>
     </div>
   );

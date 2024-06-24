@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import profilePic from "/public/profileDrawer/profilePic.png";
 import userIcon from "/public/profileDrawer/user.png";
@@ -7,8 +9,22 @@ import logoutIcon from "/public/profileDrawer/logout.png";
 import { cn } from "@/lib/utils";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "@/redux/features/authSlice";
+import { Button } from "../ui/button";
+import { Success_model } from "@/utils/modalHook";
+import { removeFromLocalStorage } from "@/utils/local-storage";
 
 export default function ProfileDrawer({ openState, setOpenState }) {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    removeFromLocalStorage("accessToken");
+    Success_model({ title: "Logout Successful" });
+  };
+
   return (
     <div
       className={cn(
@@ -36,7 +52,9 @@ export default function ProfileDrawer({ openState, setOpenState }) {
             alt="profile picture"
             className="mx-auto w-[80%]"
           />
-          <h4 className="mt-4 text-center text-2xl font-bold">John Doe</h4>
+          <h4 className="mt-4 text-center text-2xl font-bold">
+            {user?.fullName}
+          </h4>
         </div>
 
         {/* menu */}
@@ -74,14 +92,18 @@ export default function ProfileDrawer({ openState, setOpenState }) {
 
           <Separator className="my-4 bg-primary-secondary-3" />
 
-          <Link
+          <div
             href={"/login"}
             className="flex items-center gap-x-6"
-            onClick={() => setOpenState(false)}
+            role="button"
+            onClick={() => {
+              handleLogout();
+              setOpenState(false);
+            }}
           >
             <Image src={logoutIcon} alt="log out icon" />
             <h3 className="font-kumbh-sans text-xl">Logout</h3>
-          </Link>
+          </div>
         </div>
       </div>
     </div>

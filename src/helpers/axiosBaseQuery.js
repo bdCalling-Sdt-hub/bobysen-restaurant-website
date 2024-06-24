@@ -1,5 +1,4 @@
-import axios from "axios";
-import axiosInstance from "./axiosInterceptor";
+import { instance as axiosInstance } from "./axiosInterceptor";
 
 export const axiosBaseQuery =
   ({ baseUrl } = { baseUrl: "" }) =>

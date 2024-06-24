@@ -10,13 +10,28 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { useVerifyOtpMutation } from "@/redux/api/authApi";
+import { getFromLocalStorage } from "@/utils/local-storage";
+import { Error_Modal } from "@/utils/modalHook";
+import { useRouter } from "next/navigation";
+import LoadingButton from "../LoadingButton/LoadingButton";
 
-export default function OtpForm() {
+export default function OtpEnterForm() {
   const [otp, setOtp] = useState("");
+  const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
+  const router = useRouter();
 
-  const verifyOtp = () => {};
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await verifyOtp({ otp: otp }).unwrap();
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <form className="container mx-auto sm:w-[65%] md:w-[55%] lg:w-[45%]">
@@ -63,22 +78,26 @@ export default function OtpForm() {
               className="mr-4 border border-primary-secondary-1"
               style={{ borderRadius: "8px" }}
             />
-            <InputOTPSlot
-              index={4}
-              className="mr-4 border border-primary-secondary-1"
-              style={{ borderRadius: "8px" }}
-            />
           </InputOTPGroup>
         </InputOTP>
       </div>
 
-      <Button
-        disabled={otp?.length < 5}
-        className="mt-8 h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white"
-        onClick={verifyOtp}
-      >
-        Submit
-      </Button>
+      {!isLoading ? (
+        <Button
+          // disabled={otp?.length < 4}
+          className="mt-8 h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white"
+          onClick={handleVerifyOtp}
+        >
+          Submit
+        </Button>
+      ) : (
+        <Button
+          disabled={true}
+          className="mt-8 h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white"
+        >
+          <LoadingButton>Please wait ...</LoadingButton>
+        </Button>
+      )}
     </form>
   );
 }

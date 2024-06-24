@@ -1,5 +1,5 @@
 "use client";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -22,7 +22,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,15 +34,30 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useGetSingleUserQuery } from "@/redux/api/authApi";
 
 export default function UserProfileForm() {
+  const { data, isLoading } = useGetSingleUserQuery();
+
+  const { fullName, phoneNumber } = data.data;
+
   const [date, setDate] = useState("");
 
   const {
     register,
+    reset,
     formState: { errors },
     handleSubmit,
+    control,
   } = useForm();
+
+  // set form default values
+  useEffect(() => {
+    let defaultValues = {};
+    (defaultValues.name = fullName),
+      (defaultValues.contactNumber = phoneNumber);
+    reset({ ...defaultValues });
+  }, []);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -70,16 +85,24 @@ export default function UserProfileForm() {
           <Label htmlFor="sex" className="mb-1">
             Sex
           </Label>
-          <Select {...register("sex", { required: true })}>
-            <SelectTrigger className="border border-primary-secondary-3 text-primary-secondary-3">
-              <SelectValue placeholder="Sex" />
-            </SelectTrigger>
-            <SelectContent className="border border-primary-secondary-3 text-primary-secondary-3">
-              <SelectItem value="male">Male</SelectItem>
-              <SelectItem value="female">Female</SelectItem>
-              <SelectItem value="other">Other</SelectItem>
-            </SelectContent>
-          </Select>
+
+          <Controller
+            control={control}
+            name="sex"
+            rules={{ required: true }}
+            render={({ field }) => (
+              <Select {...field}>
+                <SelectTrigger className="border border-primary-secondary-3 text-primary-secondary-3">
+                  <SelectValue placeholder="Sex" />
+                </SelectTrigger>
+                <SelectContent className="border border-primary-secondary-3 text-primary-secondary-3">
+                  <SelectItem value="male">Male</SelectItem>
+                  <SelectItem value="female">Female</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            )}
+          />
         </div>
 
         {/* date picker */}
@@ -118,10 +141,10 @@ export default function UserProfileForm() {
           Contact Number
         </Label>
         <Input
-          type="number"
+          type="tel"
           id="contactNumber"
           placeholder="Contact Number"
-          {...register("name", { required: true })}
+          {...register("contactNumber", { required: true })}
           className="border border-primary-secondary-3 bg-primary-white-light text-primary-black"
         />
       </div>
@@ -129,40 +152,40 @@ export default function UserProfileForm() {
       {/* passwords */}
       <div className="flex flex-col items-center gap-y-8 lg:flex-row lg:gap-x-6 lg:gap-y-0">
         <div className="grid w-full items-center gap-1.5 font-kumbh-sans lg:w-[50%]">
-          <Label htmlFor="password" className="mb-1">
+          <Label htmlFor="oldPassword" className="mb-1">
             Old Password
           </Label>
           <Input
             type="password"
-            id="password"
+            id="oldPassword"
             placeholder="Old password"
-            {...register("name", { required: true })}
+            {...register("oldPassword", { required: true })}
             className="border border-primary-secondary-3 bg-primary-white-light text-primary-black"
           />
         </div>
 
         <div className="grid w-full items-center gap-1.5 font-kumbh-sans lg:w-[50%]">
-          <Label htmlFor="password" className="mb-1">
+          <Label htmlFor="newPassword" className="mb-1">
             A new Password
           </Label>
           <Input
             type="password"
-            id="password"
+            id="newPassword"
             placeholder="New password"
-            {...register("name", { required: true })}
+            {...register("newPassword", { required: true })}
             className="border border-primary-secondary-3 bg-primary-white-light text-primary-black"
           />
         </div>
 
         <div className="grid w-full items-center gap-1.5 font-kumbh-sans lg:w-[50%]">
-          <Label htmlFor="password" className="mb-1">
+          <Label htmlFor="confirmPassword" className="mb-1">
             Confirm Password
           </Label>
           <Input
             type="password"
-            id="password"
+            id="confirmPassword"
             placeholder="Confirm password"
-            {...register("name", { required: true })}
+            {...register("confirmPassword", { required: true })}
             className="border border-primary-secondary-3 bg-primary-white-light text-primary-black"
           />
         </div>
@@ -181,7 +204,7 @@ export default function UserProfileForm() {
           <AlertDialogTrigger>
             <Button
               variant="outline"
-              className="text-primary-danger border-primary-danger hover:bg-primary-danger w-full bg-transparent font-kumbh-sans hover:text-primary-white"
+              className="w-full border-primary-danger bg-transparent font-kumbh-sans text-primary-danger hover:bg-primary-danger hover:text-primary-white"
               size="lg"
             >
               Delete Account
@@ -198,7 +221,7 @@ export default function UserProfileForm() {
             </AlertDialogHeader>
             <AlertDialogFooter className="mt-6 grid grid-cols-1 lg:grid-cols-2">
               <AlertDialogAction
-                className="text-primary-danger border-primary-danger hover:bg-primary-danger border bg-transparent hover:text-primary-white"
+                className="border border-primary-danger bg-transparent text-primary-danger hover:bg-primary-danger hover:text-primary-white"
                 variant="outline"
               >
                 Confirm

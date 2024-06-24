@@ -7,7 +7,7 @@ export const Success_model = (message) => {
     title: message.title || "Successfully!!!",
     text: message.text || "",
     showConfirmButton: false,
-    timer: 4000,
+    timer: 2500,
   });
 };
 
@@ -18,6 +18,6 @@ export const Error_Modal = (message) => {
     title: message || "Failed!!!",
     text: message.text || "",
     showConfirmButton: false,
-    timer: 2000,
+    timer: 2500,
   });
 };
