@@ -1,7 +1,7 @@
 // import setAccessToken from "@/services/actions/setAccessToken";
 // import { getNewAccessToken } from "@/services/auth.services";
 // import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
-import { getFromLocalStorage, setToLocalStorage } from "@/utils/local-storage";
+import { getFromLocalStorage } from "@/utils/local-storage";
 import axios from "axios";
 
 const instance = axios.create();
@@ -49,8 +49,6 @@ instance.interceptors.response.use(
       const response = await getNewAccessToken();
       const accessToken = response?.data?.accessToken;
       config.headers["Authorization"] = accessToken;
-      setToLocalStorage(authKey, accessToken);
-      setAccessToken(accessToken);
       return instance(config);
     } else {
       const responseObject = {

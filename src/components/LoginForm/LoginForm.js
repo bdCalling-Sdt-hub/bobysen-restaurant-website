@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { setUser } from "@/redux/features/authSlice";
+import { decodeJwt } from "@/utils/jwt.js";
 import { setToLocalStorage } from "@/utils/local-storage";
 import { Error_Modal, Success_model } from "@/utils/modalHook";
 import Link from "next/link";
@@ -28,10 +29,14 @@ export default function LoginForm() {
   const onSubmit = async (data) => {
     try {
       const res = await login(data).unwrap();
-      console.log(res);
       if (res?.data?.accessToken) {
         Success_model({ title: "Login Successful" });
-        dispatch(setUser({ user: res?.data?.user }));
+        dispatch(
+          setUser({
+            user: decodeJwt(res?.data?.accessToken),
+            accessToken: res?.data?.accessToken,
+          }),
+        );
         setToLocalStorage("accessToken", res.data.accessToken);
         router.push("/");
       }
