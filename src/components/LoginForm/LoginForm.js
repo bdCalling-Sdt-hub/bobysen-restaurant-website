@@ -1,18 +1,18 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { Button } from "../ui/button";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { setUser } from "@/redux/features/authSlice";
-import { useDispatch } from "react-redux";
-import { Error_Modal, Success_model } from "@/utils/modalHook";
-import { useRouter } from "next/navigation";
-import LoadingButton from "../LoadingButton/LoadingButton";
 import { setToLocalStorage } from "@/utils/local-storage";
+import { Error_Modal, Success_model } from "@/utils/modalHook";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import LoadingButton from "../LoadingButton/LoadingButton";
+import { Button } from "../ui/button";
 
 export default function LoginForm() {
   const {
@@ -28,11 +28,10 @@ export default function LoginForm() {
   const onSubmit = async (data) => {
     try {
       const res = await login(data).unwrap();
-
+      console.log(res);
       if (res?.data?.accessToken) {
-        console.log("hello");
         Success_model({ title: "Login Successful" });
-        dispatch(setUser({ user: res.data.user }));
+        dispatch(setUser({ user: res?.data?.user }));
         setToLocalStorage("accessToken", res.data.accessToken);
         router.push("/");
       }

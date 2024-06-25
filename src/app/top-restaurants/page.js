@@ -1,8 +1,12 @@
+"use client";
 import HeroSearchBar from "@/components/HeroSearchBar/HeroSearchBar";
 import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
-import React from "react";
+import { useGetAllTopRestaurntsQuery } from "@/redux/api/topRestaurantApi.js";
 
 export default function TopRestaurants() {
+  const query = {};
+  const { data: Rdata, isLoading } = useGetAllTopRestaurntsQuery(query);
+  console.log(Rdata);
   return (
     <div className="container pt-[160px]">
       <div className="flex flex-col items-center justify-between space-y-5 lg:flex-row lg:space-y-0">

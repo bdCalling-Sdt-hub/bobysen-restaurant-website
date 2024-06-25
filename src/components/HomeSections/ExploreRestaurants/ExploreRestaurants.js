@@ -1,7 +1,7 @@
-import Link from "next/link";
-import rightArrow from "/public/ExploreRestaurants/rightArrow.png";
 import Image from "next/image";
+import Link from "next/link";
 import ExploreRestaurantSliderCard from "./_components/ExploreRestaurantSliderCard";
+import rightArrow from "/public/ExploreRestaurants/rightArrow.png";
 
 export default function ExploreRestaurants() {
   return (

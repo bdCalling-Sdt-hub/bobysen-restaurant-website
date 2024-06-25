@@ -1,54 +1,94 @@
-// "use client";
+"use client";
 
-import RestaurantImageSlider from "./_components/RestaurantImageSlider/RestaurantImageSlider";
-import { Separator } from "@/components/ui/separator";
-import menuIcon from "/public/DynamicRestaurant/charm_menu-hamburger.png";
-import eventIcon from "/public/DynamicRestaurant/event.png";
-import bookIcon from "/public/DynamicRestaurant/image 4.png";
-import usersIcon from "/public/DynamicRestaurant/users.png";
-import calenderIcon from "/public/DynamicRestaurant/calendar.png";
-import foodMenuIcon from "/public/DynamicRestaurant/menu.png";
-import successfulIcon from "/public/DynamicRestaurant/succesful.png";
-import locationIcon from "/public/DynamicRestaurant/Location_icon_ic.png";
-import arrow from "/public/DynamicRestaurant/trending-up.png";
-import starIcon from "/public/DynamicRestaurant/Star 1.png";
-import goldStarIcon from "/public/DynamicRestaurant/goldStar.png";
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Progress } from "@/components/ui/progress";
-import styles from "./DynamicRestaurant.module.css";
-import FeedbackCard from "./_components/FeedbackCard/FeedbackCard";
 import {
   AlertDialog,
   AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { useGetSingleRestaurantQuery } from "@/redux/api/restaurantApi.js";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { CircleX } from "lucide-react";
-
-export const metadata = {
-  title: "Book your Table | Bookatable",
-};
+import Image from "next/image";
+import Link from "next/link";
+import { useCallback, useState } from "react";
+import styles from "./DynamicRestaurant.module.css";
+import FeedbackCard from "./_components/FeedbackCard/FeedbackCard";
+import RestaurantImageSlider from "./_components/RestaurantImageSlider/RestaurantImageSlider";
+import locationIcon from "/public/DynamicRestaurant/Location_icon_ic.png";
+import starIcon from "/public/DynamicRestaurant/Star 1.png";
+import calenderIcon from "/public/DynamicRestaurant/calendar.png";
+import menuIcon from "/public/DynamicRestaurant/charm_menu-hamburger.png";
+import eventIcon from "/public/DynamicRestaurant/event.png";
+import goldStarIcon from "/public/DynamicRestaurant/goldStar.png";
+import bookIcon from "/public/DynamicRestaurant/image 4.png";
+import foodMenuIcon from "/public/DynamicRestaurant/menu.png";
+import successfulIcon from "/public/DynamicRestaurant/succesful.png";
+import usersIcon from "/public/DynamicRestaurant/users.png";
+// export const metadata = {
+//   title: "Book your Table | Bookatable",
+// };
+const AnyReactComponent = ({ text }) => (
+  <div className="">
+    <img
+      height={50}
+      width={50}
+      src="https://i.ibb.co/V9QYmtw/marker.png"
+      alt=""
+    />
+  </div>
+);
 
 export default function DynamicRestaurant({ params }) {
+  const [map, setMap] = useState(null);
   // TODO: Use dynamic data from database
   const { id } = params;
+  const { data: Rdata, isLoading } = useGetSingleRestaurantQuery(id);
+  const {
+    name,
+    location,
+
+    avgReviews,
+    reviewStatus,
+    days,
+    description,
+    helpLineNumber1,
+    helpLineNumber2,
+  } = Rdata?.data ?? {};
+  const center = {
+    lat: 23.7387,
+    lng: 90.3935,
+  };
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "AIzaSyDhzY2k-tIrpnoBut75TTDJTuE1kURA_fU",
+  });
+  const onLoad = useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+
+    setMap(map);
+  }, []);
+  const onUnmount = useCallback(function callback(map) {
+    setMap(null);
+  }, []);
 
   return (
     <div className="container pt-[160px]">
@@ -56,12 +96,11 @@ export default function DynamicRestaurant({ params }) {
       <section className="grid grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-10 md:gap-y-0">
         {/* left */}
         <div className="relative rounded-xl bg-primary-white-light p-4 shadow">
-          <RestaurantImageSlider />
+          <RestaurantImageSlider images={Rdata?.data?.images} />
 
           <div className="mt-5">
-            <h1 className="text-3xl font-bold text-primary-secondary-1">
-              <span className="text-primary-secondary-3">Villago</span>{" "}
-              Restaurant & Bar
+            <h1 className="text-3xl font-bold text-primary-secondary-3">
+              {name}
             </h1>
             <Separator className="mb-4 mt-2" />
 
@@ -71,14 +110,13 @@ export default function DynamicRestaurant({ params }) {
                 <div className="flex items-start gap-2">
                   <Image src={locationIcon} alt="location icon" />
                   <p className="text-primary-secondary-1">
-                    360 San Lorenzo Avenue, Suite 1430 Coral Gables, FL
-                    33146-1865
-                    <Link
+                    {location}
+                    {/* <Link
                       href="https://maps.app.goo.gl/7cd8co1jrPgimQE77"
                       className="flex items-center gap-x-2 font-semibold italic"
                     >
                       Get Direction <Image src={arrow} alt="arrow icon" />
-                    </Link>
+                    </Link> */}
                   </p>
                 </div>
 
@@ -105,12 +143,7 @@ export default function DynamicRestaurant({ params }) {
               <div className="flex items-start gap-2">
                 <Image src={menuIcon} alt="hamburger menu icon" />
                 <p>
-                  Villagio restaurant and bar has one mission: to provide guests
-                  with a fine and fresh seafood experience. Featuring seasonal
-                  and sustainable seafood that is flown in fresh daily, our
-                  chef-driven menu proves that no matter when you’re dining,
-                  seafood can be truly exceptional. to provide guests with a
-                  fine
+                  {description}
                   <Button variant="link" className="text-primary-secondary-3">
                     Read More...
                   </Button>
@@ -179,14 +212,19 @@ export default function DynamicRestaurant({ params }) {
               Here to Find
             </h3>
             <Separator className="mb-2 mt-3 bg-primary-secondary-3" />
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3594.1672444935734!2d-80.2609355!3d25.731982300000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b7ee988e43eb%3A0x3b46d98faeef083a!2s360%20San%20Lorenzo%20Ave%20%231430%2C%20Coral%20Gables%2C%20FL%2033146%2C%20USA!5e0!3m2!1sen!2sbd!4v1717945743373!5m2!1sen!2sbd"
-              width={"100%"}
-              height="250"
-              style={{ border: 0 }}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+            <div style={{ height: "250px", width: "100%" }}>
+              {isLoaded && (
+                <GoogleMap
+                  mapContainerStyle={{ height: "250px", width: "100%" }}
+                  center={center}
+                  zoom={10}
+                  onLoad={onLoad}
+                  onUnmount={onUnmount}
+                >
+                  <Marker position={center} />
+                </GoogleMap>
+              )}
+            </div>
           </div>
 
           <div className="rounded-xl bg-primary-white-light p-4 shadow">
@@ -197,7 +235,9 @@ export default function DynamicRestaurant({ params }) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead></TableHead>
+                  <TableHead className="font-bold text-primary-black">
+                    Day
+                  </TableHead>
                   <TableHead className="font-bold text-primary-black">
                     Open
                   </TableHead>
@@ -208,41 +248,13 @@ export default function DynamicRestaurant({ params }) {
               </TableHeader>
               <TableBody>
                 {/* TODO: Use data from database */}
-                <TableRow className="border-0">
-                  <TableCell>Saturday</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                </TableRow>
-                <TableRow className="border-0">
-                  <TableCell>Saturday</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                </TableRow>
-                <TableRow className="border-0">
-                  <TableCell>Saturday</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                </TableRow>
-                <TableRow className="border-0">
-                  <TableCell>Saturday</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                </TableRow>
-                <TableRow className="border-0">
-                  <TableCell>Saturday</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                </TableRow>
-                <TableRow className="border-0">
-                  <TableCell>Saturday</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                </TableRow>
-                <TableRow className="border-0">
-                  <TableCell>Saturday</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                  <TableCell>10:00-12:00 PM</TableCell>
-                </TableRow>
+                {days?.map((day) => (
+                  <TableRow key={day.id} className="border-0">
+                    <TableCell>{day?.day}</TableCell>
+                    <TableCell>{day?.openingTime}</TableCell>
+                    <TableCell>{day?.closingTime}</TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </div>

@@ -1,49 +1,47 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
+import showImage from "@/utils/fileHelper.js";
 import Image from "next/image";
-import restaurant1 from "/public/ExploreRestaurants/restaurant-1.png";
-import star from "/public/ExploreRestaurants/star.png";
-import locationIcon from "/public/ExploreRestaurants/location.svg";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import locationIcon from "/public/ExploreRestaurants/location.svg";
+import star from "/public/ExploreRestaurants/star.png";
 
-export default function RestaurantCard({ card }) {
+export default function RestaurantCard({ data }) {
+  console.log(data);
   return (
     <Card className="shadow">
       <CardHeader>
         <Image
-          src={restaurant1}
+          width={400}
+          height={400}
+          src={showImage(data?.restaurant?.images[0]?.url)}
           alt="restaurant 1"
           className="mx-auto mb-2 block"
         />
         <div className="flex justify-between">
           <h3 className="text-3xl font-bold text-primary-secondary-1">
-            Trattoria dall&apos;Oste
+            {data?.restaurant?.name}
           </h3>
           <div className="flex items-center gap-x-2 text-xl">
             <Image src={star} alt="rating star" />
-            <h4>(4.5)</h4>
+            <h4> {data?.restaurant?.avgReviews}</h4>
           </div>
         </div>
         <div className="flex items-center gap-x-2">
           <Image src={locationIcon} alt="location marker icon" />
           <span className="font-kumbh-sans text-base font-medium text-primary-black/75">
-            Via Luigi Alamanni, 3, 50123 Firenze
+            {data?.restaurant?.location}
           </span>
         </div>
       </CardHeader>
       <CardContent>
         <p className="font-kumbh-sans text-sm text-primary-secondary-2">
-          Featuring seasonal and sustainable seafood that is flown in fresh
-          daily, our chef-driven menu proves that no matter when you’re dining,
-          seafood can be truly exceptional.
+          {data?.restaurant?.description}
           {/* TODO: Add relevant link */}
           <Link
             href="/restaurant/id"
@@ -55,7 +53,10 @@ export default function RestaurantCard({ card }) {
       </CardContent>
       <CardFooter>
         {/* TODO: Add relevant link */}
-        <Link href={`/restaurant/1`} className="w-full rounded-xl">
+        <Link
+          href={`/restaurant/${data?.restaurant?._id}`}
+          className="w-full rounded-xl"
+        >
           <Button
             className="w-full bg-primary-secondary-3 font-kumbh-sans font-bold text-primary-white"
             size="lg"

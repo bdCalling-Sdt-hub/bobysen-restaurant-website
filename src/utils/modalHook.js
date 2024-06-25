@@ -16,7 +16,7 @@ export const Error_Modal = (message) => {
     position: "center",
     icon: "error",
     title: message || "Failed!!!",
-    text: message.text || "",
+    text: message?.text || "",
     showConfirmButton: false,
     timer: 2500,
   });

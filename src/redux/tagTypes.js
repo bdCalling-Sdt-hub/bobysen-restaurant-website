@@ -5,6 +5,7 @@ export const tagTypes = {
   otp: "otp",
   restaurant: "restaurant",
   menuCategory: "menuCategory",
+  topRestaurants: "topRestaurants",
   menu: "menu",
   table: "table",
   booking: "booking",

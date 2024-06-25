@@ -7,9 +7,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useGetAllTopRestaurntsQuery } from "@/redux/api/topRestaurantApi.js";
 import Autoplay from "embla-carousel-autoplay";
 
 export default function ExploreRestaurantSliderCard() {
+  const query = {};
+  const { data: Rdata, isLoading } = useGetAllTopRestaurntsQuery(query);
   return (
     <Carousel
       plugins={[
@@ -19,9 +22,9 @@ export default function ExploreRestaurantSliderCard() {
       ]}
     >
       <CarouselContent className="-ml-8">
-        {Array.from({ length: 9 }).map((_, idx) => (
+        {Rdata?.data?.map((data, idx) => (
           <CarouselItem key={idx} className="pl-8 md:basis-1/3">
-            <RestaurantCard />
+            <RestaurantCard data={data} />
           </CarouselItem>
         ))}
       </CarouselContent>

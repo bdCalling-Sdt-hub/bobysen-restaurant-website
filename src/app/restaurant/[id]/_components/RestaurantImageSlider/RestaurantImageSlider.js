@@ -5,29 +5,27 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import restaurantPic from "/public/DynamicRestaurant/villagio1.jpg";
+import showImage from "@/utils/fileHelper.js";
 import Image from "next/image";
 
-export default function RestaurantImageSlider() {
+export default function RestaurantImageSlider({ images }) {
   return (
     <div>
       <Carousel>
         <CarouselContent>
-          <CarouselItem>
-            <Image src={restaurantPic} alt="picture of the restaurant" />
-          </CarouselItem>
-          <CarouselItem>
-            <Image src={restaurantPic} alt="picture of the restaurant" />
-          </CarouselItem>
-          <CarouselItem>
-            <Image src={restaurantPic} alt="picture of the restaurant" />
-          </CarouselItem>
-          <CarouselItem>
-            <Image src={restaurantPic} alt="picture of the restaurant" />
-          </CarouselItem>
+          {images?.map((image) => (
+            <CarouselItem key={image.id}>
+              <Image
+                height={0}
+                width={800}
+                src={showImage(image?.url)}
+                alt="picture of the restaurant"
+              />
+            </CarouselItem>
+          ))}
         </CarouselContent>
-        <CarouselPrevious className="text-primary-white-light bg-primary-secondary-3" />
-        <CarouselNext className="text-primary-white-light bg-primary-secondary-3" />
+        <CarouselPrevious className="bg-primary-secondary-3 text-primary-white-light" />
+        <CarouselNext className="bg-primary-secondary-3 text-primary-white-light" />
       </Carousel>
     </div>
   );
