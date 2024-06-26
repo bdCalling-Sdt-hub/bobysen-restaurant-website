@@ -29,6 +29,7 @@ export const tagTypesList = [
   tagTypes.menu,
   tagTypes.table,
   tagTypes.booking,
+  tagTypes.topRestaurants,
   tagTypes.admin,
   tagTypes.favoriteList,
   tagTypes.files,

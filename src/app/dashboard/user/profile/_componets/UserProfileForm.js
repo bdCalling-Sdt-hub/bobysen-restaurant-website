@@ -1,28 +1,17 @@
 "use client";
-import { Controller, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
+import { Controller, useForm } from "react-hook-form";
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { useEffect, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,13 +23,22 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
+import { useEffect, useState } from "react";
 
 export default function UserProfileForm() {
   const data = useGetSingleUserQuery();
   console.log(data);
 
-  const { fullName, phoneNumber } = data.data;
+  const { fullName, phoneNumber } = data?.data;
 
   const [date, setDate] = useState("");
 

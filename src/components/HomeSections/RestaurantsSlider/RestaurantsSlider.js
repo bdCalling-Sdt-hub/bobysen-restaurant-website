@@ -1,5 +1,4 @@
-import Link from "next/link";
-import SliderCard from "./SliderCard/SliderCard";
+"use client";
 import {
   Carousel,
   CarouselContent,
@@ -7,10 +6,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useGetAllRestaurantsQuery } from "@/redux/api/restaurantApi.js";
 import Image from "next/image";
+import Link from "next/link";
+import SliderCard from "./SliderCard/SliderCard";
 import rightArrow from "/public/restaurantSlider/rightArrow.png";
 
 export default function RestaurantsSlider() {
+  const { data: Rdata } = useGetAllRestaurantsQuery(undefined);
   return (
     // TODO: Load dynamic data from database
 
@@ -38,21 +41,11 @@ export default function RestaurantsSlider() {
       </div>
       <Carousel>
         <CarouselContent className="-ml-8">
-          <CarouselItem className="pl-8 md:basis-1/2">
-            <SliderCard />
-          </CarouselItem>
-          <CarouselItem className="pl-8 md:basis-1/2">
-            <SliderCard />
-          </CarouselItem>
-          <CarouselItem className="pl-8 md:basis-1/2">
-            <SliderCard />
-          </CarouselItem>
-          <CarouselItem className="pl-8 md:basis-1/2">
-            <SliderCard />
-          </CarouselItem>
-          <CarouselItem className="pl-8 md:basis-1/2">
-            <SliderCard />
-          </CarouselItem>
+          {Rdata?.data?.map((data, index) => (
+            <CarouselItem key={index} className="pl-8 md:basis-1/2">
+              <SliderCard data={data} />
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <div>
           <CarouselPrevious className="-left-6 bg-primary-secondary-3 text-primary-white lg:-left-12" />

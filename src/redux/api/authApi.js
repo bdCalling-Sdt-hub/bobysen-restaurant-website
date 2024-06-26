@@ -9,7 +9,7 @@ const authApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: `${AUTH_URL}/create-user`,
         method: "POST",
-        data: data,
+        body: data,
       }),
 
       invalidatesTags: [tagTypes.auth],
@@ -19,7 +19,7 @@ const authApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: "/auth/login",
         method: "POST",
-        data,
+        body: data,
       }),
       invalidatesTags: [tagTypes.auth],
     }),

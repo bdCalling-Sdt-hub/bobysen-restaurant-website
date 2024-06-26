@@ -12,7 +12,6 @@ import locationIcon from "/public/ExploreRestaurants/location.svg";
 import star from "/public/ExploreRestaurants/star.png";
 
 export default function RestaurantCard({ data }) {
-  console.log(data);
   return (
     <Card className="shadow">
       <CardHeader>
