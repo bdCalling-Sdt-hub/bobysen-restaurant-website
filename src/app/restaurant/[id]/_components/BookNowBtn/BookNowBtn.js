@@ -31,8 +31,6 @@ export default function BookNowBtn({ id }) {
   const { user } = useSelector((state) => state.auth);
   const router = useRouter();
 
-  console.log(user);
-
   // show modal if user exists else send to login
   const handleOpenModal = (e) => {
     e.preventDefault();
