@@ -37,7 +37,8 @@ import {
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
 
 export default function UserProfileForm() {
-  const { data, isLoading } = useGetSingleUserQuery();
+  const data = useGetSingleUserQuery();
+  console.log(data);
 
   const { fullName, phoneNumber } = data.data;
 

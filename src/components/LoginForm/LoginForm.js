@@ -5,14 +5,17 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { setUser } from "@/redux/features/authSlice";
-import { setToLocalStorage } from "@/utils/local-storage";
+import eyeIcon from "/public/signUp/eyeIcon.svg";
+import eyeOffIcon from "/public/signUp/eyeOffIcon.svg";
 import { Error_Modal, Success_model } from "@/utils/modalHook";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import LoadingButton from "../LoadingButton/LoadingButton";
 import { Button } from "../ui/button";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function LoginForm() {
   const {
@@ -21,19 +24,20 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm();
 
+  const [showPass, setShowPass] = useState(false);
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const router = useRouter();
+  const redirectLink = useSearchParams().get("redirectLink");
 
   const onSubmit = async (data) => {
     try {
       const res = await login(data).unwrap();
-      console.log(res);
+
       if (res?.data?.accessToken) {
         Success_model({ title: "Login Successful" });
-        dispatch(setUser({ user: res?.data?.user }));
-        setToLocalStorage("accessToken", res.data.accessToken);
-        router.push("/");
+        dispatch(setUser({ user: res.data.user, token: res.data.accessToken }));
+        router.push(redirectLink || "/");
       }
     } catch (error) {
       Error_Modal(error?.message);
@@ -62,7 +66,7 @@ export default function LoginForm() {
         )}
       </div>
 
-      <div className="mt-6 grid w-full items-center gap-1.5">
+      <div className="relative mt-6 grid w-full items-center gap-1.5">
         <div className="mb-1 flex items-center justify-between">
           <Label
             htmlFor="password"
@@ -79,11 +83,28 @@ export default function LoginForm() {
           </Link>
         </div>
         <Input
-          type="password"
+          type={showPass ? "text" : "password"}
           id="password"
           {...register("password", { required: true })}
           className="border-primary-secondary-1 text-primary-black"
         />
+        {!showPass ? (
+          <Image
+            src={eyeIcon}
+            alt="show password icon"
+            className="absolute right-2 top-[50%] translate-y-1/2 opacity-[80%]"
+            onClick={() => setShowPass(!showPass)}
+            role="button"
+          />
+        ) : (
+          <Image
+            src={eyeOffIcon}
+            alt="hide password icon"
+            className="absolute right-2 top-[45%] translate-y-1/2 opacity-[80%]"
+            onClick={() => setShowPass(!showPass)}
+            role="button"
+          />
+        )}
         {errors.password && (
           <p className={cn("font-kumbh-sans text-primary-secondary-1")}>
             Password is required

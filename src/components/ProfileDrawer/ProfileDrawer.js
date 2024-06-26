@@ -21,7 +21,6 @@ export default function ProfileDrawer({ openState, setOpenState }) {
 
   const handleLogout = () => {
     dispatch(logout());
-    removeFromLocalStorage("accessToken");
     Success_model({ title: "Logout Successful" });
   };
 

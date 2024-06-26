@@ -1,16 +1,5 @@
 "use client";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
@@ -25,7 +14,6 @@ import {
 import { cn } from "@/lib/utils";
 import { useGetSingleRestaurantQuery } from "@/redux/api/restaurantApi.js";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { CircleX } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useState } from "react";
@@ -34,17 +22,13 @@ import FeedbackCard from "./_components/FeedbackCard/FeedbackCard";
 import RestaurantImageSlider from "./_components/RestaurantImageSlider/RestaurantImageSlider";
 import locationIcon from "/public/DynamicRestaurant/Location_icon_ic.png";
 import starIcon from "/public/DynamicRestaurant/Star 1.png";
-import calenderIcon from "/public/DynamicRestaurant/calendar.png";
 import menuIcon from "/public/DynamicRestaurant/charm_menu-hamburger.png";
 import eventIcon from "/public/DynamicRestaurant/event.png";
 import goldStarIcon from "/public/DynamicRestaurant/goldStar.png";
 import bookIcon from "/public/DynamicRestaurant/image 4.png";
-import foodMenuIcon from "/public/DynamicRestaurant/menu.png";
-import successfulIcon from "/public/DynamicRestaurant/succesful.png";
-import usersIcon from "/public/DynamicRestaurant/users.png";
-// export const metadata = {
-//   title: "Book your Table | Bookatable",
-// };
+import BookNowBtn from "./_components/BookNowBtn/BookNowBtn";
+import { Phone, PhoneOutgoing } from "lucide-react";
+
 const AnyReactComponent = ({ text }) => (
   <div className="">
     <img
@@ -64,7 +48,6 @@ export default function DynamicRestaurant({ params }) {
   const {
     name,
     location,
-
     avgReviews,
     reviewStatus,
     days,
@@ -127,9 +110,21 @@ export default function DynamicRestaurant({ params }) {
                   </p>
                 </div>
 
+                <div className="flex items-start gap-x-3">
+                  <PhoneOutgoing size={19} color="#8aba51" />
+                  <div className="flex flex-col gap-y-2">
+                    <p className="text-base text-primary-secondary-1">
+                      0178397619
+                    </p>
+                    <p className="text-base text-primary-secondary-1">
+                      0182897619
+                    </p>
+                  </div>
+                </div>
+
                 <div className="flex items-start gap-2">
                   <Image src={bookIcon} alt="calendar icon" />
-                  <Link href={`/menu/${id}`}>
+                  <Link href={`/menu/${id}?state=only-menu`}>
                     <p className="border-b-2 border-b-primary-secondary-2 text-primary-secondary-1 transition-all duration-300 ease-in-out hover:border-b-primary-secondary-1">
                       Show Menu
                     </p>
@@ -152,57 +147,8 @@ export default function DynamicRestaurant({ params }) {
             </div>
           </div>
 
-          {/* Book Now Modal */}
-          <AlertDialog className="relative">
-            <AlertDialogTrigger className="absolute -bottom-2 left-1/2 w-[96%] -translate-x-1/2 -translate-y-1/2 rounded bg-primary-secondary-2 py-2 text-primary-white">
-              Book Now
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>
-                  <Image
-                    src={successfulIcon}
-                    alt="booking successful marker"
-                    className="mx-auto block"
-                  />
-                  <h4 className="my-3 text-center text-2xl text-primary-secondary-1">
-                    Table Booked Successfully
-                  </h4>
-                </AlertDialogTitle>
-                <Separator className="bg-primary-secondary-1" />
-                <AlertDialogDescription>
-                  <div className="mx-auto my-5 w-3/4 space-y-3">
-                    <div className="flex items-center gap-x-4 font-kumbh-sans">
-                      <Image src={calenderIcon} alt="calendar icon" />
-                      <p className="text-xl">17 December 2022 | 12:15 PM</p>
-                    </div>
-                    <div className="flex items-center gap-x-4 font-kumbh-sans">
-                      <Image src={usersIcon} alt="users icon" />
-                      <p className="text-xl">2 Guests</p>
-                    </div>
-                  </div>
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter className="mx-auto w-max">
-                <Link href={`/menu/${id}`}>
-                  <AlertDialogAction className="flex items-center gap-x-3 bg-primary-secondary-3 px-5 py-6 text-lg font-bold text-primary-white">
-                    <Image src={foodMenuIcon} alt="food menu icon" />
-                    <span>Show Menu</span>
-                  </AlertDialogAction>
-                </Link>
-                <AlertDialogCancel className="absolute right-0 top-0 border-0">
-                  <CircleX />
-                </AlertDialogCancel>
-              </AlertDialogFooter>
-              <Separator className="bg-primary-secondary-1" />
-
-              <p className="text-justify font-kumbh-sans text-primary-white-dark">
-                Your table is reserved! Since you reserved your table with Dine
-                in Florida, your will automatically receive 2% off your bill
-                when you pay
-              </p>
-            </AlertDialogContent>
-          </AlertDialog>
+          {/* Book Now Button with Modal */}
+          <BookNowBtn id={id} />
         </div>
 
         {/* right */}

@@ -1,6 +1,5 @@
 import { Kumbh_Sans, Roboto } from "next/font/google";
 import "./globals.css";
-import Head from "next/head";
 import Navbar from "@/components/Navbar/Navbar";
 import Image from "next/image";
 import circle from "/public/home/circle.png";

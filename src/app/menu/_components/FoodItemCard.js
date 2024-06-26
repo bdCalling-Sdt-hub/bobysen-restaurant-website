@@ -13,9 +13,12 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import StarRatings from "react-star-ratings";
+import { useSearchParams } from "next/navigation";
 
 export default function FoodItemCard({ cardData }) {
   const { id, name, price } = cardData;
+  const params = useSearchParams().get("state");
+  console.log(params);
 
   return (
     <Card className="rounded-3xl border bg-transparent text-primary-secondary-1 shadow-none">
@@ -48,14 +51,16 @@ export default function FoodItemCard({ cardData }) {
           </div>
         </div>
       </CardContent>
-      <CardFooter>
-        <Button
-          className="w-full rounded-3xl bg-primary-secondary-1 font-kumbh-sans text-primary-white"
-          asChild
-        >
-          <Link href={`/menu/item/${id}`}>Order Now</Link>
-        </Button>
-      </CardFooter>
+      {params !== "only-menu" && (
+        <CardFooter>
+          <Button
+            className="w-full rounded-3xl bg-primary-secondary-1 font-kumbh-sans text-primary-white"
+            asChild
+          >
+            <Link href={`/menu/item/${id}`}>Order Now</Link>
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 }
