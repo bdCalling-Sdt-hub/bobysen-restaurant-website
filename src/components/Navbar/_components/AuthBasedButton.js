@@ -9,11 +9,12 @@ import { useSelector } from "react-redux";
 
 export default function AuthBasedButton(props) {
   const [profileDrawerOpenState, setProfileDrawerOpenState] = useState(false);
-  const user = useSelector(selectUser);
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
 
   return (
     <>
-      {user ? (
+      {user?.userId ? (
         <Button
           {...props}
           onClick={() => setProfileDrawerOpenState(!profileDrawerOpenState)}

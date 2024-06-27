@@ -10,7 +10,7 @@ import { jwtDecode } from "jwt-decode";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import LoadingButton from "../LoadingButton/LoadingButton";
@@ -38,8 +38,8 @@ export default function LoginForm() {
         Success_model({ title: "Login Successful" });
         dispatch(
           setUser({
-            user: jwtDecode(res.data.accessToken),
-            token: res.data.accessToken,
+            user: jwtDecode(res?.data?.accessToken),
+            token: res?.data?.accessToken,
           }),
         );
         router.push(redirectLink || "/");

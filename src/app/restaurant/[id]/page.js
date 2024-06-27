@@ -28,10 +28,8 @@ import menuIcon from "/public/DynamicRestaurant/charm_menu-hamburger.png";
 import eventIcon from "/public/DynamicRestaurant/event.png";
 import goldStarIcon from "/public/DynamicRestaurant/goldStar.png";
 import bookIcon from "/public/DynamicRestaurant/image 4.png";
-<<<<<<< HEAD
 import usersIcon from "/public/DynamicRestaurant/users.png";
-import BookNowBtn from "./_components/BookNowBtn/BookNowBtn";
-import { Clock, PhoneOutgoing } from "lucide-react";
+import { Clock } from "lucide-react";
 import { DayPickerInput } from "@/components/DayPickerInput/DayPickerInput";
 import TimePicker from "rc-time-picker-date-fns";
 import {
@@ -41,8 +39,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-=======
->>>>>>> origin/uzzal
 
 const AnyReactComponent = ({ text }) => (
   <div className="">
@@ -70,7 +66,7 @@ export default function DynamicRestaurant({ params }) {
     helpLineNumber1,
     helpLineNumber2,
   } = Rdata?.data ?? {};
-  console.log(Rdata);
+
   const center = {
     lat: 23.7387,
     lng: 90.3935,

@@ -70,7 +70,7 @@ export default function ProfileDrawer({ openState, setOpenState }) {
           <Separator className="my-4 bg-primary-secondary-3" />
 
           <Link
-            href="/dashboard/user/orders"
+            href="/dashboard/user/reservations"
             className="flex items-center gap-x-6"
             onClick={() => setOpenState(false)}
           >
