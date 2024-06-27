@@ -5,17 +5,18 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { setUser } from "@/redux/features/authSlice";
-import eyeIcon from "/public/signUp/eyeIcon.svg";
-import eyeOffIcon from "/public/signUp/eyeOffIcon.svg";
 import { Error_Modal, Success_model } from "@/utils/modalHook";
+import { jwtDecode } from "jwt-decode";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import LoadingButton from "../LoadingButton/LoadingButton";
 import { Button } from "../ui/button";
-import Image from "next/image";
-import { useState } from "react";
+import eyeIcon from "/public/signUp/eyeIcon.svg";
+import eyeOffIcon from "/public/signUp/eyeOffIcon.svg";
 
 export default function LoginForm() {
   const {
@@ -33,10 +34,14 @@ export default function LoginForm() {
   const onSubmit = async (data) => {
     try {
       const res = await login(data).unwrap();
-
       if (res?.data?.accessToken) {
         Success_model({ title: "Login Successful" });
-        dispatch(setUser({ user: res.data.user, token: res.data.accessToken }));
+        dispatch(
+          setUser({
+            user: jwtDecode(res.data.accessToken),
+            token: res.data.accessToken,
+          }),
+        );
         router.push(redirectLink || "/");
       }
     } catch (error) {

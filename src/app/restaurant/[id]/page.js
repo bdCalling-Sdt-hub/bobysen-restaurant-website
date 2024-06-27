@@ -14,10 +14,12 @@ import {
 import { cn } from "@/lib/utils";
 import { useGetSingleRestaurantQuery } from "@/redux/api/restaurantApi.js";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { PhoneOutgoing } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useState } from "react";
 import styles from "./DynamicRestaurant.module.css";
+import BookNowBtn from "./_components/BookNowBtn/BookNowBtn";
 import FeedbackCard from "./_components/FeedbackCard/FeedbackCard";
 import RestaurantImageSlider from "./_components/RestaurantImageSlider/RestaurantImageSlider";
 import locationIcon from "/public/DynamicRestaurant/Location_icon_ic.png";
@@ -26,6 +28,7 @@ import menuIcon from "/public/DynamicRestaurant/charm_menu-hamburger.png";
 import eventIcon from "/public/DynamicRestaurant/event.png";
 import goldStarIcon from "/public/DynamicRestaurant/goldStar.png";
 import bookIcon from "/public/DynamicRestaurant/image 4.png";
+<<<<<<< HEAD
 import usersIcon from "/public/DynamicRestaurant/users.png";
 import BookNowBtn from "./_components/BookNowBtn/BookNowBtn";
 import { Clock, PhoneOutgoing } from "lucide-react";
@@ -38,6 +41,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+=======
+>>>>>>> origin/uzzal
 
 const AnyReactComponent = ({ text }) => (
   <div className="">
@@ -65,6 +70,7 @@ export default function DynamicRestaurant({ params }) {
     helpLineNumber1,
     helpLineNumber2,
   } = Rdata?.data ?? {};
+  console.log(Rdata);
   const center = {
     lat: 23.7387,
     lng: 90.3935,
@@ -130,10 +136,10 @@ export default function DynamicRestaurant({ params }) {
                   <PhoneOutgoing size={19} color="#8aba51" />
                   <div className="flex flex-col gap-y-2">
                     <p className="text-base text-primary-secondary-1">
-                      0178397619
+                      {helpLineNumber1}
                     </p>
                     <p className="text-base text-primary-secondary-1">
-                      0182897619
+                      {helpLineNumber2}
                     </p>
                   </div>
                 </div>

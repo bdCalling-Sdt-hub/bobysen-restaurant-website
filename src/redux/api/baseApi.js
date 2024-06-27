@@ -1,11 +1,69 @@
-import { axiosBaseQuery } from "@/helpers/axiosBaseQuery";
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { tagTypesList } from "../tagTypes";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { logout, setUser } from "../features/authSlice.js";
+import { tagTypesList } from "../tagTypes.js";
 
-// Define a service using a base URL and expected endpoints
+const baseQuery = fetchBaseQuery({
+  baseUrl: "http://192.168.10.61:5005/api/v1",
+  prepareHeaders: (headers, { getState }) => {
+    const otpToken = sessionStorage.getItem("token");
+    const token = getState().auth.token;
+
+    if (token) {
+      headers.set("authorization", `Bearer ${token}`);
+    }
+    if (otpToken) {
+      headers.set("token", otpToken);
+    }
+
+    return headers;
+  },
+});
+
+const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
+  let result = await baseQuery(args, api, extraOptions);
+
+  if (result?.error?.status === 401) {
+    console.log("Sending refresh token");
+
+    const res = await fetch(
+      "http://192.168.10.61:5005/api/v1/auth/refresh-token",
+      {
+        method: "POST",
+        credentials: "include",
+      },
+    );
+
+    const data = await res.json();
+    if (data?.data?.accessToken) {
+      const user = api.getState().auth.user;
+
+      api.dispatch(
+        setUser({
+          user,
+          token: data.data.accessToken,
+        }),
+      );
+
+      result = await baseQuery(args, api, extraOptions);
+    } else {
+      api.dispatch(logout());
+    }
+  }
+
+  // Handle meta for pagination
+  // if (result?.data?.meta) {
+  //   result = {
+  //     data: result?.data?.data,
+  //     meta: result?.data?.meta,
+  //   };
+  // }
+  return result;
+};
+
 export const baseApi = createApi({
-  reducerPath: "api",
-  baseQuery: axiosBaseQuery({ baseUrl: "http://192.168.10.61:5005/api/v1" }),
-  endpoints: () => ({}),
+  reducerPath: "baseApi",
+  baseQuery: baseQueryWithRefreshToken,
+
   tagTypes: tagTypesList,
+  endpoints: () => ({}),
 });

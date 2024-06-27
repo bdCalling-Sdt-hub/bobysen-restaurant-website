@@ -4,11 +4,17 @@ import { baseApi } from "./baseApi";
 const topRestaurantApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllTopRestaurnts: builder.query({
-      query: (data) => ({
+      query: (params) => ({
         url: `/topRestaurants`,
         method: "GET",
-        data: data,
+        params,
       }),
+      transformResponse: (response) => {
+        return {
+          data: response?.data,
+          meta: response?.meta,
+        };
+      },
       providesTags: [tagTypes.topRestaurants],
     }),
     getSingleTopRestaurant: builder.query({

@@ -13,6 +13,7 @@ import Autoplay from "embla-carousel-autoplay";
 export default function ExploreRestaurantSliderCard() {
   const query = {};
   const { data: Rdata, isLoading } = useGetAllTopRestaurntsQuery(query);
+  console.log(Rdata, "Rdata");
   return (
     <Carousel
       plugins={[

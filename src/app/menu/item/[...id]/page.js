@@ -1,6 +1,4 @@
-import Image from "next/image";
-import foodItemPic from "/public/Menu/foodItem1.png";
-import { Heart, Minus, Plus, Star } from "lucide-react";
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,16 +7,43 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useInsertItemIntoFavoriteListMutation } from "@/redux/api/favouriteApi.js";
+import { useGetSingleMenuQuery } from "@/redux/api/menuApi.js";
+import showImage from "@/utils/fileHelper.js";
+import { Error_Modal, Success_model } from "@/utils/modalHook.js";
+import { Heart, Minus, Plus } from "lucide-react";
+import Image from "next/image";
 
-export default function FoodItem() {
+export default function FoodItem({ params }) {
+  const [favourite, { isLoading, isSuccess }] =
+    useInsertItemIntoFavoriteListMutation();
+  const { data: Mdata, refetch } = useGetSingleMenuQuery(params?.id?.[0]);
   // TODO: Use dynamic data
+  const handleFavourite = async () => {
+    try {
+      const res = await favourite({ id: Mdata?.data?._id }).unwrap();
+
+      if (!Mdata?.data?.isFavourite) {
+        Success_model({ title: "Menu successfully added to favorite list" });
+      } else if (Mdata?.data?.isFavourite) {
+        Success_model({
+          title: "Menu successfully removed from favorite list",
+        });
+      }
+      refetch();
+    } catch (error) {
+      Error_Modal({ title: error?.message });
+    }
+  };
 
   return (
     <div className="container flex flex-col items-center gap-x-10 pb-24 pt-[180px] lg:flex-row">
       {/* left */}
       <div className="w-full lg:w-[30%]">
         <Image
-          src={foodItemPic}
+          width={500}
+          height={500}
+          src={showImage(Mdata?.data?.image)}
           alt="Picture of the food item"
           className="w-full"
         />
@@ -27,10 +52,10 @@ export default function FoodItem() {
       {/* right */}
       <div className="mt-16 w-full lg:mt-0 lg:w-[60%]">
         {/* title */}
-        <h1 className="text-primary-black">Chicken Curry Masala</h1>
+        <h1 className="text-primary-black">{Mdata?.data?.name}</h1>
 
         {/* rating */}
-        <div className="mt-3 flex flex-col items-center gap-x-5 lg:flex-row">
+        {/* <div className="mt-3 flex flex-col items-center gap-x-5 lg:flex-row">
           <div className="flex items-center gap-x-2">
             <Star className="fill-[#FFAD33] stroke-[#FFAD33]" />
             <Star className="fill-[#FFAD33] stroke-[#FFAD33]" />
@@ -41,20 +66,19 @@ export default function FoodItem() {
           <p className="font-kumbh-sans text-lg text-primary-secondary-2">
             (150 Reviews)
           </p>
-        </div>
+        </div> */}
 
         {/* price */}
         <p className="mb-7 mt-4 text-2xl font-semibold text-primary-black">
-          $192.00
+          $ {Mdata?.data?.price}
         </p>
 
         {/* desc */}
         <div className="space-y-3 pe-20 font-kumbh-sans">
           <h5 className="text-xl text-primary-black">Description</h5>
           <p className="text-lg text-primary-secondary-2">
-            Our classic cheeseburger is made with a fresh, never-frozen beef
-            patty that is cooked to perfection and topped with melted American
-            cheese, lettuce, tomato, pickles, and onions.
+            You can add this menu item to your cart to place an order.
+            Additionally, you can mark it as a favorite for future reference.
           </p>
         </div>
 
@@ -89,10 +113,14 @@ export default function FoodItem() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger
-                className="h-[50px] rounded-lg border border-primary-secondary-2 px-3 hover:bg-gray-300/30"
+                className={`h-[50px] rounded-lg border px-3 hover:bg-gray-300/30 ${
+                  Mdata?.data?.isFavourite
+                    ? "border-transparent bg-primary-secondary-2"
+                    : "border-primary-secondary-2"
+                }`}
                 variant="outline"
               >
-                <Heart />
+                <Heart onClick={handleFavourite} />
               </TooltipTrigger>
               <TooltipContent>
                 <p>Add to Favorite</p>

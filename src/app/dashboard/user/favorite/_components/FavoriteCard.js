@@ -1,30 +1,37 @@
 "use client";
 
-import Image from "next/image";
-import foodPic from "/public/dashboard-user/favorite/foodPic.png";
 import { Button } from "@/components/ui/button";
-import StarRatings from "react-star-ratings";
-import Link from "next/link";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { useInsertItemIntoFavoriteListMutation } from "@/redux/api/favouriteApi.js";
+import showImage from "@/utils/fileHelper.js";
+import { Error_Modal, Success_model } from "@/utils/modalHook.js";
 import { Heart } from "lucide-react";
+import Image from "next/image";
+import StarRatings from "react-star-ratings";
 
-export default function FavoriteCard({ id }) {
+export default function FavoriteCard({ data }) {
+  const [favourite] = useInsertItemIntoFavoriteListMutation();
+  const handleFavourite = async () => {
+    try {
+      await favourite({ id: data?._id }).unwrap();
+      Success_model("Menu successfully removed from favorite list");
+    } catch (error) {
+      Error_Modal(error?.message);
+    }
+  };
   return (
     <div className="rounded-3xl border p-3">
-      <Image src={foodPic} alt="food pic" />
+      <Image
+        src={showImage(data?.image)}
+        alt="food pic"
+        width={600}
+        height={400}
+      />
       <h3 className="mb-3 mt-4 text-3xl font-semibold text-primary-secondary-1">
-        Spinach & Mushroom
+        {data?.name}
       </h3>
       <p className="mb-4 font-kumbh-sans text-primary-secondary-2">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat,
-        necessitatibus harum tempora molestias, neque vitae nostrum eos itaque,
-        odio rem accusamus velit nulla facere tenetur quaerat quas! Beatae,
-        atque nihil?
+        You can order this menu when you book a table. Additionally, you can
+        remove the menu from your favorites list by clicking the button.
       </p>
 
       <div className="flex items-center gap-x-4">
@@ -43,12 +50,16 @@ export default function FavoriteCard({ id }) {
       <div className="flex items-center justify-between gap-x-4">
         <Button
           className="mt-4 flex-grow rounded-3xl bg-primary-secondary-2 font-kumbh-sans text-primary-white"
-          asChild
+          onClick={handleFavourite}
+          // asChild
         >
-          <Link href={`/dashboard/user/favorite/${id}`}>Show Details</Link>
+          {/* <Link href={`/dashboard/user/favorite/`}> */}
+          <span className="me-4">Remove From Here</span>
+          <Heart className="stroke-primary-white" />
+          {/* </Link> */}
         </Button>
 
-        <TooltipProvider>
+        {/* <TooltipProvider>
           <Tooltip>
             <TooltipTrigger
               className="mt-4 rounded-full bg-primary-secondary-2 px-3 py-2 hover:bg-gray-700"
@@ -60,7 +71,7 @@ export default function FavoriteCard({ id }) {
               <p>Remove from Favorite</p>
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
+        </TooltipProvider> */}
       </div>
     </div>
   );

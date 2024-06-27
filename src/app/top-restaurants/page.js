@@ -6,7 +6,6 @@ import { useGetAllTopRestaurntsQuery } from "@/redux/api/topRestaurantApi.js";
 export default function TopRestaurants() {
   const query = {};
   const { data: Rdata, isLoading } = useGetAllTopRestaurntsQuery(query);
-  console.log(Rdata);
   return (
     <div className="container pt-[160px]">
       <div className="flex flex-col items-center justify-between space-y-5 lg:flex-row lg:space-y-0">
@@ -28,8 +27,8 @@ export default function TopRestaurants() {
       </div>
 
       <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 12 }).map((_, idx) => (
-          <RestaurantCard key={idx} />
+        {Rdata?.data?.map((data, idx) => (
+          <RestaurantCard key={idx} data={data} />
         ))}
       </div>
     </div>

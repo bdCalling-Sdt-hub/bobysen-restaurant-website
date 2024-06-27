@@ -12,18 +12,17 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Separator } from "@/components/ui/separator";
+import { LoginPrompt_Modal } from "@/utils/modalHook";
 import { CircleX } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import calenderIcon from "/public/DynamicRestaurant/calendar.png";
 import foodMenuIcon from "/public/DynamicRestaurant/menu.png";
 import successfulIcon from "/public/DynamicRestaurant/succesful.png";
 import usersIcon from "/public/DynamicRestaurant/users.png";
-import calenderIcon from "/public/DynamicRestaurant/calendar.png";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { usePathname, useRouter } from "next/navigation";
-import { FileSpreadsheet } from "lucide";
-import { LoginPrompt_Modal } from "@/utils/modalHook";
 
 export default function BookNowBtn({ id }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -34,10 +33,10 @@ export default function BookNowBtn({ id }) {
   // show modal if user exists else send to login
   const handleOpenModal = (e) => {
     e.preventDefault();
-    if (!user) {
+    if (!user?.userId) {
       setLoginModalOpen(true);
       setModalOpen(false);
-    } else if (user?._id) {
+    } else if (user?.userId) {
       setModalOpen(true);
     }
   };

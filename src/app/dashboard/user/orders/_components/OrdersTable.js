@@ -1,4 +1,15 @@
-import React from "react";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import EmptyData from "@/components/ui/Empty.jsx";
 import {
   Table,
   TableBody,
@@ -8,26 +19,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useGetMenuByReservationIdQuery } from "@/redux/api/cartApi.js";
 import { EyeIcon, MessageSquareText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import CartCard from "@/app/cart/_components/CartCard";
-import OrderCard from "./OrderCard";
 import Link from "next/link";
+import { useState } from "react";
+import OrderCard from "./OrderCard";
+import OrderSkeleton from "./OrderSkeleton.js";
 
-export default function OrdersTable({ status }) {
+export default function OrdersTable({ status, data }) {
+  const [reservationId, setReservationId] = useState();
+  const { data: Cdata, isLoading } = useGetMenuByReservationIdQuery(
+    reservationId,
+    {
+      skip: !reservationId,
+    },
+  );
   // TODO: Use dynamic table data
-
   return (
     <div className="container mt-12">
       <Table className="border">
@@ -38,7 +45,13 @@ export default function OrdersTable({ status }) {
               Restaurant Name
             </TableHead>
             <TableHead className="font-kumbh-sans text-xl text-primary-secondary-1">
-              Amount
+              Reservation ID
+            </TableHead>
+            <TableHead className="font-kumbh-sans text-xl text-primary-secondary-1">
+              Guest
+            </TableHead>
+            <TableHead className="font-kumbh-sans text-xl text-primary-secondary-1">
+              Table No
             </TableHead>
             <TableHead className="font-kumbh-sans text-xl text-primary-secondary-1">
               Time & Date
@@ -54,22 +67,32 @@ export default function OrdersTable({ status }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Array.from({ length: 7 }).map((_, idx) => (
+          {data?.data?.map((data, idx) => (
             <TableRow key={idx}>
               <TableCell className="font-kumbh-sans text-primary-black">
-                Lava Java Restaurant
+                {data?.restaurant?.name}
               </TableCell>
               <TableCell className="font-kumbh-sans text-primary-black">
-                $500
+                {data?.id}
               </TableCell>
               <TableCell className="font-kumbh-sans text-primary-black">
-                31 apr 2024, 11.00PM
+                {data?.table?.seats} Person
+              </TableCell>
+              <TableCell className="font-kumbh-sans text-primary-black">
+                {data?.table?.tableNo}
+              </TableCell>
+
+              <TableCell className="font-kumbh-sans text-primary-black">
+                {new Date(data?.date).toDateString()}, ({data?.time})
               </TableCell>
               <TableCell className="font-kumbh-sans text-primary-black">
                 {/* Show Order History Modal on Eye button click */}
                 <AlertDialog>
                   <AlertDialogTrigger>
-                    <EyeIcon role="button" />
+                    <EyeIcon
+                      role="button"
+                      onClick={() => setReservationId(data?._id)}
+                    />
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
@@ -79,14 +102,24 @@ export default function OrdersTable({ status }) {
                       <AlertDialogDescription>
                         {/* Use Dynamic data for the cards */}
                         <div className="mt-4 max-h-[50vh] space-y-4 overflow-auto">
-                          <OrderCard />
-                          <OrderCard />
-                          <OrderCard />
+                          {isLoading ? (
+                            <OrderSkeleton />
+                          ) : Cdata?.data?.items?.length > 0 ? (
+                            Cdata.data.items.map((data, index) => (
+                              <OrderCard key={index} data={data} />
+                            ))
+                          ) : (
+                            <EmptyData />
+                          )}
                         </div>
 
-                        <div className="mb-2 mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
+                        <div className="mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
+                          <h4>Transaction Id</h4>
+                          <h4>#30400e0349540340</h4>
+                        </div>
+                        <div className="mb-2 mt-4 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
                           <h4>Total Cost</h4>
-                          <h4>$1500.00</h4>
+                          <h4>${Cdata?.data?.totalAmount}</h4>
                         </div>
                       </AlertDialogDescription>
                     </AlertDialogHeader>

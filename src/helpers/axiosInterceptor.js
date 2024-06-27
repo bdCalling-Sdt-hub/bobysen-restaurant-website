@@ -36,6 +36,7 @@ instance.interceptors.response.use(
       data: response?.data?.data,
       meta: response?.data?.meta,
     };
+    console.log(response);
     return { data: responseObject };
   },
   async function (error) {

@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import foodPic from "/public/Menu/foodItem.png";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,14 +9,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import StarRatings from "react-star-ratings";
+import showImage from "@/utils/fileHelper.js";
+import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import BookNowModal from "./BookNowModal";
 
 export default function FoodItemCard({ cardData }) {
-  const { id, name, price } = cardData;
+  const { _id, name, price } = cardData;
+
   const params = useSearchParams().get("state");
   const restaurantId = usePathname().replace("/menu/", "");
   const router = useRouter();
@@ -28,7 +28,7 @@ export default function FoodItemCard({ cardData }) {
     if (params === "only-menu") {
       setBookNowModalOpen(true);
     } else {
-      router.push(`/menu/item/${id}`);
+      router.push(`/menu/item/${_id}`);
     }
   };
 
@@ -37,14 +37,17 @@ export default function FoodItemCard({ cardData }) {
       <Card className="rounded-3xl border bg-transparent text-primary-secondary-1 shadow-none">
         <CardHeader>
           <CardTitle>
-            <Image src={foodPic} alt={`${name}`} className="mb-3 block" />
+            <Image
+              width={600}
+              height={0}
+              src={showImage(cardData?.image)}
+              alt={`${name}`}
+              className="mb-3 block"
+            />
             <p className="text-3xl font-bold">{name}</p>
           </CardTitle>
           <CardDescription className="font-kumbh-sans">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus
-            iste ea amet porro cum harum praesentium cupiditate quae eveniet
-            sunt at est odit, illo, voluptatum repellat esse recusandae impedit
-            unde?
+            you can order the food by clicking on the Order Now Button.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -52,7 +55,7 @@ export default function FoodItemCard({ cardData }) {
             ${parseFloat(price).toFixed(2)}
           </p>
 
-          <div className="flex items-center gap-x-4">
+          {/* <div className="flex items-center gap-x-4">
             <StarRatings
               rating={4.5}
               starRatedColor="#F5BE32"
@@ -63,7 +66,7 @@ export default function FoodItemCard({ cardData }) {
               <h4 className="text-[#F5BE32]">4.5</h4>
               <span className="text-primary-secondary-1">(10)</span>
             </div>
-          </div>
+          </div> */}
         </CardContent>
         <CardFooter>
           <Button
