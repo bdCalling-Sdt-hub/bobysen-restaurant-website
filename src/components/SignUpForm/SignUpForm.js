@@ -1,20 +1,19 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { useSignUpMutation } from "@/redux/api/authApi";
+import { Error_Modal, Success_model } from "@/utils/modalHook";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import LoadingButton from "../LoadingButton/LoadingButton";
 import { Button } from "../ui/button";
 import eyeIcon from "/public/signUp/eyeIcon.svg";
 import eyeOffIcon from "/public/signUp/eyeOffIcon.svg";
-import Image from "next/image";
-import { useState } from "react";
-import { useSignUpMutation } from "@/redux/api/authApi";
-import { Error_Modal, Success_model } from "@/utils/modalHook";
-import { useRouter } from "next/navigation";
-import LoadingButton from "../LoadingButton/LoadingButton";
-import { setToLocalStorage } from "@/utils/local-storage";
 
 export default function SignUpForm() {
   const {
@@ -46,7 +45,7 @@ export default function SignUpForm() {
         });
 
         // set otp to local-storage
-        setToLocalStorage("signUpToken", res?.data?.token);
+        sessionStorage.setItem("token", res?.data?.token);
 
         router.push("/verify-otp");
       }

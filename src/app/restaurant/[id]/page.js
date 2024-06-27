@@ -14,7 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useGetSingleRestaurantQuery } from "@/redux/api/restaurantApi.js";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { PhoneOutgoing } from "lucide-react";
+import { Clock, PhoneOutgoing } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useState } from "react";
@@ -28,12 +28,9 @@ import menuIcon from "/public/DynamicRestaurant/charm_menu-hamburger.png";
 import eventIcon from "/public/DynamicRestaurant/event.png";
 import goldStarIcon from "/public/DynamicRestaurant/goldStar.png";
 import bookIcon from "/public/DynamicRestaurant/image 4.png";
-<<<<<<< HEAD
 import usersIcon from "/public/DynamicRestaurant/users.png";
-import BookNowBtn from "./_components/BookNowBtn/BookNowBtn";
-import { Clock, PhoneOutgoing } from "lucide-react";
+
 import { DayPickerInput } from "@/components/DayPickerInput/DayPickerInput";
-import TimePicker from "rc-time-picker-date-fns";
 import {
   Select,
   SelectContent,
@@ -41,8 +38,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-=======
->>>>>>> origin/uzzal
+import TimePicker from "rc-time-picker-date-fns";
 
 const AnyReactComponent = ({ text }) => (
   <div className="">

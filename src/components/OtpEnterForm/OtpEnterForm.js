@@ -1,20 +1,16 @@
 "use client";
 
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"; // change regex to allow only chars or digits
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { useState } from "react";
+import { Label } from "@/components/ui/label";
 import { useVerifyOtpMutation } from "@/redux/api/authApi";
-import { getFromLocalStorage } from "@/utils/local-storage";
-import { Error_Modal } from "@/utils/modalHook";
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"; // change regex to allow only chars or digits
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import LoadingButton from "../LoadingButton/LoadingButton";
 
 export default function OtpEnterForm() {
@@ -27,7 +23,6 @@ export default function OtpEnterForm() {
 
     try {
       const res = await verifyOtp({ otp: otp }).unwrap();
-      console.log(res);
     } catch (error) {
       console.error(error);
     }

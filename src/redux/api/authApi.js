@@ -28,7 +28,7 @@ const authApi = baseApi.injectEndpoints({
       query: (data) => ({
         url: "/otp/verify-otp",
         method: "POST",
-        data,
+        body: data,
       }),
 
       invalidatesTags: [tagTypes.otp],
