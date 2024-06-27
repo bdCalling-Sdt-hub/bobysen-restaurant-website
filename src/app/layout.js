@@ -6,6 +6,7 @@ import circle from "/public/home/circle.png";
 import flowers from "/public/home/flowers.png";
 import Footer from "@/components/Footer/Footer";
 import Providers from "@/lib/Providers";
+import "rc-time-picker-date-fns/assets/index.css";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 const kumbhSans = Kumbh_Sans({

@@ -121,7 +121,7 @@ export default function LoginForm() {
           disabled={true}
           className="mt-10 h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white"
         >
-          <LoadingButton>SIGN IN</LoadingButton>
+          <LoadingButton>SIGNING IN...</LoadingButton>
         </Button>
       )}
 

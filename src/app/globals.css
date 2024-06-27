@@ -87,3 +87,33 @@
   text-align: center !important;
   font-weight: 500 !important;
 }
+
+/* Complete CSS to remove spinner icons from number inputs */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield !important;
+}
+
+.rc-time-picker-panel-narrow {
+  max-width: 100% !important;
+}
+
+.rc-time-picker-panel-select {
+  width: 76px !important;
+}
+
+.rc-time-picker-input {
+  height: 40px !important;
+  font-size: 15px !important;
+  font-weight: bold !important;
+  border: 0px !important;
+}
+
+.rc-time-picker-panel-inner {
+  left: -37px !important;
+}

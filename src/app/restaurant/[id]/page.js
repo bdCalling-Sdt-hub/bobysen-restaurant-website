@@ -26,8 +26,18 @@ import menuIcon from "/public/DynamicRestaurant/charm_menu-hamburger.png";
 import eventIcon from "/public/DynamicRestaurant/event.png";
 import goldStarIcon from "/public/DynamicRestaurant/goldStar.png";
 import bookIcon from "/public/DynamicRestaurant/image 4.png";
+import usersIcon from "/public/DynamicRestaurant/users.png";
 import BookNowBtn from "./_components/BookNowBtn/BookNowBtn";
-import { Phone, PhoneOutgoing } from "lucide-react";
+import { Clock, PhoneOutgoing } from "lucide-react";
+import { DayPickerInput } from "@/components/DayPickerInput/DayPickerInput";
+import TimePicker from "rc-time-picker-date-fns";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const AnyReactComponent = ({ text }) => (
   <div className="">
@@ -73,6 +83,12 @@ export default function DynamicRestaurant({ params }) {
     setMap(null);
   }, []);
 
+  // todo: get book a table data
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [guestCount, setGuestCount] = useState(null);
+  const numberOfGuests = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
   return (
     <div className="container pt-[160px]">
       {/* Restaurant Details Section */}
@@ -87,10 +103,10 @@ export default function DynamicRestaurant({ params }) {
             </h1>
             <Separator className="mb-4 mt-2" />
 
-            <div className="mb-10 grid grid-cols-1 gap-x-5 font-kumbh-sans lg:grid-cols-2">
+            <div className="mb-5 grid grid-cols-1 gap-x-5 font-kumbh-sans lg:grid-cols-2">
               {/* Inner left */}
-              <div className="space-y-4">
-                <div className="flex items-start gap-2">
+              <div className="">
+                <div className="mb-4 flex items-start gap-2">
                   <Image src={locationIcon} alt="location icon" />
                   <p className="text-primary-secondary-1">
                     {location}
@@ -103,14 +119,14 @@ export default function DynamicRestaurant({ params }) {
                   </p>
                 </div>
 
-                <div className="flex items-start gap-2">
+                <div className="mb-4 flex items-start gap-2">
                   <Image src={eventIcon} alt="calendar icon" />
                   <p className="text-primary-secondary-1">
                     Every Friday restaurant are close
                   </p>
                 </div>
 
-                <div className="flex items-start gap-x-3">
+                <div className="mb-4 flex items-start gap-x-3">
                   <PhoneOutgoing size={19} color="#8aba51" />
                   <div className="flex flex-col gap-y-2">
                     <p className="text-base text-primary-secondary-1">
@@ -130,8 +146,6 @@ export default function DynamicRestaurant({ params }) {
                     </p>
                   </Link>
                 </div>
-
-                {/* Filters */}
               </div>
 
               {/* Inner Right */}
@@ -143,6 +157,47 @@ export default function DynamicRestaurant({ params }) {
                     Read More...
                   </Button>
                 </p>
+              </div>
+            </div>
+
+            {/* Filters */}
+            <div className="lg:w-3/4">
+              <h4 className="text-xl font-semibold text-primary-secondary-1">
+                Book a table
+              </h4>
+
+              <div className="mt-2 grid w-full grid-cols-3 gap-x-6">
+                <DayPickerInput date={selectedDate} setDate={setSelectedDate} />
+                <div className="flex items-center gap-x-3 rounded-lg border px-2">
+                  <Clock />
+                  <TimePicker
+                    showHour={true}
+                    showMinute={true}
+                    showSecond={false}
+                    className="h-full w-full"
+                    defaultValue={new Date()}
+                    minuteStep={15}
+                    onChange={(value) => setSelectedTime(value)}
+                  />
+                </div>
+
+                {/* select users */}
+                <Select
+                  className=""
+                  onValueChange={(value) => setGuestCount(value)}
+                >
+                  <SelectTrigger className="flex max-w-max items-center justify-start gap-x-4">
+                    <Image src={usersIcon} alt="users icon" />
+                    <SelectValue placeholder="Guests" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {numberOfGuests?.map((number) => (
+                      <SelectItem value={number} key={number}>
+                        {number}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
