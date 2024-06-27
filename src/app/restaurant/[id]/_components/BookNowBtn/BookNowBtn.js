@@ -16,30 +16,40 @@ import { LoginPrompt_Modal } from "@/utils/modalHook";
 import { CircleX } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import calenderIcon from "/public/DynamicRestaurant/calendar.png";
 import foodMenuIcon from "/public/DynamicRestaurant/menu.png";
 import successfulIcon from "/public/DynamicRestaurant/succesful.png";
 import usersIcon from "/public/DynamicRestaurant/users.png";
+import { Loader } from "lucide";
+import LoadingButton from "@/components/LoadingButton/LoadingButton";
 
 export default function BookNowBtn({ id }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
-  const router = useRouter();
+
+  // show overlay loader for async operation
+  const [isLoaderActive, setIsLoaderActive] = useState(false);
 
   // show modal if user exists else send to login
   const handleOpenModal = (e) => {
     e.preventDefault();
+
     if (!user?.userId) {
       setLoginModalOpen(true);
       setModalOpen(false);
     } else if (user?.userId) {
-      setModalOpen(true);
+      setIsLoaderActive(true);
+      setTimeout(() => {
+        setModalOpen(true);
+        setIsLoaderActive(false);
+      }, 2500);
     }
   };
+
+  console.log(isLoaderActive);
 
   return (
     <AlertDialog
@@ -48,10 +58,15 @@ export default function BookNowBtn({ id }) {
       onOpenChange={setModalOpen}
     >
       <AlertDialogTrigger
-        className="absolute -bottom-2 left-1/2 w-[96%] -translate-x-1/2 -translate-y-1/2 rounded bg-primary-secondary-2 py-2 text-primary-white"
+        className={`absolute -bottom-2 left-1/2 w-[96%] -translate-x-1/2 -translate-y-1/2 rounded ${isLoaderActive ? "bg-gray-400" : "bg-primary-secondary-2"} py-2 text-primary-white`}
         onClick={handleOpenModal}
+        disabled={isLoaderActive}
       >
-        Book Now
+        {isLoaderActive ? (
+          <LoadingButton>Processing...</LoadingButton>
+        ) : (
+          "Book Now"
+        )}
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

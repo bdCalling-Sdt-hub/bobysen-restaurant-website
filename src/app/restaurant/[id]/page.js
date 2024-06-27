@@ -1,7 +1,15 @@
 "use client";
 
+import { DayPickerInput } from "@/components/DayPickerInput/DayPickerInput";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import {
   Table,
@@ -17,6 +25,7 @@ import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { Clock, PhoneOutgoing } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import TimePicker from "rc-time-picker-date-fns";
 import { useCallback, useState } from "react";
 import styles from "./DynamicRestaurant.module.css";
 import BookNowBtn from "./_components/BookNowBtn/BookNowBtn";
@@ -29,16 +38,6 @@ import eventIcon from "/public/DynamicRestaurant/event.png";
 import goldStarIcon from "/public/DynamicRestaurant/goldStar.png";
 import bookIcon from "/public/DynamicRestaurant/image 4.png";
 import usersIcon from "/public/DynamicRestaurant/users.png";
-
-import { DayPickerInput } from "@/components/DayPickerInput/DayPickerInput";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import TimePicker from "rc-time-picker-date-fns";
 
 const AnyReactComponent = ({ text }) => (
   <div className="">
@@ -66,7 +65,7 @@ export default function DynamicRestaurant({ params }) {
     helpLineNumber1,
     helpLineNumber2,
   } = Rdata?.data ?? {};
-  console.log(Rdata);
+
   const center = {
     lat: 23.7387,
     lng: 90.3935,
