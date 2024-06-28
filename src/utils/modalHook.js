@@ -39,8 +39,6 @@ export const Error_Modal = (message) => {
 };
 
 export const LoginPrompt_Modal = ({ loginModalOpen, setLoginModalOpen }) => {
-  const redirectLink = usePathname();
-
   return (
     <Dialog open={loginModalOpen} onOpenChange={setLoginModalOpen}>
       <DialogContent className="space-y-6">
@@ -65,7 +63,7 @@ export const LoginPrompt_Modal = ({ loginModalOpen, setLoginModalOpen }) => {
             className="bg-primary-secondary-3 font-kumbh-sans text-primary-white"
             asChild
           >
-            <Link href={`/login?redirectLink=${redirectLink}`}>Sign In</Link>
+            <Link href={`/login`}>Sign In</Link>
           </Button>
         </DialogFooter>
       </DialogContent>

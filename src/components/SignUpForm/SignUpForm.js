@@ -8,12 +8,13 @@ import { Error_Modal, Success_model } from "@/utils/modalHook";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import LoadingButton from "../LoadingButton/LoadingButton";
 import { Button } from "../ui/button";
 import eyeIcon from "/public/signUp/eyeIcon.svg";
 import eyeOffIcon from "/public/signUp/eyeOffIcon.svg";
+import { useSelector } from "react-redux";
 
 export default function SignUpForm() {
   const {
@@ -25,6 +26,7 @@ export default function SignUpForm() {
 
   const [signUp, { isLoading }] = useSignUpMutation();
   const router = useRouter();
+  const { user } = useSelector((state) => state.auth);
 
   const onSubmit = async (data) => {
     const { fname, lname } = data;
@@ -41,10 +43,10 @@ export default function SignUpForm() {
       if (res?.data?.token) {
         Success_model({
           title: "Registration Successful!",
-          text: "A verification code was sent to your email. Type to verify your identity",
+          text: "A verification code was sent to your email. Enter otp code to verify your identity",
         });
 
-        // set otp to local-storage
+        // set sign up token to session-storage
         sessionStorage.setItem("token", res?.data?.token);
 
         router.push("/verify-otp");
@@ -60,6 +62,16 @@ export default function SignUpForm() {
   // show password states
   const [showNewPass, setShowNewPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
+
+  // !-------- If user already exits then auto redirect -------
+
+  useLayoutEffect(() => {
+    if (user?.userId) {
+      router.back();
+    }
+  }, [user?.userId]);
+
+  // !----------------------------------------------------------
 
   return (
     <form
@@ -210,7 +222,7 @@ export default function SignUpForm() {
           {errors.password && (
             <p className={cn("font-kumbh-sans text-primary-danger")}>
               {errors.password.type === "pattern"
-                ? "Password must have 1 Uppercase letter, 1 Special Character, 1 Digit and no less than 8 digit."
+                ? "Password must have 1 Uppercase letter, 1 Special Character, 1 Number and no less than 8 letters."
                 : "New Password is required"}
             </p>
           )}
@@ -292,7 +304,7 @@ export default function SignUpForm() {
         </p>
         {/* TODO: Add relevant Link */}
         <Link
-          href="#"
+          href="/login"
           className="border-b border-b-primary-secondary-3 font-kumbh-sans text-primary-secondary-3"
         >
           Sign In

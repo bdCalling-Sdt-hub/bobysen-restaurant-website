@@ -27,7 +27,7 @@ export default function HeroSearchBar() {
     <div className="relative">
       <Input
         id="heroSearch"
-        className="h-[65px] w-full rounded-3xl border border-primary-black bg-transparent pl-[160px] text-lg text-primary-black shadow"
+        className="h-[65px] w-full rounded-3xl border border-primary-black bg-transparent pl-[150px] text-lg text-primary-black shadow"
         onChange={(e) => setSearchValue(e.target.value)}
       />
 

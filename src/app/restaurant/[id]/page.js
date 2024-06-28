@@ -20,13 +20,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { useGetSingleRestaurantQuery } from "@/redux/api/restaurantApi.js";
+import {
+  useGetRestaurantReviewsQuery,
+  useGetSingleRestaurantQuery,
+} from "@/redux/api/restaurantApi.js";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { Clock, PhoneOutgoing } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import TimePicker from "rc-time-picker-date-fns";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./DynamicRestaurant.module.css";
 import BookNowBtn from "./_components/BookNowBtn/BookNowBtn";
 import FeedbackCard from "./_components/FeedbackCard/FeedbackCard";
@@ -52,8 +55,9 @@ const AnyReactComponent = ({ text }) => (
 
 export default function DynamicRestaurant({ params }) {
   const [map, setMap] = useState(null);
-  // TODO: Use dynamic data from database
   const { id } = params;
+  const { data: reviewsData, isLoading: isReviewsLoading } =
+    useGetRestaurantReviewsQuery(id);
   const { data: Rdata, isLoading } = useGetSingleRestaurantQuery(id);
   const {
     name,
@@ -83,6 +87,9 @@ export default function DynamicRestaurant({ params }) {
   const onUnmount = useCallback(function callback(map) {
     setMap(null);
   }, []);
+
+  // reviews data
+  const { ratingOverview, reviews } = reviewsData?.data;
 
   // todo: get book a table data
   const [selectedTime, setSelectedTime] = useState(null);
@@ -167,8 +174,14 @@ export default function DynamicRestaurant({ params }) {
                 Book a table
               </h4>
 
-              <div className="mt-2 grid w-full grid-cols-3 gap-x-6">
-                <DayPickerInput date={selectedDate} setDate={setSelectedDate} />
+              <div className="mb-16 mt-2 grid w-1/2 grid-cols-1 gap-x-6 gap-y-4 lg:mb-0 lg:w-full lg:gap-y-0 xl:grid-cols-3">
+                <div className="w-full">
+                  <DayPickerInput
+                    date={selectedDate}
+                    setDate={setSelectedDate}
+                  />
+                </div>
+
                 <div className="flex items-center gap-x-3 rounded-lg border px-2">
                   <Clock />
                   <TimePicker
@@ -183,22 +196,21 @@ export default function DynamicRestaurant({ params }) {
                 </div>
 
                 {/* select users */}
-                <Select
-                  className=""
-                  onValueChange={(value) => setGuestCount(value)}
-                >
-                  <SelectTrigger className="flex max-w-max items-center justify-start gap-x-4">
-                    <Image src={usersIcon} alt="users icon" />
-                    <SelectValue placeholder="Guests" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {numberOfGuests?.map((number) => (
-                      <SelectItem value={number} key={number}>
-                        {number}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="">
+                  <Select onValueChange={(value) => setGuestCount(value)}>
+                    <SelectTrigger className="flex max-w-full items-center justify-between gap-x-4">
+                      <Image src={usersIcon} alt="users icon" />
+                      <SelectValue placeholder="Guests" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {numberOfGuests?.map((number) => (
+                        <SelectItem value={number} key={number}>
+                          {number}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
           </div>
@@ -271,13 +283,13 @@ export default function DynamicRestaurant({ params }) {
           <div className="mx-auto lg:mx-0 lg:w-[20%]">
             {/* left */}
             <div className="flex items-center gap-x-3 font-bold text-primary-secondary-1">
-              <h1>4.8</h1>
+              <h1>{avgReviews}</h1>
               <Image src={starIcon} alt="rating star icon" />
             </div>
 
             <p className="mt-5 max-w-max text-center font-kumbh-sans text-primary-secondary-1">
-              1,64,002 Ratings <br /> & <br />
-              5922 Reviews
+              12334 Ratings <br /> & <br />
+              {reviews?.length} Reviews
             </p>
           </div>
 
@@ -289,7 +301,25 @@ export default function DynamicRestaurant({ params }) {
                 <Image src={goldStarIcon} alt="gold star icon" />
               </div>
               <Progress
-                value={70}
+                value={
+                  ratingOverview["5star"]?.avg
+                    ? ratingOverview["5star"]?.avg
+                    : 0
+                }
+                className={cn("bg-primary-secondary-1", styles.progressBar)}
+              />
+            </div>
+            <div className="flex items-center gap-x-16">
+              <div className="flex items-center gap-x-2">
+                <h4 className="text-xl font-bold text-[#F8B84E]">4</h4>
+                <Image src={goldStarIcon} alt="gold star icon" />
+              </div>
+              <Progress
+                value={
+                  ratingOverview["4star"]?.avg
+                    ? ratingOverview["4star"]?.avg
+                    : 0
+                }
                 className={cn("bg-primary-secondary-1", styles.progressBar)}
               />
             </div>
@@ -299,27 +329,39 @@ export default function DynamicRestaurant({ params }) {
                 <Image src={goldStarIcon} alt="gold star icon" />
               </div>
               <Progress
-                value={60}
+                value={
+                  ratingOverview["3star"]?.avg
+                    ? ratingOverview["3star"]?.avg
+                    : 0
+                }
                 className={cn("bg-primary-secondary-1", styles.progressBar)}
               />
             </div>
             <div className="flex items-center gap-x-16">
               <div className="flex items-center gap-x-2">
-                <h4 className="text-xl font-bold text-[#F8B84E]">5</h4>
+                <h4 className="text-xl font-bold text-[#F8B84E]">2</h4>
                 <Image src={goldStarIcon} alt="gold star icon" />
               </div>
               <Progress
-                value={50}
+                value={
+                  ratingOverview["2star"]?.avg
+                    ? ratingOverview["2star"]?.avg
+                    : 0
+                }
                 className={cn("bg-primary-secondary-1", styles.progressBar)}
               />
             </div>
             <div className="flex items-center gap-x-16">
               <div className="flex items-center gap-x-2">
-                <h4 className="text-xl font-bold text-[#F8B84E]">5</h4>
+                <h4 className="text-xl font-bold text-[#F8B84E]">1</h4>
                 <Image src={goldStarIcon} alt="gold star icon" />
               </div>
               <Progress
-                value={40}
+                value={
+                  ratingOverview["1star"]?.avg
+                    ? ratingOverview["1star"]?.avg
+                    : 0
+                }
                 className={cn("bg-primary-secondary-1", styles.progressBar)}
               />
             </div>
@@ -335,9 +377,9 @@ export default function DynamicRestaurant({ params }) {
 
         <div className="mt-10">
           {/* TODO: Use dynamic data */}
-          {Array.from({ length: 5 }).map((_, idx) => (
+          {reviews?.map((review, idx) => (
             <div key={idx}>
-              <FeedbackCard />
+              <FeedbackCard data={review} />
               <Separator className="my-10 bg-primary-black" />
             </div>
           ))}

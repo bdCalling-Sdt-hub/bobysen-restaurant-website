@@ -32,7 +32,7 @@ export default function FoodItem({ params }) {
       }
       refetch();
     } catch (error) {
-      Error_Modal({ title: error?.message });
+      Error_Modal(error?.data?.message);
     }
   };
 

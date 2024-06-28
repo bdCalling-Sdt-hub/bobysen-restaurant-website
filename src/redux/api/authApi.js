@@ -34,13 +34,20 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.otp],
     }),
 
-    getSingleUser: builder.query({
-      query: () => ({
-        url: "/users",
-        method: "GET",
+    forgotPass: builder.mutation({
+      query: (data) => ({
+        url: "/auth/forgot-password",
+        method: "PATCH",
+        body: data,
       }),
+    }),
 
-      providesTags: [tagTypes.users],
+    resetPass: builder.mutation({
+      query: (data) => ({
+        url: "/auth/reset-password",
+        method: "PATCH",
+        body: data,
+      }),
     }),
   }),
 
@@ -51,5 +58,7 @@ export const {
   useSignUpMutation,
   useVerifyOtpMutation,
   useLoginMutation,
-  useGetSingleUserQuery,
+
+  useForgotPassMutation,
+  useResetPassMutation,
 } = authApi;

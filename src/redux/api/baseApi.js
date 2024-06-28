@@ -6,13 +6,19 @@ const baseQuery = fetchBaseQuery({
   baseUrl: "http://192.168.10.61:5005/api/v1",
   prepareHeaders: (headers, { getState }) => {
     const otpToken = sessionStorage.getItem("token");
+    const forgotPasswordToken = sessionStorage.getItem("forgotPasswordToken");
     const token = getState().auth.token;
+
+    console.log(token);
 
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
     if (otpToken) {
       headers.set("token", otpToken);
+    }
+    if (forgotPasswordToken) {
+      headers.set("token", forgotPasswordToken);
     }
 
     return headers;
@@ -23,8 +29,6 @@ const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 401) {
-    console.log("Sending refresh token");
-
     const res = await fetch(
       "http://192.168.10.61:5005/api/v1/auth/refresh-token",
       {

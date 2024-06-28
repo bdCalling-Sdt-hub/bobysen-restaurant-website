@@ -10,9 +10,9 @@ import { jwtDecode } from "jwt-decode";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoadingButton from "../LoadingButton/LoadingButton";
 import { Button } from "../ui/button";
 import eyeIcon from "/public/signUp/eyeIcon.svg";
@@ -29,7 +29,7 @@ export default function LoginForm() {
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const router = useRouter();
-  const redirectLink = useSearchParams().get("redirectLink");
+  const { user } = useSelector((state) => state.auth);
 
   const onSubmit = async (data) => {
     try {
@@ -42,12 +42,22 @@ export default function LoginForm() {
             token: res?.data?.accessToken,
           }),
         );
-        router.push(redirectLink || "/");
+        router.push("/");
       }
     } catch (error) {
-      Error_Modal(error?.message);
+      Error_Modal(error?.data?.message);
     }
   };
+
+  // !-------- If user already exits then auto redirect -------
+
+  useLayoutEffect(() => {
+    if (user?.userId) {
+      router.back();
+    }
+  }, [user?.userId]);
+
+  // !----------------------------------------------------------
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
@@ -65,7 +75,11 @@ export default function LoginForm() {
           className="border border-primary-secondary-1 text-primary-black"
         />
         {errors.email && (
-          <p className={cn("font-kumbh-sans text-primary-secondary-1")}>
+          <p
+            className={cn(
+              "font-kumbh-sans text-primary-secondary-1 text-red-500",
+            )}
+          >
             Username or Email is required
           </p>
         )}
@@ -111,7 +125,11 @@ export default function LoginForm() {
           />
         )}
         {errors.password && (
-          <p className={cn("font-kumbh-sans text-primary-secondary-1")}>
+          <p
+            className={cn(
+              "font-kumbh-sans text-primary-secondary-1 text-red-500",
+            )}
+          >
             Password is required
           </p>
         )}

@@ -42,11 +42,11 @@ const leftDivVariants = {
 
 export default function Hero() {
   return (
-    <section className="relative md:pt-[70px] lg:pt-0">
-      <div className="container flex flex-col items-center justify-center gap-x-16 sm:h-[80vh] sm:px-10 lg:flex-row lg:px-0">
+    <section className="relative sm:pt-[80px] md:pt-[140px] lg:pt-[70px] xl:pt-0">
+      <div className="flex flex-col items-center justify-center gap-x-16 lg:container sm:h-[80vh] sm:px-10 lg:flex-row lg:px-0">
         {/* left */}
         <motion.div
-          className="space-y-8 sm:container lg:w-[40%]"
+          className="container space-y-8 lg:w-[40%]"
           variants={leftDivVariants}
           initial="initial"
           animate="animate"
@@ -90,7 +90,7 @@ export default function Hero() {
         viewBox="0 0 574 235"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="absolute -z-10 hidden sm:hidden lg:left-[26%] lg:top-[6%] lg:block"
+        className="absolute -z-10 hidden sm:hidden md:hidden lg:left-[20%] lg:top-[8%] lg:block lg:w-[40%] xl:left-[25%] xl:top-[6%] xl:w-[32%] 2xl:left-[26%] 2xl:top-[5%]"
         variants={pathVariants}
         initial="initial"
         animate="animate"

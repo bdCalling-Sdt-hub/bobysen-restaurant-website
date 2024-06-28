@@ -7,6 +7,7 @@ import flowers from "/public/home/flowers.png";
 import Footer from "@/components/Footer/Footer";
 import Providers from "@/lib/Providers";
 import "rc-time-picker-date-fns/assets/index.css";
+import { Toaster } from "sonner";
 
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 const kumbhSans = Kumbh_Sans({
@@ -43,6 +44,8 @@ export default function RootLayout({ children }) {
             <Footer />
           </footer>
         </Providers>
+
+        <Toaster richColors />
       </body>
     </html>
   );

@@ -17,10 +17,20 @@ const restaurantApi = baseApi.injectEndpoints({
       }),
       // providesTags: [tagTypes.restaurant],
     }),
+
+    getRestaurantReviews: builder.query({
+      query: (id) => ({
+        url: `/reviews/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 
   // overrideExisting: true,
 });
 
-export const { useGetAllRestaurantsQuery, useGetSingleRestaurantQuery } =
-  restaurantApi;
+export const {
+  useGetAllRestaurantsQuery,
+  useGetSingleRestaurantQuery,
+  useGetRestaurantReviewsQuery,
+} = restaurantApi;

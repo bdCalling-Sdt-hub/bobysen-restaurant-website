@@ -49,8 +49,6 @@ export default function BookNowBtn({ id }) {
     }
   };
 
-  console.log(isLoaderActive);
-
   return (
     <AlertDialog
       className="relative"

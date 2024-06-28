@@ -6,15 +6,14 @@ import { useSelector } from "react-redux";
 export default function DashboardLayout({ children }) {
   const router = useRouter();
   const { user } = useSelector((state) => state.auth);
-  const pathName = usePathname();
 
   useEffect(() => {
     if (!user?.userId) {
-      router.push(`/login?redirectLink=${pathName}`); // send pathname as query to redirect user to previous page
+      router.push(`/login`);
     }
 
     return () => {};
-  }, [pathName, router, user?.userId]);
+  }, [router, user?.userId]);
 
   if (user?.userId) {
     return children;

@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { useForgotPassMutation } from "@/redux/api/authApi";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function ForgotPassForm() {
   const {
@@ -12,8 +15,26 @@ export default function ForgotPassForm() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const router = useRouter();
 
-  const onSubmit = (data) => console.log(data);
+  const [forgotPass, { isLoading }] = useForgotPassMutation();
+
+  const onSubmit = async (data) => {
+    try {
+      const res = await forgotPass(data).unwrap();
+
+      if (res?.success) {
+        toast.success(res.message);
+
+        // set sign up token to session-storage
+        sessionStorage.setItem("forgotPasswordToken", res?.data?.token);
+
+        router.push("/verify-otp");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <form
@@ -38,13 +59,17 @@ export default function ForgotPassForm() {
           className="border border-primary-secondary-1 text-primary-black"
         />
         {errors.email && (
-          <p className={cn("font-kumbh-sans text-primary-secondary-1")}>
+          <p className={cn("font-kumbh-sans text-red-500")}>
             Email is required
           </p>
         )}
       </div>
 
-      <Button className="mt-8 h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white">
+      <Button
+        type="submit"
+        disabled={isLoading}
+        className="mt-8 h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white"
+      >
         Submit
       </Button>
     </form>

@@ -12,6 +12,7 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"; // change regex to all
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import LoadingButton from "../LoadingButton/LoadingButton";
+import { Error_Modal, Success_model } from "@/utils/modalHook";
 
 export default function OtpEnterForm() {
   const [otp, setOtp] = useState("");
@@ -23,8 +24,21 @@ export default function OtpEnterForm() {
 
     try {
       const res = await verifyOtp({ otp: otp }).unwrap();
+
+      if (res?.success) {
+        // remove sign up token from session storage
+        sessionStorage.removeItem("token");
+
+        Success_model({ title: "OTP verification successful" });
+
+        if (sessionStorage.getItem("forgotPasswordToken")) {
+          router.push("/set-new-password");
+        } else {
+          router.push("/login");
+        }
+      }
     } catch (error) {
-      console.error(error);
+      Error_Modal(error?.data?.message);
     }
   };
 
@@ -79,7 +93,7 @@ export default function OtpEnterForm() {
 
       {!isLoading ? (
         <Button
-          // disabled={otp?.length < 4}
+          disabled={otp?.length < 4}
           className="mt-8 h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white"
           onClick={handleVerifyOtp}
         >

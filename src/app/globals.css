@@ -1,3 +1,6 @@
+/* fonts */
+@import url("https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -81,6 +84,7 @@
 }
 .swal2-title {
   font-size: 25px !important;
+  font-family: "Kumbh Sans", sans-serif !important;
 }
 .swal2-html-container {
   font-size: 18px !important;
@@ -105,6 +109,12 @@ input[type="number"] {
 
 .rc-time-picker-panel-select {
   width: 76px !important;
+}
+.rc-time-picker-panel-select ul li {
+  font-size: large !important;
+}
+.rc-time-picker-panel-input {
+  font-size: large !important;
 }
 
 .rc-time-picker-input {
