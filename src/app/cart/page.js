@@ -1,12 +1,16 @@
+"use client";
 import { Button } from "@/components/ui/button";
+import { useSelector } from "react-redux";
 import CartCard from "./_components/CartCard";
 
-export const metadata = {
-  title: "Cart | Bookatable",
-  description: "The cart of bookatable platform",
-};
+// export const metadata = {
+//   title: "Cart | Bookatable",
+//   description: "The cart of bookatable platform",
+// };
 
 export default function Cart() {
+  const cart = useSelector((state) => state.cart);
+
   return (
     <div className="mx-auto pb-24 pt-[160px] lg:w-[60%]">
       {/* title */}

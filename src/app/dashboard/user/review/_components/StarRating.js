@@ -1,9 +1,7 @@
 "use client";
-import { useState } from "react";
 import StarRatings from "react-star-ratings";
 
-export default function StarRating() {
-  const [rating, setRating] = useState(0);
+export default function StarRating({ rating, setRating }) {
   const handleRatingChange = (newRating) => {
     setRating(newRating);
   };

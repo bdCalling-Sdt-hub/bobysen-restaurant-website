@@ -3,6 +3,14 @@ import { baseApi } from "./baseApi";
 
 const reservationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    submitReservation: builder.mutation({
+      query: (data) => ({
+        url: `/booking`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: [tagTypes.cart, tagTypes.booking],
+    }),
     getAllReservations: builder.query({
       query: (query) => ({
         url: `/booking`,
@@ -23,5 +31,8 @@ const reservationApi = baseApi.injectEndpoints({
   // overrideExisting: true,
 });
 
-export const { useGetAllReservationsQuery, useGetSingleReservationQuery } =
-  reservationApi;
+export const {
+  useGetAllReservationsQuery,
+  useGetSingleReservationQuery,
+  useSubmitReservationMutation,
+} = reservationApi;

@@ -1,17 +1,18 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { baseApi } from "./api/baseApi";
-import authReducer from "./features/authSlice";
-import storage from "redux-persist/lib/storage";
 import {
-  persistStore,
-  persistReducer,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
+  REHYDRATE,
 } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { baseApi } from "./api/baseApi";
+import authReducer from "./features/authSlice";
+import cartSlice from "./features/cartSlice.js";
 
 const persistConfig = {
   key: "root",
@@ -21,6 +22,7 @@ const persistConfig = {
 const reducers = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
   auth: authReducer,
+  cart: cartSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -7,18 +7,34 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useAddToCartMutation } from "@/redux/api/cartApi.js";
 import { useInsertItemIntoFavoriteListMutation } from "@/redux/api/favouriteApi.js";
 import { useGetSingleMenuQuery } from "@/redux/api/menuApi.js";
+import { addToCart } from "@/redux/features/cartSlice.js";
 import showImage from "@/utils/fileHelper.js";
 import { Error_Modal, Success_model } from "@/utils/modalHook.js";
 import { Heart, Minus, Plus } from "lucide-react";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation.js";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function FoodItem({ params }) {
+  const searchParams = useSearchParams();
+  const booking = searchParams.get("booking");
+  const dispatch = useDispatch();
   const [favourite, { isLoading, isSuccess }] =
     useInsertItemIntoFavoriteListMutation();
+  const router = useRouter();
+  const [count, setCount] = useState(0);
   const { data: Mdata, refetch } = useGetSingleMenuQuery(params?.id?.[0]);
+  const [addTocart] = useAddToCartMutation();
   // TODO: Use dynamic data
+  const decreaseCount = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
   const handleFavourite = async () => {
     try {
       const res = await favourite({ id: Mdata?.data?._id }).unwrap();
@@ -36,6 +52,19 @@ export default function FoodItem({ params }) {
     }
   };
 
+  const handleAddToCart = async () => {
+    const data = {
+      bookingId: booking,
+      quantity: count,
+      price: Mdata?.data?.price,
+      menu: params?.id?.[0],
+      owner: Mdata?.data?.owner,
+    };
+    dispatch(addToCart(data));
+    router.push(`/cart?booking=${booking}`);
+    try {
+    } catch (error) {}
+  };
   return (
     <div className="container flex flex-col items-center gap-x-10 pb-24 pt-[180px] lg:flex-row">
       {/* left */}
@@ -89,24 +118,27 @@ export default function FoodItem({ params }) {
               role="button"
               className="rounded-0 flex h-[50px] items-center justify-center rounded-l-lg border-2 border-r-0 border-primary-secondary-2 bg-transparent px-3 text-primary-black hover:border-transparent hover:bg-red-400 hover:text-primary-white"
             >
-              <Minus />
+              <Minus onClick={decreaseCount} />
             </div>
             <Input
               className="h-[50px] w-[120px] border-2 border-primary-secondary-2 text-center text-2xl outline-0"
               style={{ borderRadius: "0" }}
-              defaultValue={0}
+              value={count}
               id="cartQuantityInput"
             />
-            <div
+            <button
               role="button"
               className="rounded-0 flex h-[50px] items-center justify-center rounded-r-lg border-2 border-l-0 border-transparent bg-primary-secondary-3 px-3 text-3xl text-primary-white"
             >
-              <Plus />
-            </div>
+              <Plus onClick={() => setCount((count) => count + 1)} />
+            </button>
           </div>
 
           {/* right */}
-          <Button className="h-[50px] bg-primary-secondary-2 px-10 font-kumbh-sans text-lg text-primary-white">
+          <Button
+            onClick={handleAddToCart}
+            className="h-[50px] bg-primary-secondary-2 px-10 font-kumbh-sans text-lg text-primary-white"
+          >
             Add to Cart
           </Button>
 

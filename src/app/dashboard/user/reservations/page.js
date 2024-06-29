@@ -12,7 +12,7 @@ export default function UserOrders() {
     { label: "Completed", value: "completed" },
     { label: "Cancel", value: "canCelled" },
   ];
-  const [selectedStatus, setSelectedStatus] = useState("active");
+  const [selectedStatus, setSelectedStatus] = useState(displayStatus[0]?.value);
   const { data: Rdata } = useGetAllReservationsQuery({
     status: selectedStatus,
   });

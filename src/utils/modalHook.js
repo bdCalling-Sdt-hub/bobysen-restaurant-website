@@ -1,6 +1,6 @@
 "use client";
 
-import Swal from "sweetalert2";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -9,12 +9,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Swal from "sweetalert2";
 
 export const Success_model = (message) => {
   return Swal.fire({

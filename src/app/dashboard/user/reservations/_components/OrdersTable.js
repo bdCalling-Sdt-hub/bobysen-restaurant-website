@@ -129,10 +129,12 @@ export default function OrdersTable({ status, data }) {
                   </AlertDialogContent>
                 </AlertDialog>
               </TableCell>
-              {status === "Completed" && (
+              {!data?.isReviewed && status === "completed" && (
                 <TableCell className="font-kumbh-sans text-primary-black">
                   <Button variant="outline" asChild>
-                    <Link href="/dashboard/user/review">
+                    <Link
+                      href={`/dashboard/user/review?booking=${data?._id}&restaurant=${data?.restaurant?._id}`}
+                    >
                       <MessageSquareText className="mr-2 h-4 w-4" /> Share
                       Review
                     </Link>

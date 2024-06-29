@@ -18,6 +18,13 @@ const restaurantApi = baseApi.injectEndpoints({
       // providesTags: [tagTypes.restaurant],
     }),
 
+    insertReview: builder.mutation({
+      query: (data) => ({
+        url: `/reviews`,
+        method: "POST",
+        body: data,
+      }),
+    }),
     getRestaurantReviews: builder.query({
       query: (id) => ({
         url: `/reviews/${id}`,
@@ -33,4 +40,5 @@ export const {
   useGetAllRestaurantsQuery,
   useGetSingleRestaurantQuery,
   useGetRestaurantReviewsQuery,
+  useInsertReviewMutation,
 } = restaurantApi;

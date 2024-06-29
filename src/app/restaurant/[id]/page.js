@@ -25,11 +25,12 @@ import {
   useGetSingleRestaurantQuery,
 } from "@/redux/api/restaurantApi.js";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
+import { format } from "date-fns";
 import { Clock, PhoneOutgoing } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import TimePicker from "rc-time-picker-date-fns";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import styles from "./DynamicRestaurant.module.css";
 import BookNowBtn from "./_components/BookNowBtn/BookNowBtn";
 import FeedbackCard from "./_components/FeedbackCard/FeedbackCard";
@@ -59,6 +60,7 @@ export default function DynamicRestaurant({ params }) {
   const { data: reviewsData, isLoading: isReviewsLoading } =
     useGetRestaurantReviewsQuery(id);
   const { data: Rdata, isLoading } = useGetSingleRestaurantQuery(id);
+
   const {
     name,
     location,
@@ -89,14 +91,20 @@ export default function DynamicRestaurant({ params }) {
   }, []);
 
   // reviews data
-  const { ratingOverview, reviews } = reviewsData?.data;
+  const { ratingOverview, reviews } = reviewsData?.data || {};
 
   // todo: get book a table data
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [guestCount, setGuestCount] = useState(null);
-  const numberOfGuests = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const [guestCount, setGuestCount] = useState(0);
+  const numberOfGuests = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+  const reservationData = {
+    time: selectedTime,
+    date: selectedDate,
+    seats: guestCount,
+    restaurant: id,
+  };
   return (
     <div className="container pt-[160px]">
       {/* Restaurant Details Section */}
@@ -191,7 +199,9 @@ export default function DynamicRestaurant({ params }) {
                     className="h-full w-full"
                     defaultValue={new Date()}
                     minuteStep={15}
-                    onChange={(value) => setSelectedTime(value)}
+                    onChange={(value) =>
+                      setSelectedTime(format(value, "HH:mm"))
+                    }
                   />
                 </div>
 
@@ -216,7 +226,7 @@ export default function DynamicRestaurant({ params }) {
           </div>
 
           {/* Book Now Button with Modal */}
-          <BookNowBtn id={id} />
+          <BookNowBtn reservation={reservationData} />
         </div>
 
         {/* right */}
@@ -302,8 +312,10 @@ export default function DynamicRestaurant({ params }) {
               </div>
               <Progress
                 value={
-                  ratingOverview["5star"]?.avg
-                    ? ratingOverview["5star"]?.avg
+                  ratingOverview &&
+                  ratingOverview["5star"] &&
+                  ratingOverview["5star"].avg
+                    ? ratingOverview["5star"].avg
                     : 0
                 }
                 className={cn("bg-primary-secondary-1", styles.progressBar)}
@@ -316,7 +328,7 @@ export default function DynamicRestaurant({ params }) {
               </div>
               <Progress
                 value={
-                  ratingOverview["4star"]?.avg
+                  ratingOverview && ratingOverview["4star"]?.avg
                     ? ratingOverview["4star"]?.avg
                     : 0
                 }
@@ -330,7 +342,7 @@ export default function DynamicRestaurant({ params }) {
               </div>
               <Progress
                 value={
-                  ratingOverview["3star"]?.avg
+                  ratingOverview && ratingOverview["3star"]?.avg
                     ? ratingOverview["3star"]?.avg
                     : 0
                 }
@@ -344,7 +356,7 @@ export default function DynamicRestaurant({ params }) {
               </div>
               <Progress
                 value={
-                  ratingOverview["2star"]?.avg
+                  ratingOverview && ratingOverview["2star"]?.avg
                     ? ratingOverview["2star"]?.avg
                     : 0
                 }
@@ -358,7 +370,7 @@ export default function DynamicRestaurant({ params }) {
               </div>
               <Progress
                 value={
-                  ratingOverview["1star"]?.avg
+                  ratingOverview && ratingOverview["1star"]?.avg
                     ? ratingOverview["1star"]?.avg
                     : 0
                 }

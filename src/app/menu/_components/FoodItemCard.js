@@ -15,9 +15,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import BookNowModal from "./BookNowModal";
 
-export default function FoodItemCard({ cardData }) {
+export default function FoodItemCard({ cardData, booking }) {
   const { _id, name, price } = cardData;
-
   const params = useSearchParams().get("state");
   const restaurantId = usePathname().replace("/menu/", "");
   const router = useRouter();
@@ -28,7 +27,7 @@ export default function FoodItemCard({ cardData }) {
     if (params === "only-menu") {
       setBookNowModalOpen(true);
     } else {
-      router.push(`/menu/item/${_id}`);
+      router.push(`/menu/item/${_id}?booking=${booking}`);
     }
   };
 

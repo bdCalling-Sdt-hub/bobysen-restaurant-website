@@ -10,9 +10,17 @@ const cartApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.cart, tagTypes.booking],
     }),
+    addToCart: builder.mutation({
+      query: (data) => ({
+        url: `/cart/${data?.id}`,
+        method: "POST",
+        body: data?.body,
+      }),
+      invalidatesTags: [tagTypes.cart, tagTypes.booking],
+    }),
   }),
 
   // overrideExisting: true,
 });
 
-export const { useGetMenuByReservationIdQuery } = cartApi;
+export const { useGetMenuByReservationIdQuery, useAddToCartMutation } = cartApi;
