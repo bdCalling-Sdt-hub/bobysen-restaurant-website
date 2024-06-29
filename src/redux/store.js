@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import {
   FLUSH,
   PAUSE,
@@ -11,25 +11,25 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { baseApi } from "./api/baseApi";
-import authReducer from "./features/authSlice";
+
+import authSlice from "./features/authSlice.js";
 import cartSlice from "./features/cartSlice.js";
+import searchSlice from "./features/searchSlice.js";
 
 const persistConfig = {
-  key: "root",
+  key: "auth",
   storage,
 };
 
-const reducers = combineReducers({
-  [baseApi.reducerPath]: baseApi.reducer,
-  auth: authReducer,
-  cart: cartSlice,
-});
-
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedAuthReducer = persistReducer(persistConfig, authSlice);
 
 export const store = configureStore({
-  reducer: persistedReducer,
-
+  reducer: {
+    [baseApi.reducerPath]: baseApi.reducer,
+    auth: persistedAuthReducer,
+    cart: cartSlice,
+    search: searchSlice,
+  },
   middleware: (getDefaultMiddlewares) =>
     getDefaultMiddlewares({
       serializableCheck: {
@@ -38,4 +38,6 @@ export const store = configureStore({
     }).concat(baseApi.middleware),
 });
 
-export let persistor = persistStore(store);
+// Infer the `RootState` and `AppDispatch` types from the store itself
+
+export const persistor = persistStore(store);

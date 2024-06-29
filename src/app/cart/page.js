@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 import CartCard from "./_components/CartCard";
 
@@ -9,6 +10,8 @@ import CartCard from "./_components/CartCard";
 // };
 
 export default function Cart() {
+  const searchParams = useSearchParams();
+  const booking = searchParams.get("booking");
   const cart = useSelector((state) => state.cart);
 
   return (
@@ -18,8 +21,13 @@ export default function Cart() {
 
       {/* cart cards */}
       <div className="space-y-10">
-        {Array.from({ length: 3 }).map((_, idx) => (
-          <CartCard key={idx} />
+        {cart?.items?.map((data, idx) => (
+          <CartCard
+            key={idx}
+            data={data}
+            bookingId={booking}
+            totalAmount={cart?.totalAmount}
+          />
         ))}
       </div>
 
@@ -28,8 +36,12 @@ export default function Cart() {
         <div className="flex items-center justify-between">
           <h1 className="font-normal text-primary-secondary-3">Total Cost</h1>
           <h1 className="font-bold text-primary-secondary-3">
-            ${parseFloat(1500).toFixed(2)}
+            $ {cart?.totalAmount}
           </h1>
+        </div>
+        <div className="mt-2 flex items-center justify-between">
+          <h1 className="font-normal text-primary-secondary-3">Status</h1>
+          <h1 className="font-bold text-primary-secondary-3">{cart?.status}</h1>
         </div>
         <Button className="mt-8 w-full rounded-lg bg-primary-secondary-3 font-medium text-primary-white">
           Payment

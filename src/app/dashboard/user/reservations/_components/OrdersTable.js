@@ -121,6 +121,10 @@ export default function OrdersTable({ status, data }) {
                           <h4>Total Cost</h4>
                           <h4>${Cdata?.data?.totalAmount}</h4>
                         </div>
+                        <div className="mb-2 mt-4 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
+                          <h4>Status</h4>
+                          <h4>{Cdata?.data?.status}</h4>
+                        </div>
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

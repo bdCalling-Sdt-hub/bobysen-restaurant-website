@@ -1,44 +1,61 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import locationIcon from "/public/hero/location.svg";
-import downArrowIcon from "/public/hero/downArrow.png";
-import searchIcon from "/public/hero/search.svg";
-import Image from "next/image";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { setLocation, setSearchTerm } from "@/redux/features/searchSlice.js";
+import { Error_Modal } from "@/utils/modalHook.js";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import downArrowIcon from "/public/hero/downArrow.png";
+import locationIcon from "/public/hero/location.svg";
+import searchIcon from "/public/hero/search.svg";
 
 export default function HeroSearchBar() {
-  const [searchValue, setSearchValue] = useState("");
-  const [location, setLocation] = useState("");
-  const [isLocationFocused, setIsLocationFocused] = useState(false);
+  const dispatch = useDispatch();
 
+  const [isLocationFocused, setIsLocationFocused] = useState(false);
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          dispatch(
+            setLocation({
+              Iat: position.coords.latitude,
+              lng: position.coords.longitude,
+            }),
+          );
+        },
+        (error) => {
+          Error_Modal({ title: error?.message });
+        },
+      );
+    } else {
+      Error_Modal({ title: "Geolocation is not supported by this browser." });
+    }
+  };
   const router = useRouter();
 
   return (
     <div className="relative">
       <Input
+        placeholder="Search by restaurant name"
         id="heroSearch"
         className="h-[65px] w-full rounded-3xl border border-primary-black bg-transparent pl-[150px] text-lg text-primary-black shadow"
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={(e) => dispatch(setSearchTerm(e.target.value))}
       />
 
       <div className="absolute left-[1%] top-[6%] h-[57px] w-[35%] text-ellipsis rounded-l-3xl border-l bg-primary-secondary-3 text-center font-kumbh-sans text-primary-white lg:left-[1%] lg:w-[27%]">
         <input
+          onClick={getLocation}
           type="text"
-          onChange={(e) => setLocation(e.target.value)}
+          placeholder="search here"
+          // onChange={(e) => setLocation(e.target.value)}
           defaultValue={"Location"}
-          className="h-full w-full rounded-l-3xl border-2 border-transparent bg-primary-secondary-3 pl-[25%] font-kumbh-sans text-primary-white outline-none focus:border-2 focus:border-black lg:pl-10"
-          onFocus={() => setIsLocationFocused(true)}
-          onBlur={() => setIsLocationFocused(false)}
+          className="h-full w-full cursor-pointer rounded-l-3xl border-2 border-transparent bg-primary-secondary-3 pl-[25%] font-kumbh-sans text-primary-white outline-none focus:border-2 focus:border-black lg:pl-10"
+          // onFocus={() => setIsLocationFocused(true)}
+          // onBlur={() => setIsLocationFocused(false)}
         />
         <Image
           src={downArrowIcon}

@@ -3,11 +3,13 @@ import { baseApi } from "./baseApi";
 const restaurantApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllRestaurants: builder.query({
-      query: (query) => ({
-        url: `/restaurants`,
-        method: "GET",
-        params: query,
-      }),
+      query: (args) => {
+        return {
+          url: "/restaurants",
+          method: "GET",
+          params: args,
+        };
+      },
       // providesTags: [tagTypes.restaurant],
     }),
     getSingleRestaurant: builder.query({

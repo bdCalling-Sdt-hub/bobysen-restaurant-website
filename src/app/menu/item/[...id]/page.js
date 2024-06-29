@@ -28,6 +28,7 @@ export default function FoodItem({ params }) {
   const router = useRouter();
   const [count, setCount] = useState(0);
   const { data: Mdata, refetch } = useGetSingleMenuQuery(params?.id?.[0]);
+  console.log("mdata", Mdata);
   const [addTocart] = useAddToCartMutation();
   // TODO: Use dynamic data
   const decreaseCount = () => {
@@ -58,12 +59,27 @@ export default function FoodItem({ params }) {
       quantity: count,
       price: Mdata?.data?.price,
       menu: params?.id?.[0],
+      menuName: Mdata?.data?.name,
+      menuImage: Mdata?.data?.image,
+      status: "unpaid",
+    };
+
+    const cartData = {
+      bookingId: booking,
+      menu: params?.id?.[0],
+      quantity: count,
+      amount: Number(count) * Number(Mdata?.data?.price),
       owner: Mdata?.data?.owner,
     };
     dispatch(addToCart(data));
     router.push(`/cart?booking=${booking}`);
+    Success_model({ text: "Item successfully added into cart" });
+    await addTocart({ body: cartData, id: booking }).unwrap();
+
     try {
-    } catch (error) {}
+    } catch (error) {
+      Error_Modal({ text: "Something went wrong" });
+    }
   };
   return (
     <div className="container flex flex-col items-center gap-x-10 pb-24 pt-[180px] lg:flex-row">
