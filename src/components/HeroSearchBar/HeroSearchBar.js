@@ -66,8 +66,8 @@ export default function HeroSearchBar() {
           onClick={() => setIsLocationFocused(!isLocationFocused)}
           onBlur={() => setIsLocationFocused(!isLocationFocused)}
           type="text"
-          placeholder="search here"
-          defaultValue={"Location"}
+          value={"Location"}
+          readOnly
           className="h-full w-full cursor-pointer rounded-l-3xl border-2 border-transparent bg-primary-secondary-3 pl-[20%] font-kumbh-sans text-primary-white outline-none focus:border-2 focus:border-black lg:pl-9"
         />
         <Image
