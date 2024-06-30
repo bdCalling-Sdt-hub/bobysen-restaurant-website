@@ -25,9 +25,12 @@ export function DayPickerInput({ date, setDate }) {
             !date && "text-muted-foreground",
           )}
         >
-          {/* <CalendarIcon className="mr-2 h-4 w-4" /> */}
           <Image src={calendarIcon} alt="calendar icon" className="mr-2" />
-          {date ? format(date, "yyyy-MM-dd") : <span>Date</span>}
+          {date ? (
+            format(date, "yyyy-MM-dd")
+          ) : (
+            <span className="text-primary-black">Pick Date</span>
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

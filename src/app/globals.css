@@ -90,6 +90,7 @@
   font-size: 18px !important;
   text-align: center !important;
   font-weight: 500 !important;
+  font-family: "Kumbh Sans", sans-serif !important;
 }
 
 /* Complete CSS to remove spinner icons from number inputs */
@@ -123,6 +124,9 @@ input[type="number"] {
   font-weight: 500 !important;
   border: 0px !important;
   color: var(--primary-black);
+}
+.rc-time-picker-input::placeholder {
+  color: #232323 !important;
 }
 
 .rc-time-picker-panel-inner {

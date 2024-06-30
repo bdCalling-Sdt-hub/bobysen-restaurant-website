@@ -9,6 +9,15 @@ import Providers from "@/lib/Providers";
 import "rc-time-picker-date-fns/assets/index.css";
 import { Toaster } from "sonner";
 
+export const metadata = {
+  title: {
+    default: "bookatable",
+    template: "%s | bookatable",
+  },
+  description:
+    "The official webpage of the bookatable restaurant which enable diners to customize their booking by requesting a specific table location or view.",
+};
+
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 const kumbhSans = Kumbh_Sans({
   subsets: ["latin"],

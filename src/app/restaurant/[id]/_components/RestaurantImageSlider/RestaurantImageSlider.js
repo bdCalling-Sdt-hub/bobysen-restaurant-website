@@ -9,20 +9,27 @@ import showImage from "@/utils/fileHelper.js";
 import Image from "next/image";
 
 export default function RestaurantImageSlider({ images }) {
+  console.log(images);
   return (
     <div>
       <Carousel>
         <CarouselContent>
-          {images?.map((image) => (
-            <CarouselItem key={image.id}>
-              <Image
-                height={0}
-                width={800}
-                src={showImage(image?.url)}
-                alt="picture of the restaurant"
-              />
+          {images ? (
+            images?.map((image) => (
+              <CarouselItem key={image.id}>
+                <Image
+                  height={400}
+                  width={800}
+                  src={showImage(image?.url)}
+                  alt="picture of the restaurant"
+                />
+              </CarouselItem>
+            ))
+          ) : (
+            <CarouselItem>
+              <div className="h-[400px] w-[800px] animate-pulse bg-gray-400/30"></div>
             </CarouselItem>
-          ))}
+          )}
         </CarouselContent>
         <CarouselPrevious className="bg-primary-secondary-3 text-primary-white-light" />
         <CarouselNext className="bg-primary-secondary-3 text-primary-white-light" />

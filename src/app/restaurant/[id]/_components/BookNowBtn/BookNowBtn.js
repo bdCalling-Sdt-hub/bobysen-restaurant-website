@@ -28,7 +28,7 @@ import foodMenuIcon from "/public/DynamicRestaurant/menu.png";
 import successfulIcon from "/public/DynamicRestaurant/succesful.png";
 import usersIcon from "/public/DynamicRestaurant/users.png";
 
-export default function BookNowBtn({ reservation }) {
+export default function BookNowBtn({ reservation, setShowRequiredError }) {
   const [booking, { data: submitData, isLoading: submitLoading }] =
     useSubmitReservationMutation();
   const { data: reservationData } = useGetSingleReservationQuery(
@@ -45,10 +45,16 @@ export default function BookNowBtn({ reservation }) {
 
   // show modal if user exists else send to login
   const handleReservation = async (e) => {
+    e.preventDefault();
+    setShowRequiredError(false);
+    if (!reservation.time || !reservation.date || !reservation.seats) {
+      setShowRequiredError(true);
+      return;
+    }
+
     if (!user?.userId) {
       setLoginModalOpen((prev) => !prev);
     }
-    e.preventDefault();
 
     try {
       setIsLoaderActive(true);

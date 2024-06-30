@@ -60,6 +60,7 @@ export default function DynamicRestaurant({ params }) {
   const { data: reviewsData, isLoading: isReviewsLoading } =
     useGetRestaurantReviewsQuery(id);
   const { data: Rdata, isLoading } = useGetSingleRestaurantQuery(id);
+  const [showRequiredError, setShowRequiredError] = useState(false);
 
   const {
     name,
@@ -95,8 +96,8 @@ export default function DynamicRestaurant({ params }) {
 
   // todo: get book a table data
   const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [guestCount, setGuestCount] = useState(0);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [guestCount, setGuestCount] = useState(null);
   const numberOfGuests = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const reservationData = {
@@ -105,6 +106,9 @@ export default function DynamicRestaurant({ params }) {
     seats: guestCount,
     restaurant: id,
   };
+
+  console.log(reservationData);
+
   return (
     <div className="container pt-[160px]">
       {/* Restaurant Details Section */}
@@ -153,8 +157,20 @@ export default function DynamicRestaurant({ params }) {
                     </p>
                   </div>
                 </div>
+              </div>
 
+              {/* Inner Right */}
+              <div>
                 <div className="flex items-start gap-2">
+                  <Image src={menuIcon} alt="hamburger menu icon" />
+                  <p>
+                    {description}
+                    <Button variant="link" className="text-primary-secondary-3">
+                      Read More...
+                    </Button>
+                  </p>
+                </div>
+                <div className="mt-4 flex items-start gap-2">
                   <Image src={bookIcon} alt="calendar icon" />
                   <Link href={`/menu/${id}?state=only-menu`}>
                     <p className="border-b-2 border-b-primary-secondary-2 text-primary-secondary-1 transition-all duration-300 ease-in-out hover:border-b-primary-secondary-1">
@@ -162,17 +178,6 @@ export default function DynamicRestaurant({ params }) {
                     </p>
                   </Link>
                 </div>
-              </div>
-
-              {/* Inner Right */}
-              <div className="flex items-start gap-2">
-                <Image src={menuIcon} alt="hamburger menu icon" />
-                <p>
-                  {description}
-                  <Button variant="link" className="text-primary-secondary-3">
-                    Read More...
-                  </Button>
-                </p>
               </div>
             </div>
 
@@ -182,7 +187,9 @@ export default function DynamicRestaurant({ params }) {
                 Book a table
               </h4>
 
-              <div className="mb-16 mt-2 grid w-1/2 grid-cols-1 gap-x-6 gap-y-4 lg:mb-0 lg:w-full lg:gap-y-0 xl:grid-cols-3">
+              <div
+                className={`mb-16 mt-3 grid w-1/2 grid-cols-1 gap-x-6 gap-y-4 lg:mb-0 lg:w-full lg:gap-y-0 xl:grid-cols-3`}
+              >
                 <div className="w-full">
                   <DayPickerInput
                     date={selectedDate}
@@ -197,11 +204,12 @@ export default function DynamicRestaurant({ params }) {
                     showMinute={true}
                     showSecond={false}
                     className="h-full w-full"
-                    defaultValue={new Date()}
+                    placeholder="Pick time"
                     minuteStep={15}
                     onChange={(value) =>
                       setSelectedTime(format(value, "HH:mm"))
                     }
+                    defaultValue={selectedTime}
                   />
                 </div>
 
@@ -210,7 +218,10 @@ export default function DynamicRestaurant({ params }) {
                   <Select onValueChange={(value) => setGuestCount(value)}>
                     <SelectTrigger className="flex max-w-full items-center justify-between gap-x-4">
                       <Image src={usersIcon} alt="users icon" />
-                      <SelectValue placeholder="Guests" />
+                      <SelectValue
+                        placeholder="Guests"
+                        className="text-gray- 100"
+                      />
                     </SelectTrigger>
                     <SelectContent>
                       {numberOfGuests?.map((number) => (
@@ -222,11 +233,20 @@ export default function DynamicRestaurant({ params }) {
                   </Select>
                 </div>
               </div>
+
+              {showRequiredError && (
+                <p className="mt-1 pl-1 font-kumbh-sans text-sm font-medium text-primary-danger">
+                  Please fill out the form completely to book now!
+                </p>
+              )}
             </div>
           </div>
 
           {/* Book Now Button with Modal */}
-          <BookNowBtn reservation={reservationData} />
+          <BookNowBtn
+            reservation={reservationData}
+            setShowRequiredError={setShowRequiredError}
+          />
         </div>
 
         {/* right */}
