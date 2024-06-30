@@ -14,7 +14,7 @@ import searchIcon from "/public/hero/search.svg";
 
 export default function HeroSearchBar() {
   const dispatch = useDispatch();
-
+  const [search, setSearch] = useState();
   const [isLocationFocused, setIsLocationFocused] = useState(false);
   const getLocation = () => {
     if (navigator.geolocation) {
@@ -43,7 +43,7 @@ export default function HeroSearchBar() {
         placeholder="Search by restaurant name"
         id="heroSearch"
         className="h-[65px] w-full rounded-3xl border border-primary-black bg-transparent pl-[150px] text-lg text-primary-black shadow"
-        onChange={(e) => dispatch(setSearchTerm(e.target.value))}
+        onChange={(e) => setSearch(e.target.value)}
       />
 
       <div className="absolute left-[1%] top-[6%] h-[57px] w-[35%] text-ellipsis rounded-l-3xl border-l bg-primary-secondary-3 text-center font-kumbh-sans text-primary-white lg:left-[1%] lg:w-[27%]">
@@ -93,7 +93,11 @@ export default function HeroSearchBar() {
         role="button"
         onClick={() => router.push("/all-restaurants")}
       >
-        <Image src={searchIcon} alt="search icon" />
+        <Image
+          src={searchIcon}
+          alt="search icon"
+          onClick={() => dispatch(setSearchTerm(search))}
+        />
       </div>
     </div>
   );

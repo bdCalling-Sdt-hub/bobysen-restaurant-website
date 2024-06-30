@@ -49,16 +49,23 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+    deleteAccount: builder.mutation({
+      query: (data) => ({
+        url: "/users",
+        method: "DELETE",
+        body: data,
+      }),
+    }),
   }),
 
-  overrideExisting: true,
+  // overrideExisting: true,
 });
 
 export const {
   useSignUpMutation,
   useVerifyOtpMutation,
   useLoginMutation,
-
+  useDeleteAccountMutation,
   useForgotPassMutation,
   useResetPassMutation,
 } = authApi;

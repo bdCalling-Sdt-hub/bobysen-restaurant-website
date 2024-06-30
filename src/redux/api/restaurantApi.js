@@ -1,3 +1,4 @@
+import { tagTypes } from "../tagTypes.js";
 import { baseApi } from "./baseApi";
 
 const restaurantApi = baseApi.injectEndpoints({
@@ -17,7 +18,7 @@ const restaurantApi = baseApi.injectEndpoints({
         url: `/restaurants/${id}`,
         method: "GET",
       }),
-      // providesTags: [tagTypes.restaurant],
+      providesTags: [tagTypes.restaurant, tagTypes.review],
     }),
 
     insertReview: builder.mutation({
@@ -26,6 +27,7 @@ const restaurantApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      providesTags: [tagTypes.restaurant, tagTypes.review],
     }),
     getRestaurantReviews: builder.query({
       query: (id) => ({
@@ -33,6 +35,7 @@ const restaurantApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    providesTags: [tagTypes.restaurant, tagTypes.review],
   }),
 
   // overrideExisting: true,

@@ -298,8 +298,7 @@ export default function DynamicRestaurant({ params }) {
             </div>
 
             <p className="mt-5 max-w-max text-center font-kumbh-sans text-primary-secondary-1">
-              12334 Ratings <br /> & <br />
-              {reviews?.length} Reviews
+              {reviews?.length ?? 0} Reviews
             </p>
           </div>
 

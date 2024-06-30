@@ -17,9 +17,11 @@ export const tagTypes = {
   content: "content",
   order: "order",
   wallet: "wallet",
+  review: "review",
 };
 
 export const tagTypesList = [
+  tagTypes.review,
   tagTypes.auth,
   tagTypes.users,
   tagTypes.vendor,

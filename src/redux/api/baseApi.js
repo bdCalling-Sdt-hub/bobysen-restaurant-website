@@ -9,8 +9,6 @@ const baseQuery = fetchBaseQuery({
     const forgotPasswordToken = sessionStorage.getItem("forgotPasswordToken");
     const token = getState().auth.token;
 
-    console.log(token);
-
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
