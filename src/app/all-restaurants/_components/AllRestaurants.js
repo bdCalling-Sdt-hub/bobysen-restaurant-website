@@ -4,16 +4,14 @@ import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
 import SkeletonLoader from "@/components/SkeletonLoader/SkeletonLoader";
 import { useGetAllRestaurantsQuery } from "@/redux/api/restaurantApi";
 import { Empty } from "antd";
-import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function AllRestaurants() {
   const search = useSelector((state) => state.search);
+  console.log(search);
   const { data: Rdata, isFetching: isRestaurantDataLoading } =
-    useGetAllRestaurantsQuery(search, {
-      skip: !Boolean(search),
-    });
-
+    useGetAllRestaurantsQuery(search);
+  console.log(Rdata);
   return (
     <>
       {isRestaurantDataLoading ? (

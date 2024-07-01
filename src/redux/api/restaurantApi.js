@@ -8,7 +8,7 @@ const restaurantApi = baseApi.injectEndpoints({
         return {
           url: "/restaurants",
           method: "GET",
-          // params: args,
+          params: args,
         };
       },
       // providesTags: [tagTypes.restaurant],
