@@ -1,4 +1,5 @@
 "use client";
+import SkeletonLoader from "@/components/SkeletonLoader/SkeletonLoader.js";
 import {
   Carousel,
   CarouselContent,
@@ -28,8 +29,12 @@ export default function DynamicMenu({ params }) {
     menuCategories?.data[0]?._id,
   );
 
-  const { data: Fdata } = useGetAllMenuQuery(
-    { category: selectedCategory },
+  const {
+    data: Fdata,
+    isLoading,
+    isFetching,
+  } = useGetAllMenuQuery(
+    { category: selectedCategory, restaurant: params?.id },
     { skip: !menuCategories?.data[0]?._id },
   );
   return (
@@ -60,8 +65,12 @@ export default function DynamicMenu({ params }) {
       </div>
 
       {/* category items */}
-      {Fdata?.data?.length > 0 ? (
-        <div className="mx-auto my-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:w-[80%] lg:grid-cols-4">
+      {isLoading || isFetching ? (
+        <div className="container">
+          <SkeletonLoader />
+        </div>
+      ) : Fdata?.data?.length > 0 ? (
+        <div className="container mx-auto my-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:w-[80%] lg:grid-cols-4">
           {Fdata?.data?.map((data, idx) => (
             <FoodItemCard cardData={data} key={idx} booking={booking} />
           ))}

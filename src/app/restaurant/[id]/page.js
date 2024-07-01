@@ -64,6 +64,7 @@ export default function DynamicRestaurant({ params }) {
 
   const {
     name,
+    address,
     location,
     avgReviews,
     reviewStatus,
@@ -127,7 +128,7 @@ export default function DynamicRestaurant({ params }) {
                 <div className="mb-4 flex items-start gap-2">
                   <Image src={locationIcon} alt="location icon" />
                   <p className="text-primary-secondary-1">
-                    {location}
+                    {address}
                     {/* <Link
                       href="https://maps.app.goo.gl/7cd8co1jrPgimQE77"
                       className="flex items-center gap-x-2 font-semibold italic"
