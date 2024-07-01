@@ -32,7 +32,7 @@ export default function UserReview() {
       Success_model({ text: res?.message });
       router.push("/");
     } catch (error) {
-      Error_Modal(error?.data?.message);
+      Error_Modal({ title: error?.data?.message });
     }
   };
   return (

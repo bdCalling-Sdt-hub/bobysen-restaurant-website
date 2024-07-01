@@ -49,7 +49,7 @@ export default function FoodItem({ params }) {
       }
       refetch();
     } catch (error) {
-      Error_Modal(error?.data?.message);
+      Error_Modal({ title: error?.data?.message });
     }
   };
 
@@ -78,7 +78,7 @@ export default function FoodItem({ params }) {
 
     try {
     } catch (error) {
-      Error_Modal({ text: "Something went wrong" });
+      Error_Modal({ text: error?.data?.message || "Something went wrong" });
     }
   };
   return (

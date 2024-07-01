@@ -15,7 +15,7 @@ export default function FavoriteCard({ data }) {
       await favourite({ id: data?._id }).unwrap();
       Success_model("Menu successfully removed from favorite list");
     } catch (error) {
-      Error_Modal(error?.message);
+      Error_Modal({ title: error?.data?.message });
     }
   };
   return (

@@ -33,7 +33,7 @@ export default function HeroSearchBar() {
           );
         },
         (error) => {
-          Error_Modal(error?.message);
+          Error_Modal(error?.data?.message);
         },
       );
     } else {

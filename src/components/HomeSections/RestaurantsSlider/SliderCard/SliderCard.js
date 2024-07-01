@@ -49,7 +49,7 @@ export default function SliderCard({ data }) {
         <div className="mb-4 flex items-center gap-x-2">
           <Image src={locationIcon} alt="location marker icon" />
           <span className="font-kumbh-sans text-base font-medium text-primary-black/75">
-            {data?.location}
+            {data?.address}
           </span>
         </div>
 

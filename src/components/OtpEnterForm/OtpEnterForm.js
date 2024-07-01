@@ -38,7 +38,7 @@ export default function OtpEnterForm() {
         }
       }
     } catch (error) {
-      Error_Modal(error?.data?.message);
+      Error_Modal({ title: error?.data?.message });
     }
   };
 

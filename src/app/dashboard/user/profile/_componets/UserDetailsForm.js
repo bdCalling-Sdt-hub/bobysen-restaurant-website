@@ -66,7 +66,7 @@ export default function UserDetailsForm() {
         Success_model({ title: "Profile Updated Successfully" });
       }
     } catch (error) {
-      Error_Modal(error?.data?.message);
+      Error_Modal({ title: error?.data?.message });
     }
   };
 

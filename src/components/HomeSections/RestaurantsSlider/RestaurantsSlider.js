@@ -11,12 +11,13 @@ import Image from "next/image";
 import Link from "next/link";
 import SliderCard from "./SliderCard/SliderCard";
 import rightArrow from "/public/restaurantSlider/rightArrow.png";
+import { useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function RestaurantsSlider() {
-  const { data: Rdata } = useGetAllRestaurantsQuery(undefined);
-  return (
-    // TODO: Load dynamic data from database
+  const { data: Rdata, isFetching } = useGetAllRestaurantsQuery();
 
+  return (
     <section className="container mb-[100px]">
       <div className="mb-16 flex items-center justify-between">
         {/* left */}
@@ -39,19 +40,36 @@ export default function RestaurantsSlider() {
           <Image src={rightArrow} alt="right arrow" />
         </Link>
       </div>
-      <Carousel>
-        <CarouselContent className="-ml-8">
-          {Rdata?.data?.map((data, index) => (
-            <CarouselItem key={index} className="pl-8 md:basis-1/2">
-              <SliderCard data={data} />
-            </CarouselItem>
+      {isFetching ? (
+        <div className="grid grid-cols-1 gap-y-5 lg:grid-cols-2 lg:gap-x-5 lg:gap-y-0">
+          {Array.from({ length: 2 }).map((_, idx) => (
+            <div
+              key={idx}
+              className="h-[240px] w-full rounded-2xl border border-gray-200"
+            >
+              <Skeleton className="m-5 h-24 w-[75%]" />
+              <Skeleton className="m-5 h-4 w-[85%]" />
+              <Skeleton className="m-5 h-4 w-[65%]" />
+              <Skeleton className="m-5 h-4 w-[55%]" />
+            </div>
           ))}
-        </CarouselContent>
-        <div>
-          <CarouselPrevious className="-left-6 bg-primary-secondary-3 text-primary-white lg:-left-12" />
-          <CarouselNext className="-right-6 bg-primary-secondary-3 text-primary-white lg:-right-12" />
         </div>
-      </Carousel>
+      ) : (
+        <Carousel>
+          <CarouselContent className="-ml-8">
+            {Rdata?.success &&
+              Rdata?.data?.map((item, index) => (
+                <CarouselItem key={index} className="pl-8 md:basis-1/2">
+                  <SliderCard data={item} />
+                </CarouselItem>
+              ))}
+          </CarouselContent>
+          <div>
+            <CarouselPrevious className="-left-6 bg-primary-secondary-3 text-primary-white lg:-left-12" />
+            <CarouselNext className="-right-6 bg-primary-secondary-3 text-primary-white lg:-right-12" />
+          </div>
+        </Carousel>
+      )}
     </section>
   );
 }

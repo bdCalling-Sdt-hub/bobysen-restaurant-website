@@ -107,8 +107,6 @@ export default function DynamicRestaurant({ params }) {
     restaurant: id,
   };
 
-  console.log(reservationData);
-
   return (
     <div className="container pt-[160px]">
       {/* Restaurant Details Section */}

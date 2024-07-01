@@ -52,10 +52,11 @@ export default function SignUpForm() {
         router.push("/verify-otp");
       }
     } catch (error) {
-      Error_Modal(
-        error?.data?.message.charAt(0).toUpperCase() +
+      Error_Modal({
+        title:
+          error?.data?.message.charAt(0).toUpperCase() +
           error?.data?.message.slice(1),
-      );
+      });
     }
   };
 
