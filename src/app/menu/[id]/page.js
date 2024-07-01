@@ -70,7 +70,7 @@ export default function DynamicMenu({ params }) {
           <SkeletonLoader />
         </div>
       ) : Fdata?.data?.length > 0 ? (
-        <div className="container mx-auto my-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:w-[80%] lg:grid-cols-4">
+        <div className="mx-auto my-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:w-[80%] lg:grid-cols-4">
           {Fdata?.data?.map((data, idx) => (
             <FoodItemCard cardData={data} key={idx} booking={booking} />
           ))}

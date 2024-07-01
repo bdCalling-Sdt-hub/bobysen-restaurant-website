@@ -54,6 +54,7 @@ export default function BookNowBtn({ reservation, setShowRequiredError }) {
 
     if (!user?.userId) {
       setLoginModalOpen((prev) => !prev);
+      return;
     }
 
     try {
