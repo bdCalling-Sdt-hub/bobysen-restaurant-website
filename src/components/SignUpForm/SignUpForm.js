@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import eyeIcon from "/public/signUp/eyeIcon.svg";
 import eyeOffIcon from "/public/signUp/eyeOffIcon.svg";
 import { useSelector } from "react-redux";
+import EyeIconInverse from "../EyeIconInverse/EyeIconInverse";
 
 export default function SignUpForm() {
   const {
@@ -24,6 +25,8 @@ export default function SignUpForm() {
     watch,
   } = useForm();
 
+  const [showNewPass, setShowNewPass] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
   const [signUp, { isLoading }] = useSignUpMutation();
   const router = useRouter();
   const { user } = useSelector((state) => state.auth);
@@ -60,12 +63,7 @@ export default function SignUpForm() {
     }
   };
 
-  // show password states
-  const [showNewPass, setShowNewPass] = useState(false);
-  const [showConfirmPass, setShowConfirmPass] = useState(false);
-
   // !-------- If user already exits then auto redirect -------
-
   useLayoutEffect(() => {
     if (user?.userId) {
       router.back();
@@ -201,23 +199,10 @@ export default function SignUpForm() {
               })}
               className="border-primary-secondary-1 text-primary-black"
             />
-            {!showNewPass ? (
-              <Image
-                src={eyeIcon}
-                alt="show password icon"
-                className="absolute right-1 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[80%]"
-                onClick={() => setShowNewPass(!showNewPass)}
-                role="button"
-              />
-            ) : (
-              <Image
-                src={eyeOffIcon}
-                alt="hide password icon"
-                className="absolute right-1 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[80%]"
-                onClick={() => setShowNewPass(!showNewPass)}
-                role="button"
-              />
-            )}
+            <EyeIconInverse
+              showPassword={showNewPass}
+              setShowPassword={setShowNewPass}
+            />
           </div>
 
           {errors.password && (
@@ -253,23 +238,11 @@ export default function SignUpForm() {
               })}
               className="border-primary-secondary-1 text-primary-black"
             />
-            {!showConfirmPass ? (
-              <Image
-                src={eyeIcon}
-                alt="show password icon"
-                className="absolute right-1 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[80%]"
-                onClick={() => setShowConfirmPass(!showConfirmPass)}
-                role="button"
-              />
-            ) : (
-              <Image
-                src={eyeOffIcon}
-                alt="hide password icon"
-                className="absolute right-1 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[80%]"
-                onClick={() => setShowConfirmPass(!showConfirmPass)}
-                role="button"
-              />
-            )}
+
+            <EyeIconInverse
+              showPassword={showConfirmPass}
+              setShowPassword={setShowConfirmPass}
+            />
           </div>
 
           {errors.confirmPassword && (

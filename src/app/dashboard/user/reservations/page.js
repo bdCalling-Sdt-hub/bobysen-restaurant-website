@@ -16,6 +16,7 @@ export default function UserOrders() {
   const { data: Rdata } = useGetAllReservationsQuery({
     status: selectedStatus,
   });
+
   return (
     <div className="pt-[160px]">
       {/* header */}
@@ -38,7 +39,6 @@ export default function UserOrders() {
         </div>
       </div>
 
-      {/* Orders - TODO: Show dynamic table data */}
       <div>
         <OrdersTable status={selectedStatus} data={Rdata} />
       </div>

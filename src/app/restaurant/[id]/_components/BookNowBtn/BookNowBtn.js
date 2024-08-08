@@ -18,7 +18,7 @@ import {
   useSubmitReservationMutation,
 } from "@/redux/api/reservationApi.js";
 import { Error_Modal, LoginPrompt_Modal } from "@/utils/modalHook";
-import { CircleX } from "lucide-react";
+import { Calendar, CircleX, Table2, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -68,6 +68,8 @@ export default function BookNowBtn({ reservation, setShowRequiredError }) {
     }
   };
 
+  console.log(table);
+
   return (
     <AlertDialog
       className="relative"
@@ -101,17 +103,17 @@ export default function BookNowBtn({ reservation, setShowRequiredError }) {
           <AlertDialogDescription>
             <div className="mx-auto my-5 w-3/4 space-y-3">
               <div className="flex items-center gap-x-4 font-kumbh-sans">
-                <Image src={calenderIcon} alt="calendar icon" />
+                <Calendar className="text-primary-black/75" />
                 <p className="text-xl">
                   {date} | {time}
                 </p>
               </div>
-              {/* <div className="flex items-center gap-x-4 font-kumbh-sans">
-                <Image src={tableIcon} alt="users icon" />
-                <p className="text-xl">{data?.data?.tableNo ?? 0}</p>
-              </div> */}
               <div className="flex items-center gap-x-4 font-kumbh-sans">
-                <Image src={usersIcon} alt="users icon" />
+                <Table2 className="text-primary-black/75" />
+                <p className="text-xl">{table?.tableNo} Table</p>
+              </div>
+              <div className="flex items-center gap-x-4 font-kumbh-sans">
+                <Users className="text-primary-black/75" />
                 <p className="text-xl">{table?.seats} Guests</p>
               </div>
             </div>

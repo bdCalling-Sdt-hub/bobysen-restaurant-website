@@ -9,7 +9,6 @@ import showImage from "@/utils/fileHelper.js";
 import Image from "next/image";
 
 export default function RestaurantImageSlider({ images }) {
-  console.log(images);
   return (
     <div>
       <Carousel>
@@ -22,6 +21,7 @@ export default function RestaurantImageSlider({ images }) {
                   width={800}
                   src={showImage(image?.url)}
                   alt="picture of the restaurant"
+                  className="mx-auto block"
                 />
               </CarouselItem>
             ))

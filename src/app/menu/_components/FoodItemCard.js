@@ -16,7 +16,7 @@ import { useState } from "react";
 import BookNowModal from "./BookNowModal";
 
 export default function FoodItemCard({ cardData, booking }) {
-  const { _id, name, price,description } = cardData;
+  const { _id, name, price, description } = cardData;
   const params = useSearchParams().get("state");
   const restaurantId = usePathname().replace("/menu/", "");
   const router = useRouter();
@@ -30,6 +30,8 @@ export default function FoodItemCard({ cardData, booking }) {
       router.push(`/menu/item/${_id}?booking=${booking}`);
     }
   };
+
+  console.log(cardData);
 
   return (
     <>
@@ -46,11 +48,11 @@ export default function FoodItemCard({ cardData, booking }) {
             <p className="text-3xl font-bold">{name}</p>
           </CardTitle>
           <CardDescription className="font-kumbh-sans">
-           {description}
+            {description}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="mb-3 text-2xl font-medium">
+          <p className="text-2xl font-medium">
             ${parseFloat(price).toFixed(2)}
           </p>
 

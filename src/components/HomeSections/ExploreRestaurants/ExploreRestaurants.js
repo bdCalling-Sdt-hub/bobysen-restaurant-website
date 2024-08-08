@@ -1,14 +1,15 @@
-'use client'
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import ExploreRestaurantSliderCard from "./_components/ExploreRestaurantSliderCard";
 import rightArrow from "/public/ExploreRestaurants/rightArrow.png";
 import { useGetAllTopRestaurntsQuery } from "@/redux/api/topRestaurantApi";
 import { Empty } from "antd";
+import { ChevronRight } from "lucide-react";
 
 export default function ExploreRestaurants() {
   const query = {};
-  const { data: Rdata, isLoading, } = useGetAllTopRestaurntsQuery(query);
+  const { data: Rdata, isLoading } = useGetAllTopRestaurntsQuery(query);
   return (
     <section className="container my-[60px]">
       <div className="flex items-center justify-between">
@@ -26,22 +27,26 @@ export default function ExploreRestaurants() {
         {/* right */}
         <Link
           href="/top-restaurants"
-          className="flex items-center gap-x-2 border-b-2 border-transparent hover:border-b-2 hover:border-y-primary-secondary-2"
+          className="group flex items-center gap-x-1 hover:text-primary-secondary-3"
         >
-          <p className="font-kumbh-sans">See All</p>
-          <Image src={rightArrow} alt="right arrow" />
+          <p className="font-kumbh-sans transition-all duration-300 ease-in-out">
+            See All
+          </p>
+          <ChevronRight
+            size={20}
+            className="transition-all duration-300 ease-in-out group-hover:translate-x-2"
+          />
         </Link>
       </div>
 
       {/* TODO: Load Card Data from database */}
-      {
-  Rdata?.data?.length > 0 
-    ? <div className="mt-10">
-        <ExploreRestaurantSliderCard Rdata={Rdata} />
-      </div> 
-    : <Empty/> 
-}
-
+      {Rdata?.data?.length > 0 ? (
+        <div className="mt-10">
+          <ExploreRestaurantSliderCard Rdata={Rdata} />
+        </div>
+      ) : (
+        <Empty />
+      )}
     </section>
   );
 }

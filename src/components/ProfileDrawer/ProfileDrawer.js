@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import profilePic from "/public/profileDrawer/profilePic.png";
 import userIcon from "/public/profileDrawer/user.png";
 import historyIcon from "/public/profileDrawer/history.png";
 import favoriteIcon from "/public/profileDrawer/favorite.png";
@@ -11,13 +10,15 @@ import { Separator } from "../ui/separator";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "@/redux/features/authSlice";
-import { Button } from "../ui/button";
 import { Success_model } from "@/utils/modalHook";
-import { removeFromLocalStorage } from "@/utils/local-storage";
+import { useGetSingleUserQuery } from "@/redux/api/userApi";
+import { Camera, ShoppingCart } from "lucide-react";
 
 export default function ProfileDrawer({ openState, setOpenState }) {
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
+
+  const { data: profileData } = useGetSingleUserQuery();
+  const user = profileData?.data || {};
 
   const handleLogout = () => {
     dispatch(logout());
@@ -46,18 +47,36 @@ export default function ProfileDrawer({ openState, setOpenState }) {
         )}
       >
         <div className="mx-auto max-w-max">
-          <Image
-            src={profilePic}
-            alt="profile picture"
-            className="mx-auto w-[80%]"
-          />
-          <h4 className="mt-4 text-center text-2xl font-bold">
+          {user?.image ? (
+            <Image
+              src={user?.image}
+              alt="profile picture"
+              className="mx-auto w-[80%]"
+            />
+          ) : (
+            <div className="group relative mx-auto flex h-36 w-36 items-center justify-center rounded-full bg-primary-secondary-1">
+              <h3 className="text-3xl font-semibold">
+                {user?.fullName?.split(" ")[0][0]}
+                {user?.fullName?.split(" ")[1][0]}
+              </h3>
+
+              <Link
+                href={"/dashboard/user/profile"}
+                className="invisible absolute bottom-1 right-1 rounded-full bg-white p-2 text-black opacity-0 transition-all duration-300 ease-in-out group-hover:visible group-hover:opacity-100"
+                title="Change Profile Picture"
+                onClick={() => setOpenState(false)}
+              >
+                <Camera size={16} />
+              </Link>
+            </div>
+          )}
+          <h4 className="mt-5 text-center text-3xl font-semibold">
             {user?.fullName}
           </h4>
         </div>
 
         {/* menu */}
-        <div className="mt-12">
+        <div className="mt-16">
           <Link
             href="/dashboard/user/profile"
             className="flex items-center gap-x-6"
@@ -76,6 +95,17 @@ export default function ProfileDrawer({ openState, setOpenState }) {
           >
             <Image src={historyIcon} alt="booking history icon" />
             <h3 className="font-kumbh-sans text-xl">Booking History</h3>
+          </Link>
+
+          <Separator className="my-4 bg-primary-secondary-3" />
+
+          <Link
+            href="/cart"
+            className="flex items-center gap-x-6"
+            onClick={() => setOpenState(false)}
+          >
+            <ShoppingCart size={30} />
+            <h3 className="font-kumbh-sans text-xl">My Cart</h3>
           </Link>
 
           <Separator className="my-4 bg-primary-secondary-3" />

@@ -21,6 +21,9 @@ export default function HeroSearchBar() {
   const pathName = usePathname();
   const searchBtnRef = useRef();
 
+  // search bar value
+  const { searchTerm } = useSelector((state) => state.search);
+
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -30,6 +33,8 @@ export default function HeroSearchBar() {
               Iat: position.coords.latitude,
               lng: position.coords.longitude,
             }),
+
+            router.push(`/all-restaurants`),
           );
         },
         (error) => {
@@ -40,9 +45,6 @@ export default function HeroSearchBar() {
       Error_Modal("Geolocation is not supported by this browser.");
     }
   };
-
-  // search bar value
-  const { searchTerm } = useSelector((state) => state.search);
 
   return (
     <div className="relative">

@@ -34,11 +34,15 @@ export default function OrdersTable({ status, data }) {
       skip: !reservationId,
     },
   );
-  // TODO: Use dynamic table data
+
+  console.log(data);
+
   return (
     <div className="container mt-12">
       <Table className="border">
-        <TableCaption>A list of your {status} orders.</TableCaption>
+        <TableCaption>
+          A list of your {status?.toLowerCase()} orders.
+        </TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="font-kumbh-sans text-xl text-primary-secondary-1">
@@ -112,12 +116,14 @@ export default function OrdersTable({ status, data }) {
                             <EmptyData />
                           )}
                         </div>
-
-                        <div className="mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
-                          <h4>Transaction Id</h4>
-                          <h4>#30400e0349540340</h4>
-                        </div>
-                        <div className="mb-2 mt-4 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
+                        {/* 
+                        {Cdata?.data?.status !== "unpaid" && (
+                          <div className="mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
+                            <h4>Transaction Id</h4>
+                            <h4>#30400e0349540340</h4>
+                          </div>
+                        )} */}
+                        <div className="mb-2 mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
                           <h4>Total Cost</h4>
                           <h4>${Cdata?.data?.totalAmount}</h4>
                         </div>

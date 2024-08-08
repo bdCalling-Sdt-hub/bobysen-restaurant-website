@@ -40,11 +40,11 @@ export default function Login() {
         <div className="mt-5 w-[90%] lg:mt-0 lg:w-1/2">
           <Image src={logo} alt="logo" className="mx-auto w-[40%]" />
 
-          <div className="mt-4 lg:mt-10 lg:px-4">
-            <p className="text-center text-xl font-semibold text-primary-secondary-1">
-              Great to have you back !
-            </p>
+          <p className="text-center text-2xl font-semibold text-primary-secondary-1">
+            Great to have you back !
+          </p>
 
+          <div className="mt-10 lg:px-4">
             <LoginForm />
           </div>
         </div>

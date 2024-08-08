@@ -1,4 +1,4 @@
-import { Kumbh_Sans, Roboto } from "next/font/google";
+import { Kumbh_Sans, Poppins, Roboto } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Image from "next/image";
@@ -11,8 +11,8 @@ import { Toaster } from "sonner";
 
 export const metadata = {
   title: {
-    default: "bookatable",
-    template: "%s | bookatable",
+    default: "Bookatable",
+    template: "%s | Bookatable",
   },
   description:
     "The official webpage of the bookatable restaurant which enable diners to customize their booking by requesting a specific table location or view.",
@@ -24,12 +24,18 @@ const kumbhSans = Kumbh_Sans({
   display: "swap",
   variable: "--font-kumbhSans",
 });
+const poppins = Poppins({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "600"],
+  variable: "--font-poppins",
+});
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${roboto.className} ${kumbhSans.variable} max-w-8xl flex min-h-screen flex-col`}
+        className={`${poppins.className} ${kumbhSans.variable} max-w-8xl flex min-h-screen flex-col`}
       >
         <Providers>
           <Navbar />

@@ -4,7 +4,8 @@
 .cartCardTr td {
   font-size: 24px !important;
   font-family: var(--font-kumbh-sans);
-  padding: 10px;
+  padding-inline: 10px;
+  padding-block: 6px;
 }
 
 .cartCardTr td:nth-of-type(2) {

@@ -18,6 +18,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        // custom colors
         "primary-black": "#232323",
         "primary-white": "#F8FAFC",
         "primary-white-light": "#FEFFFF",

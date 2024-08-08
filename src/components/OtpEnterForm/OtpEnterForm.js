@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/input-otp";
 import { Label } from "@/components/ui/label";
 import { useVerifyOtpMutation } from "@/redux/api/authApi";
-import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"; // change regex to allow only chars or digits
+import { REGEXP_ONLY_DIGITS } from "input-otp"; // change regex to allow only chars or digits
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import LoadingButton from "../LoadingButton/LoadingButton";
@@ -44,48 +44,43 @@ export default function OtpEnterForm() {
 
   return (
     <form className="container mx-auto sm:w-[65%] md:w-[55%] lg:w-[45%]">
-      <div className="mb-7">
+      <div>
         <h3 className="text-2xl font-bold text-primary-secondary-1">
-          Put OTP here
+          Enter OTP here
         </h3>
         <p className="mt-2 font-medium text-primary-secondary-2">
-          OTP expires in 3 minutes
+          Check your mail inbox and enter the code here. <br /> OTP expires in 3
+          minutes
         </p>
       </div>
 
-      <div className="grid w-full items-center gap-1.5">
-        <Label
-          htmlFor="otp"
-          className="mb-2 block font-semibold text-primary-secondary-1"
-        >
-          OTP
-        </Label>
+      <div className="mx-auto my-10 w-max">
         <InputOTP
           maxLength={5}
-          pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+          pattern={REGEXP_ONLY_DIGITS}
           id="otp"
           onChange={(value) => setOtp(value)}
         >
           <InputOTPGroup>
             <InputOTPSlot
               index={0}
-              className="mr-4 border border-primary-secondary-1"
-              style={{ borderRadius: "8px" }}
+              className="mr-4 h-14 w-14 border border-primary-secondary-1 font-kumbh-sans text-2xl font-bold"
+              style={{ borderRadius: "3px" }}
             />
             <InputOTPSlot
               index={1}
-              className="mr-4 border border-primary-secondary-1"
-              style={{ borderRadius: "8px" }}
+              className="mr-4 h-14 w-14 border border-primary-secondary-1 font-kumbh-sans text-xl font-bold"
+              style={{ borderRadius: "3px" }}
             />
             <InputOTPSlot
               index={2}
-              className="mr-4 border border-primary-secondary-1"
-              style={{ borderRadius: "8px" }}
+              className="mr-4 h-14 w-14 border border-primary-secondary-1 font-kumbh-sans text-xl font-bold"
+              style={{ borderRadius: "3px" }}
             />
             <InputOTPSlot
               index={3}
-              className="mr-4 border border-primary-secondary-1"
-              style={{ borderRadius: "8px" }}
+              className="mr-4 h-14 w-14 border border-primary-secondary-1 font-kumbh-sans text-xl font-bold"
+              style={{ borderRadius: "3px" }}
             />
           </InputOTPGroup>
         </InputOTP>
@@ -94,7 +89,7 @@ export default function OtpEnterForm() {
       {!isLoading ? (
         <Button
           disabled={otp?.length < 4}
-          className="mt-8 h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white"
+          className="h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white"
           onClick={handleVerifyOtp}
         >
           Submit
@@ -102,7 +97,7 @@ export default function OtpEnterForm() {
       ) : (
         <Button
           disabled={true}
-          className="mt-8 h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white"
+          className="h-[45px] w-full rounded-md bg-primary-secondary-1 font-kumbh-sans text-primary-white"
         >
           <LoadingButton>Please wait ...</LoadingButton>
         </Button>

@@ -3,7 +3,7 @@ import AllRestaurants from "./_components/AllRestaurants";
 
 export const metadata = {
   title: {
-    absolute: "All restaurants | bookatable",
+    absolute: "All restaurants | Bookatable",
   },
 };
 

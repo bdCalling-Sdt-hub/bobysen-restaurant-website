@@ -5,7 +5,7 @@ import RestaurantsSlider from "@/components/HomeSections/RestaurantsSlider/Resta
 import Services from "@/components/HomeSections/Services/Services";
 
 export const metadata = {
-  title: "Home | bookatable",
+  title: "Home | Bookatable",
   description:
     "A restaurant table booking platform that enables diners to customize their booking by requesting a specific table location or view.",
 };

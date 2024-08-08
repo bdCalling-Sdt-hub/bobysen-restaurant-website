@@ -21,8 +21,6 @@ export default function UserDetailsForm() {
 
   const { image, fullName, phoneNumber, email } = profileData?.data || {};
 
-  console.log(profileData?.data);
-
   const [profilePic, setProfilePic] = useState(null);
 
   const {
@@ -78,19 +76,27 @@ export default function UserDetailsForm() {
           {profileDataLoading ? (
             <div className="h-[200px] w-[200px] animate-pulse rounded-full bg-gray-400/10"></div>
           ) : (
-            <Image
-              src={
-                profilePic
-                  ? window.URL.createObjectURL(profilePic)
-                  : image
-                    ? `http://192.168.10.61:5005${image}`
-                    : defaultProfilePic
-              }
-              alt="profile picture"
-              width={170}
-              height={170}
-              className="h-full w-full rounded-full object-fill"
-            />
+            profilePic ||
+            (image ? (
+              <Image
+                src={
+                  profilePic
+                    ? window.URL.createObjectURL(profilePic)
+                    : image && `http://192.168.10.61:5005${image}`
+                }
+                alt="profile picture"
+                width={170}
+                height={170}
+                className="h-full w-full rounded-full object-fill"
+              />
+            ) : (
+              <div className="group relative mx-auto flex h-[200px] w-[200px] items-center justify-center rounded-full bg-primary-secondary-1">
+                <h3 className="text-4xl font-semibold text-white">
+                  {profileData?.data?.fullName?.split(" ")[0][0]}
+                  {profileData?.data?.fullName?.split(" ")[1][0]}
+                </h3>
+              </div>
+            ))
           )}
         </div>
 

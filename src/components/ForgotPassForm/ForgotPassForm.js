@@ -41,14 +41,19 @@ export default function ForgotPassForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="container mx-auto sm:w-[65%] md:w-[55%] lg:w-[45%]"
     >
-      <h3 className="mb-12 text-2xl font-bold text-primary-secondary-1">
-        Forgot Password ?
-      </h3>
+      <div className="mb-10 space-y-2">
+        <h3 className="text-2xl font-bold text-primary-secondary-1">
+          Forgot Password ?
+        </h3>
+        <p className="font-kumbh-sans text-muted-foreground">
+          Enter your details below to request an OTP for account password reset.
+        </p>
+      </div>
 
       <div className="grid w-full items-center gap-1.5">
         <Label
           htmlFor="email"
-          className="mb-2 block font-semibold text-primary-secondary-1"
+          className="mb-1 block font-semibold text-primary-secondary-1"
         >
           Email
         </Label>

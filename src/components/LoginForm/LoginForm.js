@@ -17,6 +17,7 @@ import LoadingButton from "../LoadingButton/LoadingButton";
 import { Button } from "../ui/button";
 import eyeIcon from "/public/signUp/eyeIcon.svg";
 import eyeOffIcon from "/public/signUp/eyeOffIcon.svg";
+import EyeIconInverse from "../EyeIconInverse/EyeIconInverse";
 
 export default function LoginForm() {
   const {
@@ -50,14 +51,13 @@ export default function LoginForm() {
   };
 
   // !-------- If user already exits then auto redirect -------
-
   useLayoutEffect(() => {
     if (user?.userId) {
       router.back();
     }
   }, [user?.userId]);
 
-  // !----------------------------------------------------------
+  // !---------------------------------------------------------
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
@@ -75,11 +75,7 @@ export default function LoginForm() {
           className="border border-primary-secondary-1 text-primary-black"
         />
         {errors.email && (
-          <p
-            className={cn(
-              "font-kumbh-sans text-primary-secondary-1 text-red-500",
-            )}
-          >
+          <p className={cn("font-kumbh-sans text-red-500")}>
             Username or Email is required
           </p>
         )}
@@ -93,7 +89,7 @@ export default function LoginForm() {
           >
             Password
           </Label>
-          {/* TODO: Add relevant Link */}
+
           <Link
             href="/forgot-password"
             className="text-primary-secondary-1 opacity-[90%]"
@@ -101,35 +97,23 @@ export default function LoginForm() {
             Forgot Password?
           </Link>
         </div>
-        <Input
-          type={showPass ? "text" : "password"}
-          id="password"
-          {...register("password", { required: true })}
-          className="border-primary-secondary-1 text-primary-black"
-        />
-        {!showPass ? (
-          <Image
-            src={eyeIcon}
-            alt="show password icon"
-            className="absolute right-2 top-[50%] translate-y-1/2 opacity-[80%]"
-            onClick={() => setShowPass(!showPass)}
-            role="button"
+
+        <div className="relative">
+          <Input
+            type={showPass ? "text" : "password"}
+            id="password"
+            {...register("password", { required: true })}
+            className="border-primary-secondary-1 text-primary-black"
           />
-        ) : (
-          <Image
-            src={eyeOffIcon}
-            alt="hide password icon"
-            className="absolute right-2 top-[45%] translate-y-1/2 opacity-[80%]"
-            onClick={() => setShowPass(!showPass)}
-            role="button"
+
+          <EyeIconInverse
+            showPassword={showPass}
+            setShowPassword={setShowPass}
           />
-        )}
+        </div>
+
         {errors.password && (
-          <p
-            className={cn(
-              "font-kumbh-sans text-primary-secondary-1 text-red-500",
-            )}
-          >
+          <p className={cn("font-kumbh-sans text-red-500")}>
             Password is required
           </p>
         )}
