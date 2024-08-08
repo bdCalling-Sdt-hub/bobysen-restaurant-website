@@ -28,7 +28,6 @@ export default function FoodItem({ params }) {
   const router = useRouter();
   const [count, setCount] = useState(0);
   const { data: Mdata, refetch } = useGetSingleMenuQuery(params?.id?.[0]);
-  console.log("mdata", Mdata);
   const [addTocart] = useAddToCartMutation();
   // TODO: Use dynamic data
   const decreaseCount = () => {
@@ -122,8 +121,7 @@ export default function FoodItem({ params }) {
         <div className="space-y-3 pe-20 font-kumbh-sans">
           <h5 className="text-xl text-primary-black">Description</h5>
           <p className="text-lg text-primary-secondary-2">
-            You can add this menu item to your cart to place an order.
-            Additionally, you can mark it as a favorite for future reference.
+           {Mdata?.data?.description}
           </p>
         </div>
 

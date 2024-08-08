@@ -265,6 +265,7 @@ export default function DynamicRestaurant({ params }) {
                   onUnmount={onUnmount}
                 >
                   <Marker position={center} />
+                  
                 </GoogleMap>
               )}
             </div>

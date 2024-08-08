@@ -10,9 +10,8 @@ import {
 import { useGetAllTopRestaurntsQuery } from "@/redux/api/topRestaurantApi.js";
 import Autoplay from "embla-carousel-autoplay";
 
-export default function ExploreRestaurantSliderCard() {
-  const query = {};
-  const { data: Rdata, isLoading } = useGetAllTopRestaurntsQuery(query);
+export default function ExploreRestaurantSliderCard({Rdata}) {
+
 
   return (
     <Carousel

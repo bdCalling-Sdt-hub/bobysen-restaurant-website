@@ -30,8 +30,7 @@ export default function FavoriteCard({ data }) {
         {data?.name}
       </h3>
       <p className="mb-4 font-kumbh-sans text-primary-secondary-2">
-        You can order this menu when you book a table. Additionally, you can
-        remove the menu from your favorites list by clicking the button.
+      {data?.description}
       </p>
 
       <div className="flex items-center gap-x-4">

@@ -1,9 +1,14 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
 import ExploreRestaurantSliderCard from "./_components/ExploreRestaurantSliderCard";
 import rightArrow from "/public/ExploreRestaurants/rightArrow.png";
+import { useGetAllTopRestaurntsQuery } from "@/redux/api/topRestaurantApi";
+import { Empty } from "antd";
 
 export default function ExploreRestaurants() {
+  const query = {};
+  const { data: Rdata, isLoading, } = useGetAllTopRestaurntsQuery(query);
   return (
     <section className="container my-[60px]">
       <div className="flex items-center justify-between">
@@ -29,9 +34,14 @@ export default function ExploreRestaurants() {
       </div>
 
       {/* TODO: Load Card Data from database */}
-      <div className="mt-10">
-        <ExploreRestaurantSliderCard />
-      </div>
+      {
+  Rdata?.data?.length > 0 
+    ? <div className="mt-10">
+        <ExploreRestaurantSliderCard Rdata={Rdata} />
+      </div> 
+    : <Empty/> 
+}
+
     </section>
   );
 }

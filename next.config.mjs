@@ -8,7 +8,8 @@ const nextConfig = {
       },
       {
         protocol: "http",
-        hostname: "192.168.10.61",
+        hostname: "192.168.10.138",
+        
         port: "5005", // Include the port if it's part of the hostname
       },
     ],
