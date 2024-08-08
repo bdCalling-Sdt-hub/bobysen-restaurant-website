@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import CartCard from "./_components/CartCard";
 import { Empty } from "antd";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 
 // export const metadata = {
 //   title: "Cart | Bookatable",
@@ -14,19 +15,20 @@ import { Plus } from "lucide-react";
 export default function Cart() {
   const searchParams = useSearchParams();
   const booking = searchParams.get("booking");
+  const restaurantId = searchParams.get("restaurant");
   const cart = useSelector((state) => state.cart);
-
-  console.log(cart);
 
   return (
     <div className="mx-auto pb-24 pt-[180px] lg:w-[68%]">
       {/* title */}
       <div className="mb-10 flex items-center justify-between">
-        <h1>My Cart</h1>
-        <button className="flex items-center gap-x-2 rounded-lg bg-primary-secondary-3 px-4 py-2 text-lg font-medium text-white transition-all duration-300 ease-in-out hover:bg-black hover:text-primary-secondary-3">
-          <Plus />
-          Add More
-        </button>
+        <h1>Cart Details</h1>
+        <Link href={`/menu/${restaurantId}?booking=${booking}`}>
+          <button className="flex items-center gap-x-2 rounded-lg bg-primary-secondary-3 px-4 py-2 text-lg font-medium text-white transition-all duration-300 ease-in-out hover:bg-black hover:text-primary-secondary-3">
+            <Plus />
+            Add More
+          </button>
+        </Link>
       </div>
 
       {cart?.items?.length ? (

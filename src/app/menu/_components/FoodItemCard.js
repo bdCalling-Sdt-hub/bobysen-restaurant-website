@@ -12,15 +12,25 @@ import {
 import showImage from "@/utils/fileHelper.js";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookNowModal from "./BookNowModal";
+import { useGetMenuByReservationIdQuery } from "@/redux/api/cartApi";
 
 export default function FoodItemCard({ cardData, booking }) {
   const { _id, name, price, description } = cardData;
   const params = useSearchParams().get("state");
+  const reservationId = useSearchParams().get("booking");
   const restaurantId = usePathname().replace("/menu/", "");
   const router = useRouter();
   const [bookNowModalOpen, setBookNowModalOpen] = useState(false);
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  const [alreadyInCartItems, setAlreadyInCartItems] = useState([]);
+
+  useEffect(() => {
+    if (cart?.bookingId === reservationId) {
+      setAlreadyInCartItems(cart.items.map((item) => item.menu));
+    }
+  }, [cart?.bookingId]);
 
   // show book table prompt if params has state
   const handleOrderNowBtn = () => {
@@ -30,8 +40,6 @@ export default function FoodItemCard({ cardData, booking }) {
       router.push(`/menu/item/${_id}?booking=${booking}`);
     }
   };
-
-  console.log(cardData);
 
   return (
     <>
@@ -73,8 +81,11 @@ export default function FoodItemCard({ cardData, booking }) {
           <Button
             className="w-full rounded-3xl bg-primary-secondary-1 font-kumbh-sans text-primary-white"
             onClick={handleOrderNowBtn}
+            disabled={Boolean(alreadyInCartItems?.includes(_id)) === true}
           >
-            Order Now
+            {Boolean(alreadyInCartItems?.includes(_id)) === true
+              ? "Already Added"
+              : "Order Now"}
           </Button>
         </CardFooter>
       </Card>

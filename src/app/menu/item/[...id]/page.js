@@ -30,6 +30,8 @@ export default function FoodItem({ params }) {
   const { data: Mdata, refetch } = useGetSingleMenuQuery(params?.id?.[0]);
   const [addTocart] = useAddToCartMutation();
 
+  console.log(Mdata);
+
   // TODO: Use dynamic data
   const decreaseCount = () => {
     if (count > 1) {
@@ -75,7 +77,9 @@ export default function FoodItem({ params }) {
 
     dispatch(addToCart(data));
 
-    // router.push(`/cart?booking=${booking}`);
+    router.push(
+      `/cart?booking=${booking}&restaurant=${Mdata?.data?.restaurant}`,
+    );
     Success_model({ text: "Item successfully added into cart" });
 
     try {

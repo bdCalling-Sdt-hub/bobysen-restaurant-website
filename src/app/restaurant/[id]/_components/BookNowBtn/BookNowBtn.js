@@ -110,7 +110,7 @@ export default function BookNowBtn({ reservation, setShowRequiredError }) {
               </div>
               <div className="flex items-center gap-x-4 font-kumbh-sans">
                 <Table2 className="text-primary-black/75" />
-                <p className="text-xl">{table?.tableNo} Table</p>
+                <p className="text-xl">Table No: {table?.tableNo}</p>
               </div>
               <div className="flex items-center gap-x-4 font-kumbh-sans">
                 <Users className="text-primary-black/75" />

@@ -100,17 +100,6 @@ export default function ProfileDrawer({ openState, setOpenState }) {
           <Separator className="my-4 bg-primary-secondary-3" />
 
           <Link
-            href="/cart"
-            className="flex items-center gap-x-6"
-            onClick={() => setOpenState(false)}
-          >
-            <ShoppingCart size={30} />
-            <h3 className="font-kumbh-sans text-xl">My Cart</h3>
-          </Link>
-
-          <Separator className="my-4 bg-primary-secondary-3" />
-
-          <Link
             href="/dashboard/user/favorite"
             className="flex items-center gap-x-6"
             onClick={() => setOpenState(false)}
