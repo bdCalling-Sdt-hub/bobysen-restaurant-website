@@ -3,7 +3,7 @@ import { logout, setUser } from "../features/authSlice.js";
 import { tagTypesList } from "../tagTypes.js";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://192.168.10.138:5005/api/v1",
+  baseUrl: "https://api.bookatable.mu/api/v1",
   prepareHeaders: (headers, { getState }) => {
     const otpToken = sessionStorage.getItem("token");
     const forgotPasswordToken = sessionStorage.getItem("forgotPasswordToken");
