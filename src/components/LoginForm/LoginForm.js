@@ -53,7 +53,7 @@ export default function LoginForm() {
   // !-------- If user already exits then auto redirect -------
   useLayoutEffect(() => {
     if (user?.userId) {
-      router.back();
+      router.push("/");
     }
   }, [user?.userId]);
 
