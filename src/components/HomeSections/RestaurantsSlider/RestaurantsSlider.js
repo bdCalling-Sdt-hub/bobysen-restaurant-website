@@ -16,7 +16,7 @@ export default function RestaurantsSlider() {
   const { data: Rdata, isFetching } = useGetAllRestaurantsQuery();
 
   return (
-    <section className="container mb-[100px]">
+    <section className="container">
       <div className="mb-16 flex items-center justify-between">
         {/* left */}
         <div className="w-1/2">
@@ -24,8 +24,8 @@ export default function RestaurantsSlider() {
             Explore{" "}
             <span className="text-primary-secondary-3">Restaurants</span>
           </h1>
-          <p className="mt-4 font-kumbh-sans text-xl text-primary-secondary-2 lg:w-[40%]">
-            Check your city Near by Restaurant
+          <p className="mt-4 font-kumbh-sans text-xl text-primary-secondary-2">
+            Browse your nearby Restaurants
           </p>
         </div>
 

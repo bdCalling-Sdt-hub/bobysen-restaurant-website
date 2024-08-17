@@ -51,7 +51,7 @@ export default function HeroSearchBar() {
       <Input
         placeholder="Search by restaurant name"
         id="heroSearch"
-        className={`h-[65px] w-full rounded-3xl border border-primary-black bg-transparent pl-[140px] ${pathName === "/" ? "lg:pl-[148px]" : "lg:pl-[160px]"} pr-[70px] text-lg text-primary-black shadow`}
+        className={`h-[65px] w-full rounded-3xl border bg-transparent pl-[140px] ${pathName === "/home" ? "border-primary-white text-primary-white lg:pl-[160px]" : "border-primary-black text-primary-black lg:pl-[160px]"} pr-[70px] text-lg shadow`}
         defaultValue={
           pathName === "/all-restaurants" && searchTerm ? searchTerm : ""
         }
@@ -63,7 +63,7 @@ export default function HeroSearchBar() {
         }}
       />
 
-      <div className="absolute left-[1%] top-[6%] h-[57px] w-[35%] text-ellipsis rounded-l-3xl border-l bg-primary-secondary-3 text-center font-kumbh-sans text-primary-white lg:left-[1%] lg:w-[27%]">
+      <div className="absolute left-[1%] top-[6%] h-[57px] w-[35%] text-ellipsis rounded-l-3xl border-l bg-primary-secondary-3 text-center font-kumbh-sans text-primary-white lg:left-[0.5%] lg:w-[24%]">
         <input
           onClick={() => setIsLocationFocused(!isLocationFocused)}
           onBlur={() => setIsLocationFocused(!isLocationFocused)}

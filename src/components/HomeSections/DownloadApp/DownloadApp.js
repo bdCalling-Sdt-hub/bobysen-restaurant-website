@@ -4,21 +4,21 @@ import appStore from "/public/DownloadApp/Mobile app store badge (1).png";
 import playStore from "/public/DownloadApp/Mobile app store badge.png";
 import Link from "next/link";
 import Image from "next/image";
+import BackgroundVideo from "next-video/background-video";
+import "./DownloadApp.css";
 
 export default function DownloadApp() {
   return (
-    <section className="container relative z-10 flex flex-col-reverse items-center gap-x-8 gap-y-12 lg:flex-row lg:gap-y-0">
+    <section className="container relative mt-[160px] flex flex-col-reverse items-center gap-x-8 gap-y-12 lg:flex-row lg:gap-y-0">
       {/* left */}
       <div className="lg:w-1/2">
-        <h1 className="font-bold text-primary-secondary-1">
-          It’s Now More Easy to{" "}
-          <span className="text-primary-secondary-3">Booking</span> by Our
-          Mobile App
+        <h1 className="text-5xl font-bold text-primary-secondary-1 lg:leading-snug">
+          Booking Made Easier with Our{" "}
+          <span className="text-primary-secondary-3">Mobile App</span>
         </h1>
-        <p className="mb-10 mt-7 font-kumbh-sans text-[#191919] lg:w-[75%]">
-          All you need to do is downlode one of the best delivery apps, make a
-          and most companies are opting for mobile app devlopment for food
-          delivery
+        <p className="mb-10 mt-7 font-kumbh-sans text-lg text-primary-secondary-2 lg:w-[75%]">
+          Simply download one of the restaurant booking app. and you&apos;ll be
+          ready to book your table and order your meal in just a few taps.
         </p>
 
         <div className="flex items-center gap-x-4">
@@ -33,16 +33,19 @@ export default function DownloadApp() {
       </div>
 
       {/* right */}
-      <div className="z-10 lg:w-1/2">
-        <Image src={chef} alt="chef's image" />
+      <div className="lg:w-1/2">
+        <BackgroundVideo
+          src="/videos/Mobile App Section Video Optimized.mp4"
+          className="download-app-video-container"
+        />
       </div>
 
       {/* floating arrow */}
-      <Image
+      {/* <Image
         src={arrow}
         alt="arrow icon"
-        className="absolute -top-[8%] right-[35%] -z-10 hidden lg:block"
-      />
+        className="absolute -top-[14%] right-[35%] -z-10 hidden lg:block"
+      /> */}
     </section>
   );
 }

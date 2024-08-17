@@ -29,7 +29,7 @@ export function DayPickerInput({ date, setDate }) {
           {date ? (
             format(date, "yyyy-MM-dd")
           ) : (
-            <span className="text-primary-black">Pick Date</span>
+            <span className="text-primary-black">Date</span>
           )}
         </Button>
       </PopoverTrigger>

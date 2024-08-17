@@ -1,3 +1,4 @@
+import { withNextVideo } from "next-video/process";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -15,6 +16,16 @@ const nextConfig = {
     ],
     domains: ["192.168.10.61"],
   },
+
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/home", // redirect `/` to `/home` by default
+        permanent: true,
+      },
+    ];
+  },
 };
 
-export default nextConfig;
+export default withNextVideo(nextConfig);

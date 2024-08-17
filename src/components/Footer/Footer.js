@@ -6,37 +6,64 @@ import twitterLogo from "/public/footer/social (2).png";
 import instaLogo from "/public/footer/social.png";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { Instagram } from "lucide-react";
+import { Facebook } from "lucide-react";
+import { Twitter } from "lucide-react";
+import { Linkedin } from "lucide-react";
+import { Copyright } from "lucide-react";
 
 export default function Footer() {
   return (
-    <div className="mt-20 bg-primary-black py-10">
-      <div className="container flex flex-col justify-between lg:flex-row">
+    <div className="mt-20 bg-primary-black py-10 text-primary-white">
+      <div className="container flex flex-col justify-between gap-x-10 lg:flex-row">
         {/* left */}
-        <div className="lg:w-[50%]">
+        <div className="lg:w-[60%]">
           <Image src={logo} alt="bookatable logo" />
-          <p className="mt-8 font-kumbh-sans text-primary-white">
-            The Food we had enjoyed at the time of dinner. It was really
-            delicious taste with great quality, everything had unique taste
-            which we had ordered, nice arrangement and services from the staff
-            while eating, we found nothing bad about this hotel.
+
+          <h5 className="mb-2 mt-8 text-xl font-semibold">
+            Discover Your Next Culinary Experience
+          </h5>
+          <p className="font-kumbh-sans text-primary-white/90">
+            Find and book the perfect table at your favorite restaurants with
+            ease. Explore a world of dining options, from cozy local spots to
+            top-rated fine dining. Reserve your table today and enjoy
+            unforgettable meals, every time.
           </p>
         </div>
 
         {/* right */}
-        <div className="mt-10 flex flex-col gap-x-10 gap-y-8 lg:mt-0 lg:w-[40%] lg:flex-row lg:gap-y-0">
+        <div className="lg:max mt-10 flex flex-col gap-x-16 gap-y-8 lg:mt-0 lg:flex-row lg:gap-y-0">
           <div className="space-y-3">
-            <h4 className="font-bold text-primary-white">Follow us</h4>
+            <h4 className="font-bold">Follow us</h4>
             <div className="flex items-center gap-x-3">
-              <Image src={instaLogo} alt="bookatable logo" />
-              <Image src={fbLogo} alt="bookatable logo" />
-              <Image src={twitterLogo} alt="bookatable logo" />
+              <Link
+                href="https://www.instagram.com/bookatable.mu"
+                target="_blank"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-white text-primary-black"
+              >
+                <Instagram size={20} />
+              </Link>
+
+              <Link
+                href="https://www.facebook.com/bookatable.mu"
+                target="_blank"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-white text-primary-black"
+              >
+                <Facebook size={20} />
+              </Link>
+
+              <Link
+                href="https://www.linkedin.com/company/bookatable-mu"
+                target="_blank"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-white text-primary-black"
+              >
+                <Linkedin size={20} />
+              </Link>
             </div>
           </div>
           <div className="space-y-3">
-            <h4 className="font-bold text-primary-white">Call us</h4>
-            <p className="font-kumbh-sans text-xl text-primary-white">
-              +48 661 120 494
-            </p>
+            <h4 className="font-bold">WhatsApp</h4>
+            <p className="font-kumbh-sans text-xl">+230 52520249</p>
           </div>
         </div>
       </div>
@@ -44,27 +71,21 @@ export default function Footer() {
 
       <div className="container flex flex-col items-center justify-between gap-y-5 lg:flex-row lg:gap-y-0">
         <div className="flex flex-col items-center gap-x-4 gap-y-2 md:flex-row md:gap-y-0">
-          <Image src={sparkTech} alt="SparkTech Agency Logo" />
-          <p className="text-center font-kumbh-sans text-sm text-primary-white md:text-left md:text-base">
-            Design & Developed by Sparktech Agency
+          {/* <Image src={sparkTech} alt="SparkTech Agency Logo" /> */}
+          <p className="flex items-center gap-x-2 text-center font-kumbh-sans text-sm md:text-left md:text-base">
+            Copyright &copy; Datamation Ltd
           </p>
         </div>
 
         <div className="flex items-center gap-x-5">
           {/* TODO: Add relevant links */}
-          <Link href={"#"} className="font-kumbh-sans text-primary-white">
+          <Link href={"/about-us"} className="font-kumbh-sans">
             About Us
           </Link>
-          <Link
-            href={"/privacy-policy"}
-            className="font-kumbh-sans text-primary-white"
-          >
+          <Link href={"/privacy-policy"} className="font-kumbh-sans">
             Privacy Policy
           </Link>
-          <Link
-            href={"/terms-of-use"}
-            className="font-kumbh-sans text-primary-white"
-          >
+          <Link href={"/terms-of-use"} className="font-kumbh-sans">
             Terms of Use
           </Link>
         </div>

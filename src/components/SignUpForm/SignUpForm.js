@@ -84,7 +84,7 @@ export default function SignUpForm() {
             htmlFor="fname"
             className="mb-1 block font-semibold text-primary-secondary-1"
           >
-            First Name
+            First Name *
           </Label>
           <Input
             type="text"
@@ -106,7 +106,7 @@ export default function SignUpForm() {
             htmlFor="lname"
             className="mb-1 block font-semibold text-primary-secondary-1"
           >
-            Last Name
+            Last Name *
           </Label>
           <Input
             type="text"
@@ -128,12 +128,12 @@ export default function SignUpForm() {
             htmlFor="phoneNumber"
             className="mb-1 block font-semibold text-primary-secondary-1"
           >
-            Phone Number
+            Phone Number *
           </Label>
           <Input
             type="tel"
             id="phoneNumber"
-            placeholder="+88#########48"
+            placeholder="Enter phone number"
             {...register("phoneNumber", {
               required: true,
               minLength: 10,
@@ -156,7 +156,7 @@ export default function SignUpForm() {
             htmlFor="email"
             className="mb-1 block font-semibold text-primary-secondary-1"
           >
-            Email
+            Email *
           </Label>
           <Input
             type="email"
@@ -184,7 +184,7 @@ export default function SignUpForm() {
             htmlFor="password"
             className="font-semibold text-primary-secondary-1"
           >
-            Password
+            Password *
           </Label>
 
           <div className="relative">
@@ -208,7 +208,7 @@ export default function SignUpForm() {
           {errors.password && (
             <p className={cn("font-kumbh-sans text-primary-danger")}>
               {errors.password.type === "pattern"
-                ? "Password must have 1 Uppercase letter, 1 Special Character, 1 Number and no less than 8 letters."
+                ? "Password must have one uppercase letter, one special Character, one number and no less than 8 letters."
                 : "New Password is required"}
             </p>
           )}
@@ -220,7 +220,7 @@ export default function SignUpForm() {
             htmlFor="confirmPassword"
             className="font-semibold text-primary-secondary-1"
           >
-            Confirm Password
+            Confirm Password *
           </Label>
 
           <div className="relative">

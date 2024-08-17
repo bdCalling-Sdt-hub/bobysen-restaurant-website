@@ -1,8 +1,6 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import ExploreRestaurantSliderCard from "./_components/ExploreRestaurantSliderCard";
-import rightArrow from "/public/ExploreRestaurants/rightArrow.png";
 import { useGetAllTopRestaurntsQuery } from "@/redux/api/topRestaurantApi";
 import { Empty } from "antd";
 import { ChevronRight } from "lucide-react";
@@ -19,8 +17,8 @@ export default function ExploreRestaurants() {
             Explore{" "}
             <span className="text-primary-secondary-3">Top Restaurants</span>
           </h1>
-          <p className="mt-4 font-kumbh-sans text-xl text-primary-secondary-2 lg:w-[40%]">
-            Check your city Near by Restaurant
+          <p className="mt-4 font-kumbh-sans text-xl text-primary-secondary-2">
+            Browse your nearby Restaurants
           </p>
         </div>
 
