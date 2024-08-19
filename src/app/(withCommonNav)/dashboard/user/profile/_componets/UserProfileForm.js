@@ -48,6 +48,7 @@ export default function UserProfileForm() {
 
           // log out user
           dispatch(logout());
+          router.refresh();
         }
       } catch (error) {
         Error_Modal({ title: error?.data?.message });

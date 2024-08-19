@@ -1,10 +1,7 @@
-import chef from "/public/DownloadApp/Frame 34616.png";
-import arrow from "/public/DownloadApp/Vector 9.png";
 import appStore from "/public/DownloadApp/Mobile app store badge (1).png";
 import playStore from "/public/DownloadApp/Mobile app store badge.png";
 import Link from "next/link";
 import Image from "next/image";
-import BackgroundVideo from "next-video/background-video";
 import "./DownloadApp.css";
 
 export default function DownloadApp() {
@@ -34,18 +31,15 @@ export default function DownloadApp() {
 
       {/* right */}
       <div className="lg:w-1/2">
-        <BackgroundVideo
-          src="/videos/Mobile App Section Video Optimized.mp4"
-          className="download-app-video-container"
-        />
+        <video
+          autoPlay
+          loop
+          muted={true}
+          className="w-[100%] rounded-3xl object-fill"
+        >
+          <source src="/videos/Mobile App Section Video Optimized.mp4" />
+        </video>
       </div>
-
-      {/* floating arrow */}
-      {/* <Image
-        src={arrow}
-        alt="arrow icon"
-        className="absolute -top-[14%] right-[35%] -z-10 hidden lg:block"
-      /> */}
     </section>
   );
 }

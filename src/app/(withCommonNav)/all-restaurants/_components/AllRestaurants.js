@@ -8,10 +8,9 @@ import { useSelector } from "react-redux";
 
 export default function AllRestaurants() {
   const search = useSelector((state) => state.search);
-  console.log(search);
   const { data: Rdata, isFetching: isRestaurantDataLoading } =
     useGetAllRestaurantsQuery(search);
-  console.log(Rdata);
+
   return (
     <>
       {isRestaurantDataLoading ? (

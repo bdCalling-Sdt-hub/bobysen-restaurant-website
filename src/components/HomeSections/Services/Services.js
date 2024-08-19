@@ -9,13 +9,13 @@ import Image from "next/image";
 
 export default function Services() {
   return (
-    <section className="container my-[120px] flex flex-col gap-y-16 lg:flex-row lg:items-center lg:justify-center lg:gap-x-20 lg:gap-y-0">
+    <section className="container my-[120px] flex flex-col gap-y-16 lg:flex-row lg:items-stretch lg:justify-center lg:gap-x-20 lg:gap-y-0">
       {/* left */}
       <div className="lg:w-[40%]">
         <Image
           src={menuPic}
           alt="people at restaurant table"
-          className="mx-auto block w-full rounded-lg"
+          className="mx-auto block h-full w-full rounded-lg"
         />
       </div>
 
@@ -36,7 +36,7 @@ export default function Services() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-y-7 lg:gap-x-16">
+        <div className="grid grid-cols-1 gap-y-10 md:grid-cols-2 lg:gap-x-16">
           {/* Online order */}
           <div className="flex items-start gap-x-3">
             <Image

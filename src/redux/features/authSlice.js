@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 const initialState = {
   user: null,
@@ -14,11 +15,17 @@ const authSlice = createSlice({
 
       state.user = user;
       state.token = token;
+
+      // Store token in Cookies for middleware authentication
+      Cookies.set("bookatable-access-token", token, { path: "/" });
     },
 
     logout: (state) => {
       state.user = null;
       state.token = null;
+
+      // Remove token from cookie
+      Cookies.remove("bookatable-access-token", { path: "/" });
     },
   },
 });

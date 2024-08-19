@@ -30,8 +30,6 @@ export default function FoodItem({ params }) {
   const { data: Mdata, refetch } = useGetSingleMenuQuery(params?.id?.[0]);
   const [addTocart] = useAddToCartMutation();
 
-  console.log(Mdata);
-
   // TODO: Use dynamic data
   const decreaseCount = () => {
     if (count > 1) {

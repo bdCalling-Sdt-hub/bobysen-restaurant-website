@@ -9,7 +9,7 @@ import AuthBasedButton from "./_components/AuthBasedButton";
 export default function Navbar() {
   return (
     <div className="absolute left-0 top-[30px] z-[9999] w-full">
-      <div className="container flex max-h-[100px] items-center justify-between">
+      <div className="flex max-h-[100px] items-center justify-between pr-2 lg:container lg:pr-0">
         {/* left */}
         <Link href="/" className="w-[30%] lg:w-[12%]">
           <Image src={logo} alt="logo" className="max-h-[100px] w-full" />

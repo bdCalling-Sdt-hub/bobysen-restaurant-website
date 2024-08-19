@@ -3,9 +3,6 @@ import Image from "next/image";
 import styles from "./OrderCard.module.css";
 
 export default function OrderCard({ data }) {
-  console.log(data);
-  // TODO: Use dynamic card data
-
   return (
     <div className="flex items-center gap-x-4 rounded bg-primary-secondary-2 px-4 py-1">
       {/* left */}

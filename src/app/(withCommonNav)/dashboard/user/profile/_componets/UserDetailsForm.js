@@ -58,7 +58,6 @@ export default function UserDetailsForm() {
 
     try {
       const res = await updateProfile(formData).unwrap();
-      console.log(res);
 
       if (res?.success) {
         Success_model({ title: "Profile Updated Successfully" });

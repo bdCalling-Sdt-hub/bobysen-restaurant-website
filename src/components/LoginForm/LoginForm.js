@@ -30,7 +30,7 @@ export default function LoginForm() {
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useDispatch();
   const router = useRouter();
-  const { user } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
 
   const onSubmit = async (data) => {
     try {
@@ -44,20 +44,12 @@ export default function LoginForm() {
           }),
         );
         router.push("/");
+        router.refresh();
       }
     } catch (error) {
       Error_Modal({ title: error?.data?.message });
     }
   };
-
-  // !-------- If user already exits then auto redirect -------
-  useLayoutEffect(() => {
-    if (user?.userId) {
-      router.push("/");
-    }
-  }, [user?.userId]);
-
-  // !---------------------------------------------------------
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-6">

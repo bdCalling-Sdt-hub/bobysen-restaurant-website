@@ -35,8 +35,6 @@ export default function OrdersTable({ status, data }) {
     },
   );
 
-  console.log(data);
-
   return (
     <div className="container mt-12">
       <Table className="border">

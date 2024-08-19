@@ -4,14 +4,13 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { setLocation, setSearchTerm } from "@/redux/features/searchSlice.js";
 import { Error_Modal } from "@/utils/modalHook.js";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import downArrowIcon from "/public/hero/downArrow.png";
-import locationIcon from "/public/hero/location.svg";
-import searchIcon from "/public/hero/search.svg";
 import { ArrowUpRight } from "lucide-react";
+import { Search } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 export default function HeroSearchBar() {
   const dispatch = useDispatch();
@@ -47,11 +46,33 @@ export default function HeroSearchBar() {
   };
 
   return (
-    <div className="relative">
+    <div
+      className={cn(
+        "relative flex items-stretch gap-x-1 rounded-full border-2 p-1",
+        pathName === "/home"
+          ? "border-primary-white text-primary-white"
+          : "border-primary-black text-primary-black",
+      )}
+    >
+      {/* Set location button */}
+      <button
+        onClick={() => setIsLocationFocused(!isLocationFocused)}
+        onBlur={() => setIsLocationFocused(!isLocationFocused)}
+        className="flex w-[75%] items-center justify-between text-ellipsis rounded-l-3xl bg-primary-secondary-3 px-2 text-center font-kumbh-sans text-primary-white md:w-[28%] lg:w-[40%] xl:w-[35%]"
+      >
+        <div className="flex items-center gap-x-1">
+          <MapPin size={18} />
+          <p>Location</p>
+        </div>
+
+        <ChevronDown size={18} />
+      </button>
+
+      {/* Search Input box */}
       <Input
         placeholder="Search by restaurant name"
         id="heroSearch"
-        className={`h-[65px] w-full rounded-3xl border bg-transparent pl-[140px] ${pathName === "/home" ? "border-primary-white text-primary-white lg:pl-[160px]" : "border-primary-black text-primary-black lg:pl-[160px]"} pr-[70px] text-lg shadow`}
+        className="h-12 flex-grow border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
         defaultValue={
           pathName === "/all-restaurants" && searchTerm ? searchTerm : ""
         }
@@ -63,25 +84,22 @@ export default function HeroSearchBar() {
         }}
       />
 
-      <div className="absolute left-[1%] top-[6%] h-[57px] w-[35%] text-ellipsis rounded-l-3xl border-l bg-primary-secondary-3 text-center font-kumbh-sans text-primary-white lg:left-[0.5%] lg:w-[24%]">
-        <input
-          onClick={() => setIsLocationFocused(!isLocationFocused)}
-          onBlur={() => setIsLocationFocused(!isLocationFocused)}
-          type="text"
-          value={"Location"}
-          readOnly
-          className="h-full w-full cursor-pointer rounded-l-3xl border-2 border-transparent bg-primary-secondary-3 pl-[20%] font-kumbh-sans text-primary-white outline-none focus:border-2 focus:border-black lg:pl-9"
-        />
-        <Image
-          src={downArrowIcon}
-          alt="arrow down icon"
-          className="absolute right-1 top-1/2"
-        />
-      </div>
+      {/* Search button */}
+      <button
+        className="flex w-28 items-center justify-center rounded-full bg-primary-secondary-3 text-white md:w-24"
+        ref={searchBtnRef}
+        onClick={() => {
+          dispatch(setSearchTerm(search));
+          router.push("/all-restaurants");
+        }}
+      >
+        <Search size={30} className="m-0 p-0" />
+      </button>
 
+      {/* Set nearby location dropdown */}
       <div
         className={cn(
-          "invisible absolute ml-2 mt-1 w-max rounded-xl bg-primary-secondary-3 px-2 py-2 font-kumbh-sans text-primary-white opacity-0 transition-all duration-300 ease-in-out",
+          "invisible absolute top-14 ml-2 mt-1 w-max rounded-xl bg-primary-secondary-3 px-2 py-2 font-kumbh-sans text-primary-white opacity-0 transition-all duration-300 ease-in-out",
           { "opacity-1 visible block": isLocationFocused },
         )}
       >
@@ -95,24 +113,6 @@ export default function HeroSearchBar() {
             <ArrowUpRight height={17} width={17} className="block pb-1" />
           </p>
         </div>
-      </div>
-
-      <Image
-        src={locationIcon}
-        alt="location icon"
-        className="absolute left-[3%] top-[35%]"
-      />
-
-      <div
-        className="absolute right-[2%] top-[9%] cursor-pointer lg:right-[1%]"
-        role="button"
-        ref={searchBtnRef}
-        onClick={() => {
-          dispatch(setSearchTerm(search));
-          router.push("/all-restaurants");
-        }}
-      >
-        <Image src={searchIcon} alt="search icon" className="" />
       </div>
     </div>
   );

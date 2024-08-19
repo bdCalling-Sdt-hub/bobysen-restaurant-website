@@ -6,7 +6,7 @@ import flowers from "/public/login/bg-flowers.png";
 import LoginForm from "@/components/LoginForm/LoginForm";
 
 export const metadata = {
-  title: "Login | Bookatable",
+  title: "Login",
   description: "Login page",
 };
 

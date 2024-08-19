@@ -12,17 +12,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "@/redux/features/authSlice";
 import { Success_model } from "@/utils/modalHook";
 import { useGetSingleUserQuery } from "@/redux/api/userApi";
-import { Camera, ShoppingCart } from "lucide-react";
+import { Camera } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function ProfileDrawer({ openState, setOpenState }) {
   const dispatch = useDispatch();
 
   const { data: profileData } = useGetSingleUserQuery();
   const user = profileData?.data || {};
+  const router = useRouter();
 
   const handleLogout = () => {
-    dispatch(logout());
     Success_model({ title: "Logout Successful" });
+    dispatch(logout());
+    router.refresh();
   };
 
   return (
