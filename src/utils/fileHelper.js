@@ -1,5 +1,5 @@
 const showImage = (path) => {
-  return `https://api.bookatable.mu${path}`;
+  return `${process.env.NEXT_PUBLIC_REDIRECT_URL}${path}`;
 };
 
 export default showImage;

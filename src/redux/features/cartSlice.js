@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  items: [], // Array to hold all items in the cart
-  totalAmount: 0,
-  bookingId: null,
+  items: JSON.parse(localStorage.getItem("cart"))?.items || [], // Initialize with localStorage data
+  totalAmount: JSON.parse(localStorage.getItem("cart"))?.totalAmount || 0,
+  bookingId: JSON.parse(localStorage.getItem("cart"))?.bookingId || null,
 };
 
 const cartSlice = createSlice({
@@ -51,9 +51,18 @@ const cartSlice = createSlice({
       const item = state.items.find((item) => item.bookingId === bookingId);
       return item;
     },
+
+    // Add a new reducer to rehydrate the state
+    rehydrateCart: (state, action) => {
+      const { items, totalAmount, bookingId } = action.payload;
+      state.items = items;
+      state.totalAmount = totalAmount;
+      state.bookingId = bookingId;
+    },
   },
 });
 
-export const { addToCart, getItemByBookingId } = cartSlice.actions;
+export const { addToCart, getItemByBookingId, rehydrateCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

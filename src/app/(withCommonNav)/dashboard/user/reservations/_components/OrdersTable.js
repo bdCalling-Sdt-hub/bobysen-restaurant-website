@@ -20,13 +20,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGetMenuByReservationIdQuery } from "@/redux/api/cartApi.js";
+import { useLoadPaymentZoneMutation } from "@/redux/api/orderApi";
 import { EyeIcon, MessageSquareText } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import OrderCard from "./OrderCard";
 import OrderSkeleton from "./OrderSkeleton.js";
-
 export default function OrdersTable({ status, data }) {
+  const [makePayment] = useLoadPaymentZoneMutation();
   const [reservationId, setReservationId] = useState();
   const { data: Cdata, isLoading } = useGetMenuByReservationIdQuery(
     reservationId,
@@ -35,6 +37,29 @@ export default function OrdersTable({ status, data }) {
     },
   );
 
+  const handlePayment = async () => {
+    const data = {
+      cart: Cdata?.data?._id,
+      order: {
+        id_order: uuidv4(),
+        currency: "MUR",
+        amount: Cdata?.data?.totalAmount,
+        iframe_behavior: {
+          height: 400,
+          width: 350,
+          custom_redirection_url: process.env.NEXT_PUBLIC_REDIRECT_URL,
+          language: "EN",
+        },
+      },
+    };
+    try {
+      const res = await makePayment(data).unwrap();
+      window.open(res?.data?.payment_zone_data);
+      Success_model("Payment successfull.");
+    } catch (error) {
+      Error_Modal("error");
+    }
+  };
   return (
     <div className="container mt-12">
       <Table className="border">
@@ -131,7 +156,16 @@ export default function OrdersTable({ status, data }) {
                         </div>
                       </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter>
+
+                    <AlertDialogFooter className="flex">
+                      {Cdata?.data?.status !== "paid" ? (
+                        <Button
+                          className="bg-primary-secondary-3"
+                          onClick={handlePayment}
+                        >
+                          Pay
+                        </Button>
+                      ) : null}
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                     </AlertDialogFooter>
                   </AlertDialogContent>

@@ -18,6 +18,7 @@ export const tagTypes = {
   order: "order",
   wallet: "wallet",
   review: "review",
+  order: "order",
 };
 
 export const tagTypesList = [
@@ -40,4 +41,5 @@ export const tagTypesList = [
   tagTypes.content,
   tagTypes.order,
   tagTypes.wallet,
+  tagTypes.order,
 ];

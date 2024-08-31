@@ -29,13 +29,13 @@ export default function CartCard({ data, bookingId, totalAmount }) {
               <td>Amount</td>
               <td>${data?.amount}</td>
             </tr>
-            <tr className={styles.cartCardTr}>
+            {/* <tr className={styles.cartCardTr}>
               <td>Payment Status</td>
               <td>
                 {data?.status[0].toUpperCase() +
                   data?.status?.slice(1, data?.status?.length)}
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>

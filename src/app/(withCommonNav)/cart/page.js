@@ -1,12 +1,15 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useSearchParams } from "next/navigation";
-import { useSelector } from "react-redux";
-import CartCard from "./_components/CartCard";
+import { useGetMenuByReservationIdQuery } from "@/redux/api/cartApi";
+import { useLoadPaymentZoneMutation } from "@/redux/api/orderApi";
+import { Error_Modal, Success_model } from "@/utils/modalHook";
 import { Empty } from "antd";
 import { Plus } from "lucide-react";
 import Link from "next/link";
-
+import { useSearchParams } from "next/navigation";
+import { useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+import CartCard from "./_components/CartCard";
 // export const metadata = {
 //   title: "Cart | Bookatable",
 //   description: "The cart of bookatable platform",
@@ -17,7 +20,33 @@ export default function Cart() {
   const booking = searchParams.get("booking");
   const restaurantId = searchParams.get("restaurant");
   const cart = useSelector((state) => state.cart);
+  const { data: Cdata } = useGetMenuByReservationIdQuery(booking);
+  console.log(Cdata);
+  const [makePayment] = useLoadPaymentZoneMutation();
 
+  const handlePayment = async () => {
+    const data = {
+      cart: Cdata?.data?._id,
+      order: {
+        id_order: uuidv4(),
+        currency: "MUR",
+        amount: cart?.totalAmount,
+        iframe_behavior: {
+          height: 400,
+          width: 350,
+          custom_redirection_url: process.env.NEXT_PUBLIC_REDIRECT_URL,
+          language: "EN",
+        },
+      },
+    };
+    try {
+      const res = await makePayment(data).unwrap();
+      window.open(res?.data?.payment_zone_data);
+      Success_model("Payment successfull.");
+    } catch (error) {
+      Error_Modal("error");
+    }
+  };
   return (
     <div className="mx-auto pb-24 pt-[180px] lg:w-[68%]">
       {/* title */}
@@ -55,6 +84,14 @@ export default function Cart() {
                 $ {cart?.totalAmount}
               </h1>
             </div>
+            <div className="mt-2 flex items-center justify-between">
+              <h1 className="text-3xl font-normal text-primary-secondary-3">
+                Status
+              </h1>
+              <h1 className="text-3xl font-bold text-primary-secondary-3">
+                {Cdata?.data?.status ?? "unpaid"}
+              </h1>
+            </div>
 
             {/* <div className="mt-4 flex items-center justify-between">
               <h1 className="text-3xl font-normal text-primary-secondary-3">
@@ -64,7 +101,11 @@ export default function Cart() {
                 {cart?.status}
               </h1>
             </div> */}
-            <Button className="mt-8 w-full rounded-lg bg-primary-secondary-3 font-medium text-primary-white">
+            <Button
+              disabled={Cdata?.data?.status === "paid"}
+              onClick={handlePayment}
+              className="mt-8 w-full rounded-lg bg-primary-secondary-3 font-medium text-primary-white"
+            >
               Payment
             </Button>
           </div>

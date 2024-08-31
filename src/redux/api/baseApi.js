@@ -3,7 +3,7 @@ import { logout, setUser } from "../features/authSlice.js";
 import { tagTypesList } from "../tagTypes.js";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://api.bookatable.mu/api/v1",
+  baseUrl: process.env.NEXT_PUBLIC_BACKEND_BASEURL,
   prepareHeaders: (headers, { getState }) => {
     const otpToken = sessionStorage.getItem("token");
     const forgotPasswordToken = sessionStorage.getItem("forgotPasswordToken");
@@ -28,7 +28,7 @@ const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
 
   if (result?.error?.status === 401) {
     const res = await fetch(
-      "http://192.168.10.61:5005/api/v1/auth/refresh-token",
+      "https://api.bookatable.mu/api/v1/auth/refresh-token",
       {
         method: "POST",
         credentials: "include",

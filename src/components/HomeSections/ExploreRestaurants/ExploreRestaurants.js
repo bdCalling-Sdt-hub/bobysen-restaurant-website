@@ -1,13 +1,14 @@
 "use client";
-import Link from "next/link";
-import ExploreRestaurantSliderCard from "./_components/ExploreRestaurantSliderCard";
 import { useGetAllTopRestaurntsQuery } from "@/redux/api/topRestaurantApi";
 import { Empty } from "antd";
 import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import ExploreRestaurantSliderCard from "./_components/ExploreRestaurantSliderCard";
 
 export default function ExploreRestaurants() {
   const query = {};
   const { data: Rdata, isLoading } = useGetAllTopRestaurntsQuery(query);
+  console.log(Rdata);
   return (
     <section className="container my-[60px]">
       <div className="flex items-center justify-between">
