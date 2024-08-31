@@ -28,7 +28,7 @@ const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
 
   if (result?.error?.status === 401) {
     const res = await fetch(
-      "https://api.bookatable.mu/api/v1/auth/refresh-token",
+      `${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/auth/refresh-token`,
       {
         method: "POST",
         credentials: "include",
