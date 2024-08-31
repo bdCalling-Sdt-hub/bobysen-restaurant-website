@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Initial state
 const initialState = {
-  items: JSON.parse(localStorage.getItem("cart"))?.items || [], // Initialize with localStorage data
-  totalAmount: JSON.parse(localStorage.getItem("cart"))?.totalAmount || 0,
-  bookingId: JSON.parse(localStorage.getItem("cart"))?.bookingId || null,
+  items: [], // Initialize with empty array
+  totalAmount: 0,
+  bookingId: null,
 };
 
 const cartSlice = createSlice({
@@ -42,8 +43,10 @@ const cartSlice = createSlice({
       state.totalAmount += amount;
       state.bookingId = bookingId;
 
-      // Update localStorage with updated cart data
-      localStorage.setItem("cart", JSON.stringify(state));
+      // Update localStorage with updated cart data (only on client side)
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cart", JSON.stringify(state));
+      }
     },
 
     getItemByBookingId: (state, action) => {
@@ -52,7 +55,6 @@ const cartSlice = createSlice({
       return item;
     },
 
-    // Add a new reducer to rehydrate the state
     rehydrateCart: (state, action) => {
       const { items, totalAmount, bookingId } = action.payload;
       state.items = items;
@@ -66,3 +68,13 @@ export const { addToCart, getItemByBookingId, rehydrateCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
+
+// Client-side rehydration
+export const rehydrateCartFromLocalStorage = () => (dispatch) => {
+  if (typeof window !== "undefined") {
+    const storedCart = JSON.parse(localStorage.getItem("cart"));
+    if (storedCart) {
+      dispatch(rehydrateCart(storedCart));
+    }
+  }
+};

@@ -12,6 +12,11 @@ const nextConfig = {
 
         port: "5005", // Include the port if it's part of the hostname
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000", // Add localhost with the port 3000
+      },
     ],
     domains: ["192.168.10.61"],
   },

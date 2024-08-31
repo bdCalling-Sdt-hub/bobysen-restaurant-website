@@ -7,7 +7,10 @@ import { Empty } from "antd";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { rehydrateCartFromLocalStorage } from "@/redux/features/cartSlice";
+import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import CartCard from "./_components/CartCard";
 // export const metadata = {
@@ -21,8 +24,11 @@ export default function Cart() {
   const restaurantId = searchParams.get("restaurant");
   const cart = useSelector((state) => state.cart);
   const { data: Cdata } = useGetMenuByReservationIdQuery(booking);
-  console.log(Cdata);
+  const dispatch = useDispatch();
   const [makePayment] = useLoadPaymentZoneMutation();
+  useEffect(() => {
+    dispatch(rehydrateCartFromLocalStorage());
+  }, [dispatch]);
 
   const handlePayment = async () => {
     const data = {
