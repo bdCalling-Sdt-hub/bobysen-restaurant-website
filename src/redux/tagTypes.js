@@ -19,6 +19,8 @@ export const tagTypes = {
   wallet: "wallet",
   review: "review",
   order: "order",
+  event: "event",
+  points: "points",
 };
 
 export const tagTypesList = [
@@ -42,4 +44,6 @@ export const tagTypesList = [
   tagTypes.order,
   tagTypes.wallet,
   tagTypes.order,
+  tagTypes.event,
+  tagTypes.points,
 ];

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/popover";
 import Image from "next/image";
 
-export function DayPickerInput({ date, setDate }) {
+export function DayPickerInput({ date, setDate, disabled }) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -23,7 +23,9 @@ export function DayPickerInput({ date, setDate }) {
           className={cn(
             "w-full justify-start text-left font-normal",
             !date && "text-muted-foreground",
+            disabled && "cursor-not-allowed opacity-50",
           )}
+          disabled={disabled} // Disable button if disabled prop is true
         >
           <Image src={calendarIcon} alt="calendar icon" className="mr-2" />
           {date ? (
@@ -37,8 +39,9 @@ export function DayPickerInput({ date, setDate }) {
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={disabled ? undefined : setDate} // Prevent date selection if disabled
           initialFocus
+          disabled={disabled} // Disable calendar interactions if disabled
         />
       </PopoverContent>
     </Popover>

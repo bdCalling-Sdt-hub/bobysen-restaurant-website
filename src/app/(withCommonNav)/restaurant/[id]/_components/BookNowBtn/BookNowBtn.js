@@ -1,5 +1,4 @@
 "use client";
-
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
 import {
   AlertDialog,
@@ -23,10 +22,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import calenderIcon from "/public/DynamicRestaurant/calendar.png";
 import foodMenuIcon from "/public/DynamicRestaurant/menu.png";
 import successfulIcon from "/public/DynamicRestaurant/succesful.png";
-import usersIcon from "/public/DynamicRestaurant/users.png";
 
 export default function BookNowBtn({ reservation, setShowRequiredError }) {
   const [booking, { data: submitData, isLoading: submitLoading }] =

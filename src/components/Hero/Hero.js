@@ -1,10 +1,10 @@
 "use client";
-import Image from "next/image";
-import coffeeShop from "/public/home/coffeeshop.png";
+// import Image from "next/image";
+// import coffeeShop from "/public/home/coffeeshop.png";
 import HeroSearchBar from "../HeroSearchBar/HeroSearchBar";
 import { motion } from "framer-motion";
 import "./Hero.css";
-import Tilt from "react-parallax-tilt";
+// import Tilt from "react-parallax-tilt";
 
 // motion variants
 const pathVariants = {
@@ -62,10 +62,10 @@ export default function Hero() {
       ></motion.div>
 
       {/* ----------------- Hero section content --------------------- */}
-      <div className="flex flex-col items-center justify-center gap-x-16 lg:container sm:px-10 lg:flex-row lg:px-0">
+      <div className="flex flex-col gap-x-16 pt-20 lg:container sm:px-10 lg:flex-row lg:px-0 lg:pt-0">
         {/* left */}
         <motion.div
-          className="container space-y-8 lg:w-[55%] xl:w-[50%]"
+          className="space-y-8 px-8 lg:w-[55%] xl:w-[50%]"
           variants={leftDivVariants}
           initial="initial"
           animate="animate"
@@ -91,7 +91,7 @@ export default function Hero() {
         </motion.div>
 
         {/* right */}
-        <motion.div
+        {/* <motion.div
           className="hidden lg:block lg:w-[45%] xl:w-[50%]"
           initial={{ x: "12vw", opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
@@ -104,7 +104,7 @@ export default function Hero() {
               className="mx-auto w-[95%] opacity-85"
             />
           </Tilt>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

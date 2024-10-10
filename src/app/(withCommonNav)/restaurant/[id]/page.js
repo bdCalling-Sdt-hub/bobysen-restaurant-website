@@ -8,10 +8,13 @@ export const metadata = {
   description: "Book restaurant page",
 };
 
-export default function page({ params }) {
+export default function page({ params, searchParams }) {
   return (
     <div>
-      <DynamicRestaurantContainer params={params} />
+      <DynamicRestaurantContainer
+        params={params}
+        eventId={searchParams?.eventId}
+      />
     </div>
   );
 }

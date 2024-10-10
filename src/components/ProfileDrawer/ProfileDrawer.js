@@ -54,6 +54,8 @@ export default function ProfileDrawer({ openState, setOpenState }) {
             <Image
               src={user?.image}
               alt="profile picture"
+              width={900}
+              height={700}
               className="mx-auto w-[80%]"
             />
           ) : (

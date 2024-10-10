@@ -42,6 +42,9 @@ import eventIcon from "/public/DynamicRestaurant/event.png";
 import goldStarIcon from "/public/DynamicRestaurant/goldStar.png";
 import bookIcon from "/public/DynamicRestaurant/image 4.png";
 import usersIcon from "/public/DynamicRestaurant/users.png";
+import { useGetSingleEventQuery } from "@/redux/api/eventApi";
+import moment from "moment";
+import SkeletonLoader from "@/components/SkeletonLoader/SkeletonLoader";
 
 const AnyReactComponent = ({ text }) => (
   <div className="">
@@ -54,7 +57,8 @@ const AnyReactComponent = ({ text }) => (
   </div>
 );
 
-export default function DynamicRestaurantContainer({ params }) {
+export default function DynamicRestaurantContainer({ params, eventId }) {
+  console.log(eventId);
   const [map, setMap] = useState(null);
   const { id } = params;
   const { data: reviewsData, isLoading: isReviewsLoading } =
@@ -62,6 +66,8 @@ export default function DynamicRestaurantContainer({ params }) {
   const { data: Rdata, isLoading: isRestaurantLoading } =
     useGetSingleRestaurantQuery(id);
   const [showRequiredError, setShowRequiredError] = useState(false);
+  const { data: eventData, isLoading } = useGetSingleEventQuery(eventId);
+  const eventDate = moment(eventData?.data?.date).format("DD MMM, YYYY");
 
   const {
     name,
@@ -98,328 +104,351 @@ export default function DynamicRestaurantContainer({ params }) {
 
   // todo: get book a table data
   const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(eventId ? eventDate : null);
   const [guestCount, setGuestCount] = useState(null);
   const numberOfGuests = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  const reservationData = {
-    time: selectedTime,
-    date: selectedDate,
-    seats: guestCount,
-    restaurant: id,
-  };
+  const reservationData = eventId
+    ? {
+        time: selectedTime,
+        date: selectedDate,
+        seats: guestCount,
+        restaurant: id,
+        event: eventId,
+      }
+    : {
+        time: selectedTime,
+        date: selectedDate,
+        seats: guestCount,
+        restaurant: id,
+      };
+
+  console.log(reservationData);
 
   return (
-    <div className="container pt-[160px]">
-      {/* Restaurant Details Section */}
-      <section className="grid grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-10 md:gap-y-0">
-        {/* left */}
-        <div className="relative rounded-xl bg-primary-white-light p-4 shadow">
-          <RestaurantImageSlider images={Rdata?.data?.images} />
+    <>
+      {isLoading ? (
+        <div className="container pt-[160px]">
+          <SkeletonLoader></SkeletonLoader>
+        </div>
+      ) : (
+        <div className="container pt-[160px]">
+          {/* Restaurant Details Section */}
+          <section className="grid grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-10 md:gap-y-0">
+            {/* left */}
+            <div className="relative rounded-xl bg-primary-white-light p-4 shadow">
+              <RestaurantImageSlider images={Rdata?.data?.images} />
 
-          {!isRestaurantLoading && (
-            <>
-              <div className="mt-3">
-                <h1 className="text-3xl font-bold text-primary-secondary-3">
-                  {name}
-                </h1>
-                <Separator className="mb-4 mt-2" />
+              {!isRestaurantLoading && (
+                <>
+                  <div className="mt-3">
+                    <h1 className="text-3xl font-bold text-primary-secondary-3">
+                      {name}
+                    </h1>
+                    <Separator className="mb-4 mt-2" />
 
-                <div className="mb-3 grid grid-cols-1 gap-x-5 font-kumbh-sans lg:grid-cols-2">
-                  {/* Inner left */}
-                  <div className="">
-                    <div className="mb-4 flex items-start gap-2">
-                      <Image src={locationIcon} alt="location icon" />
-                      <p className="text-primary-secondary-1">
-                        {address}
-                        {/* <Link
+                    <div className="mb-3 grid grid-cols-1 gap-x-5 font-kumbh-sans lg:grid-cols-2">
+                      {/* Inner left */}
+                      <div className="">
+                        <div className="mb-4 flex items-start gap-2">
+                          <Image src={locationIcon} alt="location icon" />
+                          <p className="text-primary-secondary-1">
+                            {address}
+                            {/* <Link
                       href="https://maps.app.goo.gl/7cd8co1jrPgimQE77"
                       className="flex items-center gap-x-2 font-semibold italic"
                     >
                       Get Direction <Image src={arrow} alt="arrow icon" />
                     </Link> */}
-                      </p>
-                    </div>
+                          </p>
+                        </div>
 
-                    <div className="mb-4 flex items-start gap-2">
-                      <Image src={eventIcon} alt="calendar icon" />
-                      <p className="text-primary-secondary-1">
-                        Every Friday restaurant are close
-                      </p>
-                    </div>
+                        <div className="mb-4 flex items-start gap-2">
+                          <Image src={eventIcon} alt="calendar icon" />
+                          <p className="text-primary-secondary-1">
+                            Every Friday restaurant are close
+                          </p>
+                        </div>
 
-                    <div className="mb-4 flex items-start gap-x-3">
-                      <PhoneOutgoing size={19} color="#8aba51" />
-                      <div className="flex flex-col gap-y-2">
-                        <p className="text-base text-primary-secondary-1">
-                          {helpLineNumber1}
-                        </p>
-                        <p className="text-base text-primary-secondary-1">
-                          {helpLineNumber2}
-                        </p>
+                        <div className="mb-4 flex items-start gap-x-3">
+                          <PhoneOutgoing size={19} color="#8aba51" />
+                          <div className="flex flex-col gap-y-2">
+                            <p className="text-base text-primary-secondary-1">
+                              {helpLineNumber1}
+                            </p>
+                            <p className="text-base text-primary-secondary-1">
+                              {helpLineNumber2}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Inner Right */}
+                      <div>
+                        <div className="flex items-start gap-2">
+                          <Image src={menuIcon} alt="hamburger menu icon" />
+                          <p>
+                            {description}
+                            <Button
+                              variant="link"
+                              className="text-primary-secondary-3"
+                            >
+                              Read More...
+                            </Button>
+                          </p>
+                        </div>
+                        <div className="mt-4 flex items-start gap-2">
+                          <Image src={bookIcon} alt="calendar icon" />
+                          <Link href={`/menu/${id}?state=only-menu`}>
+                            <p className="border-b-2 border-b-primary-secondary-2 text-primary-secondary-1 transition-all duration-300 ease-in-out hover:border-b-primary-secondary-1">
+                              Show Menu
+                            </p>
+                          </Link>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Inner Right */}
-                  <div>
-                    <div className="flex items-start gap-2">
-                      <Image src={menuIcon} alt="hamburger menu icon" />
-                      <p>
-                        {description}
-                        <Button
-                          variant="link"
-                          className="text-primary-secondary-3"
-                        >
-                          Read More...
-                        </Button>
-                      </p>
-                    </div>
-                    <div className="mt-4 flex items-start gap-2">
-                      <Image src={bookIcon} alt="calendar icon" />
-                      <Link href={`/menu/${id}?state=only-menu`}>
-                        <p className="border-b-2 border-b-primary-secondary-2 text-primary-secondary-1 transition-all duration-300 ease-in-out hover:border-b-primary-secondary-1">
-                          Show Menu
+                    {/* Filters */}
+                    <div className="lg:w-3/4">
+                      <h4 className="text-xl font-semibold text-primary-secondary-1">
+                        Book a table
+                      </h4>
+
+                      <div
+                        className={`mb-16 mt-3 grid w-1/2 grid-cols-1 gap-x-6 gap-y-4 lg:mb-0 lg:w-full lg:gap-y-0 xl:grid-cols-3`}
+                      >
+                        <div className="w-full">
+                          <DayPickerInput
+                            disabled={eventData?.data?.date ? true : false}
+                            date={selectedDate}
+                            setDate={setSelectedDate}
+                          />
+                        </div>
+
+                        <div className="flex items-center gap-x-1 rounded-lg border px-4">
+                          <Clock />
+                          <TimePicker
+                            showHour={true}
+                            showMinute={true}
+                            showSecond={false}
+                            className="h-full w-full"
+                            placeholder="Time"
+                            minuteStep={15}
+                            onChange={(value) =>
+                              setSelectedTime(format(value, "HH:mm"))
+                            }
+                            defaultValue={selectedTime}
+                          />
+                        </div>
+
+                        {/* select users */}
+                        <div className="">
+                          <Select
+                            onValueChange={(value) => setGuestCount(value)}
+                          >
+                            <SelectTrigger className="flex max-w-full items-center justify-between">
+                              <Image src={usersIcon} alt="users icon" />
+                              <SelectValue placeholder="Guests" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {numberOfGuests?.map((number) => (
+                                <SelectItem value={number} key={number}>
+                                  {number}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+
+                      {showRequiredError && (
+                        <p className="mt-[2px] pl-1 font-kumbh-sans text-sm font-medium text-primary-danger">
+                          Please fill out the form completely to book now!
                         </p>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Filters */}
-                <div className="lg:w-3/4">
-                  <h4 className="text-xl font-semibold text-primary-secondary-1">
-                    Book a table
-                  </h4>
-
-                  <div
-                    className={`mb-16 mt-3 grid w-1/2 grid-cols-1 gap-x-6 gap-y-4 lg:mb-0 lg:w-full lg:gap-y-0 xl:grid-cols-3`}
-                  >
-                    <div className="w-full">
-                      <DayPickerInput
-                        date={selectedDate}
-                        setDate={setSelectedDate}
-                      />
-                    </div>
-
-                    <div className="flex items-center gap-x-1 rounded-lg border px-4">
-                      <Clock />
-                      <TimePicker
-                        showHour={true}
-                        showMinute={true}
-                        showSecond={false}
-                        className="h-full w-full"
-                        placeholder="Time"
-                        minuteStep={15}
-                        onChange={(value) =>
-                          setSelectedTime(format(value, "HH:mm"))
-                        }
-                        defaultValue={selectedTime}
-                      />
-                    </div>
-
-                    {/* select users */}
-                    <div className="">
-                      <Select onValueChange={(value) => setGuestCount(value)}>
-                        <SelectTrigger className="flex max-w-full items-center justify-between">
-                          <Image src={usersIcon} alt="users icon" />
-                          <SelectValue placeholder="Guests" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {numberOfGuests?.map((number) => (
-                            <SelectItem value={number} key={number}>
-                              {number}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      )}
                     </div>
                   </div>
 
-                  {showRequiredError && (
-                    <p className="mt-[2px] pl-1 font-kumbh-sans text-sm font-medium text-primary-danger">
-                      Please fill out the form completely to book now!
-                    </p>
+                  {/* Book Now Button with Modal */}
+                  <BookNowBtn
+                    reservation={reservationData}
+                    setShowRequiredError={setShowRequiredError}
+                  />
+                </>
+              )}
+            </div>
+
+            {/* right */}
+            <div className="space-y-2">
+              <div className="rounded-xl bg-primary-white-light p-4 shadow">
+                <h3 className="text-center font-kumbh-sans text-lg font-semibold text-primary-secondary-1">
+                  Here to Find
+                </h3>
+                <Separator className="mb-2 mt-3 bg-primary-secondary-3" />
+                <div style={{ height: "250px", width: "100%" }}>
+                  {isLoaded && (
+                    <GoogleMap
+                      mapContainerStyle={{ height: "250px", width: "100%" }}
+                      center={center}
+                      zoom={10}
+                      onLoad={onLoad}
+                      onUnmount={onUnmount}
+                    >
+                      <Marker position={center} />
+                    </GoogleMap>
                   )}
                 </div>
               </div>
 
-              {/* Book Now Button with Modal */}
-              <BookNowBtn
-                reservation={reservationData}
-                setShowRequiredError={setShowRequiredError}
-              />
-            </>
-          )}
+              <div className="rounded-xl bg-primary-white-light p-4 shadow">
+                <h3 className="text-center font-kumbh-sans text-lg font-semibold text-primary-secondary-1">
+                  Opening Hours
+                </h3>
+                <Separator className="mb-2 mt-3 bg-primary-secondary-3" />
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="font-bold text-primary-black">
+                        Day
+                      </TableHead>
+                      <TableHead className="font-bold text-primary-black">
+                        Open
+                      </TableHead>
+                      <TableHead className="font-bold text-primary-black">
+                        Close
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {/* TODO: Use data from database */}
+                    {days?.map((day) => (
+                      <TableRow key={day.id} className="border-0">
+                        <TableCell>{day?.day}</TableCell>
+                        <TableCell>{day?.openingTime}</TableCell>
+                        <TableCell>{day?.closingTime}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
+          </section>
+
+          {/* Review Section */}
+          <section className="mt-16">
+            <h1 className="text-3xl font-bold text-primary-secondary-1">
+              Review
+            </h1>
+
+            <div className="mt-12 flex flex-col items-start gap-16 lg:flex-row">
+              <div className="mx-auto lg:mx-0 lg:w-[20%]">
+                {/* left */}
+                <div className="flex items-center gap-x-3 font-bold text-primary-secondary-1">
+                  <h1>{avgReviews}</h1>
+                  <Image src={starIcon} alt="rating star icon" />
+                </div>
+
+                <p className="mt-5 max-w-max text-center font-kumbh-sans text-primary-secondary-1">
+                  {reviews?.length ?? 0} Reviews
+                </p>
+              </div>
+
+              {/* right */}
+              <div className="w-full space-y-5 lg:w-1/2">
+                <div className="flex items-center gap-x-16">
+                  <div className="flex items-center gap-x-2">
+                    <h4 className="text-xl font-bold text-[#F8B84E]">5</h4>
+                    <Image src={goldStarIcon} alt="gold star icon" />
+                  </div>
+                  <Progress
+                    value={
+                      ratingOverview &&
+                      ratingOverview["5star"] &&
+                      ratingOverview["5star"].avg
+                        ? ratingOverview["5star"].avg
+                        : 0
+                    }
+                    className={cn("bg-primary-secondary-1", styles.progressBar)}
+                  />
+                </div>
+                <div className="flex items-center gap-x-16">
+                  <div className="flex items-center gap-x-2">
+                    <h4 className="text-xl font-bold text-[#F8B84E]">4</h4>
+                    <Image src={goldStarIcon} alt="gold star icon" />
+                  </div>
+                  <Progress
+                    value={
+                      ratingOverview && ratingOverview["4star"]?.avg
+                        ? ratingOverview["4star"]?.avg
+                        : 0
+                    }
+                    className={cn("bg-primary-secondary-1", styles.progressBar)}
+                  />
+                </div>
+                <div className="flex items-center gap-x-16">
+                  <div className="flex items-center gap-x-2">
+                    <h4 className="text-xl font-bold text-[#F8B84E]">5</h4>
+                    <Image src={goldStarIcon} alt="gold star icon" />
+                  </div>
+                  <Progress
+                    value={
+                      ratingOverview && ratingOverview["3star"]?.avg
+                        ? ratingOverview["3star"]?.avg
+                        : 0
+                    }
+                    className={cn("bg-primary-secondary-1", styles.progressBar)}
+                  />
+                </div>
+                <div className="flex items-center gap-x-16">
+                  <div className="flex items-center gap-x-2">
+                    <h4 className="text-xl font-bold text-[#F8B84E]">2</h4>
+                    <Image src={goldStarIcon} alt="gold star icon" />
+                  </div>
+                  <Progress
+                    value={
+                      ratingOverview && ratingOverview["2star"]?.avg
+                        ? ratingOverview["2star"]?.avg
+                        : 0
+                    }
+                    className={cn("bg-primary-secondary-1", styles.progressBar)}
+                  />
+                </div>
+                <div className="flex items-center gap-x-16">
+                  <div className="flex items-center gap-x-2">
+                    <h4 className="text-xl font-bold text-[#F8B84E]">1</h4>
+                    <Image src={goldStarIcon} alt="gold star icon" />
+                  </div>
+                  <Progress
+                    value={
+                      ratingOverview && ratingOverview["1star"]?.avg
+                        ? ratingOverview["1star"]?.avg
+                        : 0
+                    }
+                    className={cn("bg-primary-secondary-1", styles.progressBar)}
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* User feedback section */}
+          <section className="mt-16">
+            <h1 className="text-3xl font-bold text-primary-secondary-1">
+              User Feedback
+            </h1>
+
+            <div className="mt-10">
+              {/* TODO: Use dynamic data */}
+              {reviews?.map((review, idx) => (
+                <div key={idx}>
+                  <FeedbackCard data={review} />
+                  <Separator className="my-10 bg-primary-black" />
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
-
-        {/* right */}
-        <div className="space-y-2">
-          <div className="rounded-xl bg-primary-white-light p-4 shadow">
-            <h3 className="text-center font-kumbh-sans text-lg font-semibold text-primary-secondary-1">
-              Here to Find
-            </h3>
-            <Separator className="mb-2 mt-3 bg-primary-secondary-3" />
-            <div style={{ height: "250px", width: "100%" }}>
-              {isLoaded && (
-                <GoogleMap
-                  mapContainerStyle={{ height: "250px", width: "100%" }}
-                  center={center}
-                  zoom={10}
-                  onLoad={onLoad}
-                  onUnmount={onUnmount}
-                >
-                  <Marker position={center} />
-                </GoogleMap>
-              )}
-            </div>
-          </div>
-
-          <div className="rounded-xl bg-primary-white-light p-4 shadow">
-            <h3 className="text-center font-kumbh-sans text-lg font-semibold text-primary-secondary-1">
-              Opening Hours
-            </h3>
-            <Separator className="mb-2 mt-3 bg-primary-secondary-3" />
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="font-bold text-primary-black">
-                    Day
-                  </TableHead>
-                  <TableHead className="font-bold text-primary-black">
-                    Open
-                  </TableHead>
-                  <TableHead className="font-bold text-primary-black">
-                    Close
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {/* TODO: Use data from database */}
-                {days?.map((day) => (
-                  <TableRow key={day.id} className="border-0">
-                    <TableCell>{day?.day}</TableCell>
-                    <TableCell>{day?.openingTime}</TableCell>
-                    <TableCell>{day?.closingTime}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
-      </section>
-
-      {/* Review Section */}
-      <section className="mt-16">
-        <h1 className="text-3xl font-bold text-primary-secondary-1">Review</h1>
-
-        <div className="mt-12 flex flex-col items-start gap-16 lg:flex-row">
-          <div className="mx-auto lg:mx-0 lg:w-[20%]">
-            {/* left */}
-            <div className="flex items-center gap-x-3 font-bold text-primary-secondary-1">
-              <h1>{avgReviews}</h1>
-              <Image src={starIcon} alt="rating star icon" />
-            </div>
-
-            <p className="mt-5 max-w-max text-center font-kumbh-sans text-primary-secondary-1">
-              {reviews?.length ?? 0} Reviews
-            </p>
-          </div>
-
-          {/* right */}
-          <div className="w-full space-y-5 lg:w-1/2">
-            <div className="flex items-center gap-x-16">
-              <div className="flex items-center gap-x-2">
-                <h4 className="text-xl font-bold text-[#F8B84E]">5</h4>
-                <Image src={goldStarIcon} alt="gold star icon" />
-              </div>
-              <Progress
-                value={
-                  ratingOverview &&
-                  ratingOverview["5star"] &&
-                  ratingOverview["5star"].avg
-                    ? ratingOverview["5star"].avg
-                    : 0
-                }
-                className={cn("bg-primary-secondary-1", styles.progressBar)}
-              />
-            </div>
-            <div className="flex items-center gap-x-16">
-              <div className="flex items-center gap-x-2">
-                <h4 className="text-xl font-bold text-[#F8B84E]">4</h4>
-                <Image src={goldStarIcon} alt="gold star icon" />
-              </div>
-              <Progress
-                value={
-                  ratingOverview && ratingOverview["4star"]?.avg
-                    ? ratingOverview["4star"]?.avg
-                    : 0
-                }
-                className={cn("bg-primary-secondary-1", styles.progressBar)}
-              />
-            </div>
-            <div className="flex items-center gap-x-16">
-              <div className="flex items-center gap-x-2">
-                <h4 className="text-xl font-bold text-[#F8B84E]">5</h4>
-                <Image src={goldStarIcon} alt="gold star icon" />
-              </div>
-              <Progress
-                value={
-                  ratingOverview && ratingOverview["3star"]?.avg
-                    ? ratingOverview["3star"]?.avg
-                    : 0
-                }
-                className={cn("bg-primary-secondary-1", styles.progressBar)}
-              />
-            </div>
-            <div className="flex items-center gap-x-16">
-              <div className="flex items-center gap-x-2">
-                <h4 className="text-xl font-bold text-[#F8B84E]">2</h4>
-                <Image src={goldStarIcon} alt="gold star icon" />
-              </div>
-              <Progress
-                value={
-                  ratingOverview && ratingOverview["2star"]?.avg
-                    ? ratingOverview["2star"]?.avg
-                    : 0
-                }
-                className={cn("bg-primary-secondary-1", styles.progressBar)}
-              />
-            </div>
-            <div className="flex items-center gap-x-16">
-              <div className="flex items-center gap-x-2">
-                <h4 className="text-xl font-bold text-[#F8B84E]">1</h4>
-                <Image src={goldStarIcon} alt="gold star icon" />
-              </div>
-              <Progress
-                value={
-                  ratingOverview && ratingOverview["1star"]?.avg
-                    ? ratingOverview["1star"]?.avg
-                    : 0
-                }
-                className={cn("bg-primary-secondary-1", styles.progressBar)}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* User feedback section */}
-      <section className="mt-16">
-        <h1 className="text-3xl font-bold text-primary-secondary-1">
-          User Feedback
-        </h1>
-
-        <div className="mt-10">
-          {/* TODO: Use dynamic data */}
-          {reviews?.map((review, idx) => (
-            <div key={idx}>
-              <FeedbackCard data={review} />
-              <Separator className="my-10 bg-primary-black" />
-            </div>
-          ))}
-        </div>
-      </section>
-    </div>
+      )}
+    </>
   );
 }

@@ -35,16 +35,24 @@ export default function LoginForm() {
   const onSubmit = async (data) => {
     try {
       const res = await login(data).unwrap();
+
       if (res?.data?.accessToken) {
-        Success_model({ title: "Login Successful" });
-        dispatch(
-          setUser({
-            user: jwtDecode(res?.data?.accessToken),
-            token: res?.data?.accessToken,
-          }),
-        );
-        router.push("/");
-        router.refresh();
+        const user = jwtDecode(res?.data?.accessToken)?.role === "user";
+
+        if (user) {
+          Success_model({ title: "Login Successful" });
+          dispatch(
+            setUser({
+              user: jwtDecode(res?.data?.accessToken),
+              token: res?.data?.accessToken,
+            }),
+          );
+
+          router.push("/");
+          router.refresh();
+        } else {
+          Error_Modal({ title: "You are not authorized" });
+        }
       }
     } catch (error) {
       Error_Modal({ title: error?.data?.message });

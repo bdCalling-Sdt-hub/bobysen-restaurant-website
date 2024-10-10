@@ -27,5 +27,6 @@ export const config = {
     "/otp-get",
     "/set-new-password",
     "/verify-otp",
+    "/points",
   ],
 };
