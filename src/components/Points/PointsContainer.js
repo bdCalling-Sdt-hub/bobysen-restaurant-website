@@ -12,12 +12,14 @@ import {
 import { Error_Modal, Success_model } from "@/utils/modalHook";
 import SkeletonLoader from "../SkeletonLoader/SkeletonLoader";
 import { Separator } from "../ui/separator";
+import LoadingButton from "../LoadingButton/LoadingButton";
 
 const PointsContainer = () => {
   const { data: points, isLoading: isPointsLoading } =
     useGetPointsQuery(undefined);
 
-  const [withdrawPoints, { isLoading }] = useWithDawPointsMutation();
+  const [withdrawPoints, { isLoading: isWithdrawLoading }] =
+    useWithDawPointsMutation();
 
   // withdraw points function
   const handleWithdrawPoints = async () => {
@@ -76,13 +78,23 @@ const PointsContainer = () => {
                     100
                   </p>
 
-                  <Button
-                    disabled={Number(points?.data?.coins) >= 100 ? false : true}
-                    className="bg-[#FF8333] px-7"
-                    onClick={handleWithdrawPoints}
-                  >
-                    Redeem
-                  </Button>
+                  {isWithdrawLoading ? (
+                    <div className="w-fit">
+                      <LoadingButton className="bg-[#FF8333] px-7">
+                        Processing....
+                      </LoadingButton>
+                    </div>
+                  ) : (
+                    <Button
+                      disabled={
+                        Number(points?.data?.coins) >= 100 ? false : true
+                      }
+                      className="bg-[#FF8333] px-7"
+                      onClick={handleWithdrawPoints}
+                    >
+                      Redeem
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
