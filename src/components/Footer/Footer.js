@@ -1,16 +1,8 @@
-import Image from "next/image";
-import logo from "/public/footer/Group 2.png";
-import sparkTech from "/public/footer/Group 94.png";
-import fbLogo from "/public/footer/social (1).png";
-import twitterLogo from "/public/footer/social (2).png";
-import instaLogo from "/public/footer/social.png";
 import { Separator } from "@/components/ui/separator";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { Instagram } from "lucide-react";
-import { Facebook } from "lucide-react";
-import { Twitter } from "lucide-react";
-import { Linkedin } from "lucide-react";
-import { Copyright } from "lucide-react";
+import logo from "/public/footer/Group 2.png";
 
 export default function Footer() {
   return (
@@ -62,8 +54,8 @@ export default function Footer() {
             </div>
           </div>
           <div className="space-y-3">
-            <h4 className="font-bold">WhatsApp</h4>
-            <p className="font-kumbh-sans text-xl">+230 52520249</p>
+            <h4 className="font-bold">Support</h4>
+            <p className="font-kumbh-sans text-xl">info@bookatable.mu</p>
           </div>
         </div>
       </div>
