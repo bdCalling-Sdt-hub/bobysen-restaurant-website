@@ -8,11 +8,11 @@ import logoutIcon from "/public/profileDrawer/logout.png";
 import { cn } from "@/lib/utils";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { logout, selectUser } from "@/redux/features/authSlice";
+import { useDispatch } from "react-redux";
+import { logout } from "@/redux/features/authSlice";
 import { Success_model } from "@/utils/modalHook";
 import { useGetSingleUserQuery } from "@/redux/api/userApi";
-import { Camera } from "lucide-react";
+import { Camera, Coins } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function ProfileDrawer({ openState, setOpenState }) {
@@ -111,6 +111,16 @@ export default function ProfileDrawer({ openState, setOpenState }) {
           >
             <Image src={favoriteIcon} alt="favorite icon" />
             <h3 className="font-kumbh-sans text-xl">Favorite</h3>
+          </Link>
+
+          <Separator className="my-4 bg-primary-secondary-3" />
+          <Link
+            href="/points"
+            className="flex items-center gap-x-6"
+            onClick={() => setOpenState(false)}
+          >
+            <Coins size={28} />
+            <h3 className="font-kumbh-sans text-xl">Points</h3>
           </Link>
 
           <Separator className="my-4 bg-primary-secondary-3" />

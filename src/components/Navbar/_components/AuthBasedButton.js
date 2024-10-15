@@ -2,7 +2,6 @@
 
 import ProfileDrawer from "@/components/ProfileDrawer/ProfileDrawer";
 import { Button } from "@/components/ui/button";
-import { selectUser } from "@/redux/features/authSlice";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
