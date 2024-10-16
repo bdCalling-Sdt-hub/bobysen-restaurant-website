@@ -19,15 +19,15 @@ export default function HomePageNav() {
         <div className="flex items-center gap-x-1 lg:max-w-max lg:gap-x-5">
           <div className="flex flex-wrap items-center justify-center space-x-2 text-white md:space-x-5">
             <Button
-              className="hover:bg-secondary-1 h-[40px] w-[90px] text-balance rounded-xl border border-primary-secondary-3 bg-primary-secondary-3 text-xs font-semibold hover:bg-primary-secondary-1 hover:text-primary-white lg:h-[40px] lg:w-[140px] lg:px-0 lg:text-base"
-              style={{ boxShadow: "0px 3px 0px #334a55" }}
+              className="hover:bg-secondary-1 h-[40px] w-[90px] text-balance rounded-xl border border-primary-secondary-3 bg-transparent text-xs font-semibold hover:bg-primary-secondary-1 hover:text-primary-white lg:h-[40px] lg:w-[140px] lg:px-0 lg:text-base"
+              style={{ boxShadow: "0px 3px 0px #8aba51" }}
             >
               <Link href="/event">Event</Link>
             </Button>
           </div>
           <Button
-            className="hover:bg-secondary-1 h-[40px] w-[90px] text-balance rounded-xl border border-primary-secondary-3 bg-primary-secondary-3 text-xs font-semibold hover:bg-primary-secondary-1 hover:text-primary-white lg:h-[40px] lg:w-[140px] lg:px-0 lg:text-base"
-            style={{ boxShadow: "0px 3px 0px #334a55" }}
+            className="hover:bg-secondary-1 h-[40px] w-[90px] text-balance rounded-xl border border-primary-secondary-3 bg-transparent text-xs font-semibold hover:bg-primary-secondary-1 hover:text-primary-white lg:h-[40px] lg:w-[140px] lg:px-0 lg:text-base"
+            style={{ boxShadow: "0px 3px 0px #8aba51" }}
           >
             Download App
           </Button>
