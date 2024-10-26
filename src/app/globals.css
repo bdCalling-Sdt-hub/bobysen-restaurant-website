@@ -136,3 +136,6 @@ input[type="number"] {
 .rc-time-picker-panel-inner {
   left: -37px !important;
 }
+.border-red {
+  border: 2px solid red !important;
+}

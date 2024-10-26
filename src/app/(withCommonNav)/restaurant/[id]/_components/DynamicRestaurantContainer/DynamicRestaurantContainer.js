@@ -124,6 +124,7 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
       };
 
   console.log(reservationData);
+  console.log(eventData?.data?.startDate);
 
   return (
     <>
@@ -219,7 +220,9 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                       >
                         <div className="w-full">
                           <DayPickerInput
-                            disabled={eventData?.data?.date ? true : false}
+                            // disabled={eventData?.data ? true : false}
+                            minDate={eventData?.data?.startDate}
+                            maxDate={eventData?.data?.endDate}
                             date={selectedDate}
                             setDate={setSelectedDate}
                           />
@@ -271,6 +274,8 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
 
                   {/* Book Now Button with Modal */}
                   <BookNowBtn
+                    guest={guestCount}
+                    eventId={eventId}
                     reservation={reservationData}
                     setShowRequiredError={setShowRequiredError}
                   />

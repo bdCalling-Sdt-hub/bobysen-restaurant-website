@@ -37,6 +37,8 @@ export default function OrdersTable({ status, data }) {
     },
   );
 
+  console.log(Cdata);
+
   const handlePayment = async () => {
     const data = {
       cart: Cdata?.data?._id,
@@ -84,8 +86,12 @@ export default function OrdersTable({ status, data }) {
               Time & Date
             </TableHead>
             <TableHead className="font-kumbh-sans text-xl text-primary-secondary-1">
+              Event
+            </TableHead>
+            <TableHead className="font-kumbh-sans text-xl text-primary-secondary-1">
               Order History
             </TableHead>
+
             {status === "Completed" && (
               <TableHead className="font-kumbh-sans text-xl text-primary-secondary-1">
                 Review
@@ -112,65 +118,74 @@ export default function OrdersTable({ status, data }) {
               <TableCell className="font-kumbh-sans text-primary-black">
                 {new Date(data?.date).toDateString()}, ({data?.time})
               </TableCell>
+
               <TableCell className="font-kumbh-sans text-primary-black">
-                {/* Show Order History Modal on Eye button click */}
-                <AlertDialog>
-                  <AlertDialogTrigger>
-                    <EyeIcon
-                      role="button"
-                      onClick={() => setReservationId(data?._id)}
-                    />
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle className="font-kumbh-sans text-2xl">
-                        Order History
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        {/* Use Dynamic data for the cards */}
-                        <div className="mt-4 max-h-[50vh] space-y-4 overflow-auto">
-                          {isLoading ? (
-                            <OrderSkeleton />
-                          ) : Cdata?.data?.items?.length > 0 ? (
-                            Cdata.data.items.map((data, index) => (
-                              <OrderCard key={index} data={data} />
-                            ))
-                          ) : (
-                            <EmptyData />
-                          )}
-                        </div>
-                        {/* 
+                {data?.event?.title ? data?.event?.title : "N/A"}
+              </TableCell>
+
+              {!data?.event && (
+                <TableCell className="font-kumbh-sans text-primary-black">
+                  {/* Show Order History Modal on Eye button click */}
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <EyeIcon
+                        role="button"
+                        onClick={() => setReservationId(data?._id)}
+                      />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="font-kumbh-sans text-2xl">
+                          Order History
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          {/* Use Dynamic data for the cards */}
+                          <div className="mt-4 max-h-[50vh] space-y-4 overflow-auto">
+                            {isLoading ? (
+                              <OrderSkeleton />
+                            ) : Cdata?.data?.items?.length > 0 ? (
+                              Cdata.data.items.map((data, index) => (
+                                <OrderCard key={index} data={data} />
+                              ))
+                            ) : (
+                              <EmptyData />
+                            )}
+                          </div>
+                          {/* 
                         {Cdata?.data?.status !== "unpaid" && (
                           <div className="mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
                             <h4>Transaction Id</h4>
                             <h4>#30400e0349540340</h4>
                           </div>
                         )} */}
-                        <div className="mb-2 mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
-                          <h4>Total Cost</h4>
-                          <h4>${Cdata?.data?.totalAmount}</h4>
-                        </div>
-                        <div className="mb-2 mt-4 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
-                          <h4>Status</h4>
-                          <h4>{Cdata?.data?.status}</h4>
-                        </div>
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
+                          <div className="mb-2 mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
+                            <h4>Total Cost</h4>
+                            <h4>${Cdata?.data?.totalAmount}</h4>
+                          </div>
+                          <div className="mb-2 mt-4 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
+                            <h4>Status</h4>
+                            <h4>{Cdata?.data?.status}</h4>
+                          </div>
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
 
-                    <AlertDialogFooter className="flex">
-                      {Cdata?.data?.status !== "paid" ? (
-                        <Button
-                          className="bg-primary-secondary-3"
-                          onClick={handlePayment}
-                        >
-                          Pay
-                        </Button>
-                      ) : null}
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </TableCell>
+                      <AlertDialogFooter className="flex">
+                        {Cdata?.data?.status !== "paid" ? (
+                          <Button
+                            disabled={Cdata?.data?.totalAmount ? false : true}
+                            className="bg-primary-secondary-3"
+                            onClick={handlePayment}
+                          >
+                            Pay
+                          </Button>
+                        ) : null}
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </TableCell>
+              )}
+
               {!data?.isReviewed && status === "completed" && (
                 <TableCell className="font-kumbh-sans text-primary-black">
                   <Button variant="outline" asChild>

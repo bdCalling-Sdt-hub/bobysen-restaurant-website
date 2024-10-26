@@ -8,23 +8,26 @@ import SkeletonLoader from "@/components/SkeletonLoader/SkeletonLoader";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import showImage from "@/utils/fileHelper";
+import RestaurantImageSlider from "@/app/(withCommonNav)/restaurant/[id]/_components/RestaurantImageSlider/RestaurantImageSlider";
+import moment from "moment";
 
 const SingleEvent = ({ paramsId }) => {
   const { data: event, isLoading } = useGetSingleEventQuery(paramsId);
+
+  console.log(event);
 
   return (
     <>
       {isLoading ? (
         <SkeletonLoader></SkeletonLoader>
       ) : (
-        <div className="space-y-7">
-          <Image
-            src={showImage(event?.data?.image)}
-            alt="event image"
-            width={1900}
-            height={1600}
-            className="max-h-[500px] min-h-[300px] w-full"
-          ></Image>
+        <div className="relative space-y-7">
+          <RestaurantImageSlider images={event?.data?.images} />
+
+          <p className="absolute -top-6 left-1 flex items-center justify-center rounded-lg bg-primary-secondary-3 px-2 text-white">
+            ${event?.data?.entryFee} <small className="ml-1"> Entry Fee</small>
+          </p>
+
           <h1 className="text-3xl">
             <span className="text-[#8ABA51]">Restaurant </span> Event
           </h1>
@@ -44,7 +47,8 @@ const SingleEvent = ({ paramsId }) => {
               <div className="flex items-center gap-x-2">
                 <CalendarDays color="#334A55" />
                 <span className="max-w-md text-base font-medium text-primary-black/75">
-                  {event?.data?.date}
+                  {moment(event?.data?.startDate).format(" Do MMM YYYY")} -{" "}
+                  {moment(event?.data?.endDate).format("Do MMM YYYY")}
                 </span>
               </div>
 
@@ -70,7 +74,9 @@ const SingleEvent = ({ paramsId }) => {
           <Link
             href={`/restaurant/${event?.data?.restaurant?._id}?eventId=${event?.data?._id}`}
           >
-            <Button className="mt-5 w-full bg-[#758888]">Book Now</Button>
+            <Button className="mt-5 w-full bg-primary-secondary-3">
+              Book Now
+            </Button>
           </Link>
         </div>
       )}

@@ -13,29 +13,62 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Separator } from "@/components/ui/separator";
 import {
+  useGetSingleReservationForEventQuery,
   useGetSingleReservationQuery,
+  useSubmitEventReservationMutation,
   useSubmitReservationMutation,
 } from "@/redux/api/reservationApi.js";
 import { Error_Modal, LoginPrompt_Modal } from "@/utils/modalHook";
-import { Calendar, CircleX, Table2, Users } from "lucide-react";
+import { Calendar, CircleX, DollarSign, Table2, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import foodMenuIcon from "/public/DynamicRestaurant/menu.png";
 import successfulIcon from "/public/DynamicRestaurant/succesful.png";
+import { v4 as uuidv4 } from "uuid";
+import { useEventBookingPaymentMutation } from "@/redux/api/paymentApi";
 
-export default function BookNowBtn({ reservation, setShowRequiredError }) {
+export default function BookNowBtn({
+  reservation,
+  setShowRequiredError,
+  eventId,
+  guest,
+}) {
   const [booking, { data: submitData, isLoading: submitLoading }] =
     useSubmitReservationMutation();
+
+  const [
+    eventBookings,
+    { data: eventBookingsData, isLoading: eventBookingsLoading },
+  ] = useSubmitEventReservationMutation();
+
   const { data: reservationData } = useGetSingleReservationQuery(
     submitData?.data?._id,
     { skip: !submitData?.data?._id },
   );
-  const { date, time, table } = reservationData?.data[0] ?? {};
+
+  const { data: eventReservation, isLoading: isEventReservationDataLoading } =
+    useGetSingleReservationForEventQuery(eventBookingsData?.data?._id, {
+      skip: !eventBookingsData?.data?._id,
+    });
+
+  const totalEntryFee =
+    Number(eventReservation?.data?.event?.entryFee) * Number(guest);
+
+  const { date, time, table } =
+    reservationData?.data[0] ?? eventReservation?.data ?? {};
+
   const [modalOpen, setModalOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
+
+  // get event booking id for event booking payment
+  const eventBookingId = sessionStorage.getItem("eventBookingId");
+
+  // event booking payment api
+  const [bookEventPayment, { isLoading: isEventPaymentLoading }] =
+    useEventBookingPaymentMutation();
 
   // show overlay loader for async operation
   const [isLoaderActive, setIsLoaderActive] = useState(false);
@@ -46,6 +79,22 @@ export default function BookNowBtn({ reservation, setShowRequiredError }) {
     setShowRequiredError(false);
     if (!reservation.time || !reservation.date || !reservation.seats) {
       setShowRequiredError(true);
+      return;
+    }
+
+    if (eventId) {
+      try {
+        setIsLoaderActive(true);
+        const res = await eventBookings(reservation).unwrap();
+
+        setModalOpen(true);
+        sessionStorage.setItem("eventBookingId", res?.data?._id);
+
+        setIsLoaderActive(false);
+      } catch (error) {
+        Error_Modal({ title: error?.data?.message });
+        setIsLoaderActive(false);
+      }
       return;
     }
 
@@ -62,6 +111,32 @@ export default function BookNowBtn({ reservation, setShowRequiredError }) {
     } catch (error) {
       Error_Modal({ title: error?.data?.message });
       setIsLoaderActive(false);
+    }
+  };
+
+  // event booking payment
+  const handleMakePayment = async () => {
+    const eventBookingData = {
+      unpaidBooking: eventBookingId,
+      order: {
+        id_order: uuidv4(),
+        currency: "MUR",
+        amount: totalEntryFee,
+      },
+      iframe_behavior: {
+        height: 400,
+        width: 350,
+        custom_redirection_url: "https://bookatable.mu",
+        language: "EN",
+      },
+    };
+
+    try {
+      const res = await bookEventPayment(eventBookingData).unwrap();
+      sessionStorage.removeItem("eventBookingId");
+      window.open(res?.data?.payment_zone_data);
+    } catch (error) {
+      Error_Modal({ title: error?.data?.message });
     }
   };
 
@@ -91,7 +166,9 @@ export default function BookNowBtn({ reservation, setShowRequiredError }) {
               className="mx-auto block"
             />
             <h4 className="my-3 text-center text-2xl text-primary-secondary-1">
-              Table Booked Successfully
+              {eventId
+                ? "Event Booked Successfully"
+                : "Table Booked Successfully"}
             </h4>
           </AlertDialogTitle>
           <Separator className="bg-primary-secondary-1" />
@@ -111,18 +188,35 @@ export default function BookNowBtn({ reservation, setShowRequiredError }) {
                 <Users className="text-primary-black/75" />
                 <p className="text-xl">{table?.seats} Guests</p>
               </div>
+              {eventId && (
+                <div className="flex items-center gap-x-4 font-kumbh-sans">
+                  <DollarSign className="text-primary-black/75" />
+                  <p className="text-xl">Total Empty Fee: ${totalEntryFee}</p>
+                </div>
+              )}
             </div>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="mx-auto w-max">
-          <Link
-            href={`/menu/${reservation?.restaurant}?booking=${submitData?.data?._id}`}
-          >
-            <AlertDialogAction className="flex items-center gap-x-3 bg-primary-secondary-3 px-5 py-6 text-lg font-bold text-primary-white">
+          {eventId ? (
+            <AlertDialogAction
+              className="flex items-center gap-x-3 bg-primary-secondary-3 px-5 py-6 text-lg font-bold text-primary-white"
+              onClick={handleMakePayment}
+              disabled={isEventReservationDataLoading}
+            >
               <Image src={foodMenuIcon} alt="food menu icon" />
-              <span>Show Menu</span>
+              <span>Make Payment</span>
             </AlertDialogAction>
-          </Link>
+          ) : (
+            <Link
+              href={`/menu/${reservation?.restaurant}?booking=${submitData?.data?._id}`}
+            >
+              <AlertDialogAction className="flex items-center gap-x-3 bg-primary-secondary-3 px-5 py-6 text-lg font-bold text-primary-white">
+                <Image src={foodMenuIcon} alt="food menu icon" />
+                <span>Show Menu</span>
+              </AlertDialogAction>
+            </Link>
+          )}
           <AlertDialogCancel className="absolute right-0 top-0 border-0">
             <CircleX />
           </AlertDialogCancel>
@@ -130,8 +224,9 @@ export default function BookNowBtn({ reservation, setShowRequiredError }) {
         <Separator className="bg-primary-secondary-1" />
 
         <p className="text-justify font-kumbh-sans text-primary-white-dark">
-          Your table is reserved! Since you reserved your table with Dine in
-          Florida, your will automatically receive 2% off your bill when you pay
+          {eventId
+            ? "You have successfully booked an event with Dine in Florida. Please make payment to complete your reservation."
+            : " Your table is reserved! Since you reserved your table with Dine in Florida, your will automatically receive 2% off your bill when you pay"}
         </p>
       </AlertDialogContent>
 

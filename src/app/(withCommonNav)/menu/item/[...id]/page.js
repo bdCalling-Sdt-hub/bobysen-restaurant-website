@@ -27,7 +27,11 @@ export default function FoodItem({ params }) {
     useInsertItemIntoFavoriteListMutation();
   const router = useRouter();
   const [count, setCount] = useState(1);
-  const { data: Mdata, refetch } = useGetSingleMenuQuery(params?.id?.[0]);
+  const {
+    data: Mdata,
+    refetch,
+    isLoading: menuIsLoading,
+  } = useGetSingleMenuQuery(params?.id?.[0]);
   const [addTocart] = useAddToCartMutation();
 
   // TODO: Use dynamic data
@@ -86,6 +90,7 @@ export default function FoodItem({ params }) {
       Error_Modal({ text: error?.data?.message || "Something went wrong" });
     }
   };
+
   return (
     <div className="container flex flex-col items-center gap-x-10 pb-24 pt-[180px] lg:flex-row">
       {/* left */}
@@ -93,7 +98,7 @@ export default function FoodItem({ params }) {
         <Image
           width={500}
           height={500}
-          src={showImage(Mdata?.data?.image)}
+          src={showImage(Mdata?.data?.image || "")}
           alt="Picture of the food item"
           className="w-full rounded-lg"
         />

@@ -8,7 +8,7 @@ import {
 import showImage from "@/utils/fileHelper.js";
 import Image from "next/image";
 
-export default function RestaurantImageSlider({ images }) {
+export default function RestaurantImageSlider({ images, width, height }) {
   return (
     <div>
       <Carousel>
@@ -21,7 +21,7 @@ export default function RestaurantImageSlider({ images }) {
                   width={800}
                   src={showImage(image?.url)}
                   alt="picture of the restaurant"
-                  className="mx-auto block"
+                  className="mx-auto block h-full max-h-[400px] w-full"
                 />
               </CarouselItem>
             ))

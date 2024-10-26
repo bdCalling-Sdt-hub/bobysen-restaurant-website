@@ -4,7 +4,7 @@ import { authRoutes } from "./utils/pathnameHelper";
 export default function middleware(req) {
   const { nextUrl } = req;
 
-  const isLoggedIn = req.cookies.get("chaz-tati-access-token")?.value;
+  const isLoggedIn = req.cookies.get("bookatable-access-token")?.value;
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   // If user exists redirect to `/home`
