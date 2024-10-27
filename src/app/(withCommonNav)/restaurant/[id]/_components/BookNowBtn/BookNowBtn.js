@@ -191,7 +191,7 @@ export default function BookNowBtn({
               {eventId && (
                 <div className="flex items-center gap-x-4 font-kumbh-sans">
                   <DollarSign className="text-primary-black/75" />
-                  <p className="text-xl">Total Empty Fee: ${totalEntryFee}</p>
+                  <p className="text-xl">Total Entry Fee: ${totalEntryFee}</p>
                 </div>
               )}
             </div>
