@@ -61,7 +61,7 @@ export default function FoodItemCard({ cardData, booking }) {
         </CardHeader>
         <CardContent>
           <p className="text-2xl font-medium">
-            ${parseFloat(price).toFixed(2)}
+            Rs {parseFloat(price).toFixed(2)}
           </p>
 
           {/* <div className="flex items-center gap-x-4">

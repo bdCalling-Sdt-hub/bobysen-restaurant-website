@@ -111,7 +111,7 @@ export default function FoodItem({ params }) {
 
         {/* price */}
         <p className="mb-7 mt-4 text-2xl font-semibold text-primary-black">
-          $ {Mdata?.data?.price}
+          Rs {Mdata?.data?.price}
         </p>
 
         {/* desc */}

@@ -1,14 +1,6 @@
 import Image from "next/image";
 import foodItemPic from "/public/Menu/foodItem1.png";
-import { Heart, Minus, Plus, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Star } from "lucide-react";
 export default function DynamicFavoriteItem() {
   return (
     <div className="container flex flex-col items-center gap-x-10 pb-24 pt-[180px] lg:flex-row">
@@ -42,7 +34,7 @@ export default function DynamicFavoriteItem() {
 
         {/* price */}
         <p className="mb-7 mt-4 text-2xl font-semibold text-primary-black">
-          $192.00
+          Rs 192.00
         </p>
 
         {/* desc */}

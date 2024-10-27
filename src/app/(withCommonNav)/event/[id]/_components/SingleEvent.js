@@ -25,7 +25,8 @@ const SingleEvent = ({ paramsId }) => {
           <RestaurantImageSlider images={event?.data?.images} />
 
           <p className="absolute -top-6 left-1 flex items-center justify-center rounded-lg bg-primary-secondary-3 px-2 text-white">
-            ${event?.data?.entryFee} <small className="ml-1"> Entry Fee</small>
+            Rs {event?.data?.entryFee}{" "}
+            <small className="ml-1"> Entry Fee</small>
           </p>
 
           <h1 className="text-3xl">

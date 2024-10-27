@@ -20,7 +20,7 @@ const EventCard = ({ data }) => {
         />
 
         <p className="absolute left-2 top-2 flex items-center justify-center rounded-lg bg-primary-secondary-3 px-2 text-white">
-          ${data?.entryFee} <small className="ml-1"> Entry Fee</small>
+          Rs {data?.entryFee} <small className="ml-1"> Entry Fee</small>
         </p>
 
         <div>

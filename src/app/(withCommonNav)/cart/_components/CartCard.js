@@ -27,7 +27,7 @@ export default function CartCard({ data, bookingId, totalAmount }) {
             </tr>
             <tr className={styles.cartCardTr}>
               <td>Amount</td>
-              <td>${data?.amount}</td>
+              <td>Rs {data?.amount}</td>
             </tr>
             {/* <tr className={styles.cartCardTr}>
               <td>Payment Status</td>
