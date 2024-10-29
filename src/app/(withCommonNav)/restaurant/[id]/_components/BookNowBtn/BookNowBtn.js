@@ -82,6 +82,11 @@ export default function BookNowBtn({
       return;
     }
 
+    if (!user?.userId) {
+      setLoginModalOpen((prev) => !prev);
+      return;
+    }
+
     if (eventId) {
       try {
         setIsLoaderActive(true);
@@ -95,11 +100,6 @@ export default function BookNowBtn({
         Error_Modal({ title: error?.data?.message });
         setIsLoaderActive(false);
       }
-      return;
-    }
-
-    if (!user?.userId) {
-      setLoginModalOpen((prev) => !prev);
       return;
     }
 
