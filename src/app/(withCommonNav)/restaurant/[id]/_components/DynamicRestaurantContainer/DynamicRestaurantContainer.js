@@ -82,8 +82,8 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
   } = Rdata?.data ?? {};
 
   const center = {
-    lat: 23.7387,
-    lng: 90.3935,
+    lat: location?.coordinates[1] ? location?.coordinates[1] : 0,
+    lng: location?.coordinates[0] ? location?.coordinates[0] : 0,
   };
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
