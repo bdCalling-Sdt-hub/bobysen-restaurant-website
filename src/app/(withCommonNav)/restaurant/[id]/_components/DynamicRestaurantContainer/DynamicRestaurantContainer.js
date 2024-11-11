@@ -210,13 +210,13 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                     </div>
 
                     {/* Filters */}
-                    <div className="lg:w-3/4">
+                    <div className="mb-24 xl:w-3/4">
                       <h4 className="text-xl font-semibold text-primary-secondary-1">
                         Book a table
                       </h4>
 
                       <div
-                        className={`mb-16 mt-3 grid w-1/2 grid-cols-1 gap-x-6 gap-y-4 lg:mb-0 lg:w-full lg:gap-y-0 xl:grid-cols-3`}
+                        className={`mb-16 mt-3 grid grid-cols-1 gap-x-6 gap-y-4 lg:mb-0 lg:w-full xl:grid-cols-3 xl:gap-y-0`}
                       >
                         <div className="w-full">
                           <DayPickerInput
@@ -273,6 +273,7 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                   </div>
 
                   {/* Book Now Button with Modal */}
+
                   <BookNowBtn
                     guest={guestCount}
                     eventId={eventId}
