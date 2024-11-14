@@ -5,6 +5,11 @@ import RestaurantsSlider from "@/components/HomeSections/RestaurantsSlider/Resta
 import Services from "@/components/HomeSections/Services/Services";
 import HomePageNav from "./_components/HomePageNav";
 
+export const metadata = {
+  title: "Home",
+  description: "This is the official home page of BookaTable",
+};
+
 export default function HomePage() {
   return (
     <>

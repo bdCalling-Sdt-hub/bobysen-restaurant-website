@@ -4,6 +4,7 @@ import Footer from "@/components/Footer/Footer";
 import Providers from "@/lib/Providers";
 import "rc-time-picker-date-fns/assets/index.css";
 import { Toaster } from "sonner";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata = {
   title: {
@@ -14,7 +15,6 @@ export const metadata = {
     "The official webpage of the bookatable restaurant which enable diners to customize their booking by requesting a specific table location or view.",
 };
 
-const roboto = Roboto({ subsets: ["latin"], weight: "400" });
 const kumbhSans = Kumbh_Sans({
   subsets: ["latin"],
   display: "swap",
@@ -43,6 +43,20 @@ export default function RootLayout({ children }) {
 
         {/* Toaster */}
         <Toaster richColors />
+
+        {/* Top Loader */}
+        <NextTopLoader
+          color="#8ABA51"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={true}
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #8ABA51,0 0 5px #000"
+          zIndex={1600}
+        />
       </body>
     </html>
   );

@@ -41,21 +41,24 @@ export default function DynamicMenu({ params }) {
     <div className="pt-[160px]">
       {/* menu category carousel */}
       <div className="flex h-[80px] items-center justify-center bg-primary-secondary-3/55 font-kumbh-sans text-primary-secondary-1">
-        <Carousel className="container">
-          <CarouselContent>
+        <Carousel className="w-3/4">
+          <CarouselContent className="-ml-10 px-2">
             {menuCategories?.data?.map((category, index) => (
               <CarouselItem
                 key={index}
                 className={cn(
-                  "basis-[14.28%] cursor-pointer p-2 text-center text-2xl font-medium transition-all duration-300 ease-in-out",
-                  {
-                    "bg-primary-secondary-2 text-primary-white":
-                      selectedCategory === category?._id,
-                  },
+                  "basis-1/1 flex cursor-pointer items-center justify-center whitespace-nowrap pl-10 text-center text-xl font-medium lg:basis-[15%]",
                 )}
                 onClick={() => setSelectedCategory(category?._id)}
               >
-                {category?.title}
+                <p
+                  className={cn("", {
+                    "bg-primary-secondary-1 p-2 text-primary-white transition-all duration-300 ease-in-out":
+                      selectedCategory === category?._id,
+                  })}
+                >
+                  {category?.title}
+                </p>
               </CarouselItem>
             ))}
           </CarouselContent>
@@ -70,7 +73,7 @@ export default function DynamicMenu({ params }) {
           <SkeletonLoader />
         </div>
       ) : Fdata?.data?.length > 0 ? (
-        <div className="mx-auto my-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:w-[80%] lg:grid-cols-4">
+        <div className="mx-auto my-16 grid grid-cols-1 gap-8 px-5 md:grid-cols-2 lg:w-[80%] lg:grid-cols-4 lg:px-0">
           {Fdata?.data?.map((data, idx) => (
             <FoodItemCard cardData={data} key={idx} booking={booking} />
           ))}

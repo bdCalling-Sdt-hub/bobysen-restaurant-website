@@ -43,28 +43,32 @@ export default function FoodItemCard({ cardData, booking }) {
 
   return (
     <>
-      <Card className="rounded-3xl border bg-transparent text-primary-secondary-1 shadow-none">
-        <CardHeader>
-          <CardTitle>
-            <Image
-              width={600}
-              height={0}
-              src={showImage(cardData?.image)}
-              alt={`${name}`}
-              className="mb-3 block"
-            />
-            <p className="text-3xl font-bold">{name}</p>
-          </CardTitle>
-          <CardDescription className="font-kumbh-sans">
-            {description}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-2xl font-medium">
-            Rs {parseFloat(price).toFixed(2)}
-          </p>
+      <Card className="flex flex-col justify-between rounded-3xl border bg-transparent text-primary-secondary-1 shadow-none">
+        <div>
+          <CardHeader>
+            <CardTitle className="bg-slate-50">
+              <Image
+                width={1200}
+                height={1200}
+                src={showImage(cardData?.image)}
+                alt={`${name}`}
+                className="mx-auto mb-3 block h-[200px] w-auto rounded"
+              />
+            </CardTitle>
 
-          {/* <div className="flex items-center gap-x-4">
+            <p className="!pt-2 text-2xl font-bold">{name}</p>
+
+            <CardDescription className="font-kumbh-sans">
+              {description}
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent>
+            <p className="text-2xl font-medium">
+              Rs. {parseFloat(price).toFixed(2)}
+            </p>
+
+            {/* <div className="flex items-center gap-x-4">
             <StarRatings
               rating={4.5}
               starRatedColor="#F5BE32"
@@ -76,7 +80,9 @@ export default function FoodItemCard({ cardData, booking }) {
               <span className="text-primary-secondary-1">(10)</span>
             </div>
           </div> */}
-        </CardContent>
+          </CardContent>
+        </div>
+
         <CardFooter>
           <Button
             className="w-full rounded-3xl bg-primary-secondary-1 font-kumbh-sans text-primary-white"
@@ -89,6 +95,7 @@ export default function FoodItemCard({ cardData, booking }) {
           </Button>
         </CardFooter>
       </Card>
+
       <BookNowModal
         open={bookNowModalOpen}
         setOpen={setBookNowModalOpen}

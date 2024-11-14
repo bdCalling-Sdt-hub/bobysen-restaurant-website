@@ -11,6 +11,7 @@ import Link from "next/link";
 import SliderCard from "./SliderCard/SliderCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ChevronRight } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function RestaurantsSlider() {
   const { data: Rdata, isFetching } = useGetAllRestaurantsQuery();
@@ -58,7 +59,20 @@ export default function RestaurantsSlider() {
           ))}
         </div>
       ) : (
-        <Carousel>
+        <Carousel
+          opts={{
+            loop: true,
+            duration: 45,
+            align: "start",
+          }}
+          plugins={[
+            Autoplay({
+              delay: 4500,
+              stopOnInteraction: false,
+              stopOnMouseEnter: true,
+            }),
+          ]}
+        >
           <CarouselContent className="-ml-8">
             {Rdata?.success &&
               Rdata?.data?.map((item, index) => (

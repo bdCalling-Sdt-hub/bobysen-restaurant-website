@@ -12,7 +12,7 @@ export default function SkeletonLoader() {
     <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length: randomLength }).map((_, idx) => (
         <div
-          className="flex w-full flex-col rounded border p-4 shadow"
+          className="flex w-full flex-col rounded-2xl border p-4 shadow"
           key={idx}
         >
           <Skeleton className="mb-5 block h-[230px] w-full rounded-2xl" />

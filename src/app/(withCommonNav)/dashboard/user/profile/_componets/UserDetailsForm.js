@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import defaultProfilePic from "/public/dashboard-user/profile/profilePic.png";
 import { Skeleton } from "antd";
+import { X } from "lucide-react";
 
 export default function UserDetailsForm() {
   const { data: profileData, isFetching: profileDataLoading } =
@@ -31,20 +32,24 @@ export default function UserDetailsForm() {
     watch,
   } = useForm();
 
-  // set form default values
+  // Set form default values
   useEffect(() => {
     let defaultValues = {};
-    (defaultValues.fullName = fullName),
-      (defaultValues.contactNumber = phoneNumber);
+    defaultValues.fullName = fullName;
+    defaultValues.contactNumber = phoneNumber;
     defaultValues.email = email;
     reset({ ...defaultValues });
 
-    const subcription = watch((value, { name, type }) => {
-      if (name === "image") {
-        setProfilePic(value.image[0]);
+    // Watch for changes in the image field
+    const subscription = watch((value, { name }) => {
+      if (name === "image" && value.image?.length) {
+        const file = value.image[0];
+        setProfilePic(URL.createObjectURL(file)); // Set image preview URL
       }
     });
-  }, [profilePic, setProfilePic, profileDataLoading]);
+
+    return () => subscription.unsubscribe();
+  }, [fullName, phoneNumber, email, reset, watch]);
 
   const onUserDetailSubmit = async (data) => {
     const formData = new FormData();
@@ -69,47 +74,48 @@ export default function UserDetailsForm() {
 
   return (
     <form onSubmit={handleSubmit(onUserDetailSubmit)} className="mb-20">
-      {/* profile pic */}
+      {/* Profile pic */}
       <div className="my-16 flex flex-col items-center lg:flex-row lg:gap-x-20">
         <div className="h-[200px] w-[200px] overflow-hidden">
           {profileDataLoading ? (
             <div className="h-[200px] w-[200px] animate-pulse rounded-full bg-gray-400/10"></div>
           ) : (
-            profilePic ||
-            (image ? (
+            <div className="relative">
               <Image
-                src={
-                  profilePic
-                    ? window.URL.createObjectURL(profilePic)
-                    : image && `http://192.168.10.61:5005${image}`
-                }
-                alt="profile picture"
+                src={profilePic || image}
+                alt="Profile picture"
                 width={170}
                 height={170}
-                className="h-full w-full rounded-full object-fill"
+                className="aspect-square h-full w-full rounded-full border border-primary-secondary-3 object-fill p-2"
               />
-            ) : (
-              <div className="group relative mx-auto flex h-[200px] w-[200px] items-center justify-center rounded-full bg-primary-secondary-1">
-                <h3 className="text-4xl font-semibold text-white">
-                  {profileData?.data?.fullName?.split(" ")[0][0]}
-                  {profileData?.data?.fullName?.split(" ")[1][0]}
-                </h3>
-              </div>
-            ))
+
+              {profilePic && (
+                <button
+                  className="absolute right-5 top-5 rounded-full bg-black"
+                  onClick={() => {
+                    setProfilePic(null);
+                    document.getElementById("image").value = "";
+                  }}
+                >
+                  <X size={20} color="red" />
+                </button>
+              )}
+            </div>
           )}
         </div>
 
         <div className="space-y-5 text-center">
           <p className="font-kumbh-sans text-lg text-primary-secondary-1">
-            Maximum size 5mb. Format jpg, jpeg, png
+            Maximum size 5MB. Format jpg, jpeg, png
           </p>
           <input
             type="file"
             name="image"
             id="image"
             {...register("image", {
-              onchange: (e) => {
-                setProfilePic(e.target.files[0]);
+              onChange: (e) => {
+                const file = e.target.files[0];
+                setProfilePic(URL.createObjectURL(file));
               },
             })}
             accept=".jpg, .jpeg, .png, .svg"
@@ -134,21 +140,18 @@ export default function UserDetailsForm() {
         </div>
       ) : (
         <div className="flex flex-col items-center gap-6 lg:flex-row">
-          {/* full name */}
+          {/* Full name */}
           <div className="relative grid w-full items-center gap-1.5 font-kumbh-sans">
-            <Label htmlFor="full Name" className="mb-1">
+            <Label htmlFor="fullName" className="mb-1">
               Full Name
             </Label>
-            {
-              <Input
-                type="text"
-                id="full Name"
-                placeholder="Full Name"
-                {...register("fullName", { required: true })}
-                className="border border-primary-secondary-3 bg-primary-white-light text-primary-black"
-              />
-            }
-
+            <Input
+              type="text"
+              id="fullName"
+              placeholder="Full Name"
+              {...register("fullName", { required: true })}
+              className="border border-primary-secondary-3 bg-primary-white-light text-primary-black"
+            />
             {errors.fullName && (
               <span className="absolute -bottom-6 left-1">
                 Name is required
@@ -156,7 +159,7 @@ export default function UserDetailsForm() {
             )}
           </div>
 
-          {/* email */}
+          {/* Email */}
           <div className="grid w-full items-center gap-1.5 font-kumbh-sans">
             <Label htmlFor="email" className="mb-1">
               Email
@@ -173,13 +176,13 @@ export default function UserDetailsForm() {
 
           {/* Contact Number */}
           <div className="grid w-full items-center gap-1.5 font-kumbh-sans">
-            <Label htmlFor="contact Number" className="mb-1">
+            <Label htmlFor="contactNumber" className="mb-1">
               Contact Number
             </Label>
             <Input
               type="tel"
-              disabled
               id="contactNumber"
+              disabled
               placeholder="Contact Number"
               {...register("contactNumber", { required: true })}
               className="border border-primary-secondary-3 bg-primary-white-light text-primary-black"

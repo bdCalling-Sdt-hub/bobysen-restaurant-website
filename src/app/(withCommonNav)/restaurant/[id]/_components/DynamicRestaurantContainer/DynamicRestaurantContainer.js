@@ -45,6 +45,7 @@ import usersIcon from "/public/DynamicRestaurant/users.png";
 import { useGetSingleEventQuery } from "@/redux/api/eventApi";
 import moment from "moment";
 import SkeletonLoader from "@/components/SkeletonLoader/SkeletonLoader";
+import truncatedText from "@/utils/truncatedText";
 
 const AnyReactComponent = ({ text }) => (
   <div className="">
@@ -58,7 +59,6 @@ const AnyReactComponent = ({ text }) => (
 );
 
 export default function DynamicRestaurantContainer({ params, eventId }) {
-  console.log(eventId);
   const [map, setMap] = useState(null);
   const { id } = params;
   const { data: reviewsData, isLoading: isReviewsLoading } =
@@ -68,6 +68,7 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
   const [showRequiredError, setShowRequiredError] = useState(false);
   const { data: eventData, isLoading } = useGetSingleEventQuery(eventId);
   const eventDate = moment(eventData?.data?.date).format("DD MMM, YYYY");
+  const [descriptionExpanded, setDescriptionExpanded] = useState(false);
 
   const {
     name,
@@ -122,9 +123,6 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
         seats: guestCount,
         restaurant: id,
       };
-
-  console.log(reservationData);
-  console.log(eventData?.data?.startDate);
 
   return (
     <>
@@ -186,16 +184,26 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
 
                       {/* Inner Right */}
                       <div>
-                        <div className="flex items-start gap-2">
+                        <div className="flex items-start gap-1">
                           <Image src={menuIcon} alt="hamburger menu icon" />
                           <p>
-                            {description}
-                            <Button
-                              variant="link"
-                              className="text-primary-secondary-3"
-                            >
-                              Read More...
-                            </Button>
+                            {descriptionExpanded
+                              ? description
+                              : truncatedText(description, 200)}
+
+                            {description?.length > 200 && (
+                              <Button
+                                variant="link"
+                                className="text-primary-secondary-3"
+                                onClick={() =>
+                                  setDescriptionExpanded(!descriptionExpanded)
+                                }
+                              >
+                                {descriptionExpanded
+                                  ? "show less"
+                                  : "read more..."}
+                              </Button>
+                            )}
                           </p>
                         </div>
                         <div className="mt-4 flex items-start gap-2">

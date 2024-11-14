@@ -71,6 +71,7 @@ export default function LoginForm() {
         <Input
           type="email"
           id="email"
+          placeholder="Enter your email"
           {...register("email", { required: true })}
           className="border border-primary-secondary-1 text-primary-black"
         />
@@ -102,6 +103,7 @@ export default function LoginForm() {
           <Input
             type={showPass ? "text" : "password"}
             id="password"
+            placeholder="Enter your password"
             {...register("password", { required: true })}
             className="border-primary-secondary-1 text-primary-black"
           />

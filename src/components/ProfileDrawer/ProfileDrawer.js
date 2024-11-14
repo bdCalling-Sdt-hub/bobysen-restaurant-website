@@ -14,11 +14,12 @@ import { Success_model } from "@/utils/modalHook";
 import { useGetSingleUserQuery } from "@/redux/api/userApi";
 import { Camera, Coins } from "lucide-react";
 import { useRouter } from "next/navigation";
+import showImage from "@/utils/fileHelper";
 
 export default function ProfileDrawer({ openState, setOpenState }) {
   const dispatch = useDispatch();
 
-  const { data: profileData } = useGetSingleUserQuery();
+  const { data: profileData, isLoading } = useGetSingleUserQuery();
   const user = profileData?.data || {};
   const router = useRouter();
 
@@ -27,6 +28,10 @@ export default function ProfileDrawer({ openState, setOpenState }) {
     dispatch(logout());
     router.refresh();
   };
+
+  console.log(showImage(profileData?.image));
+
+  if (isLoading) return;
 
   return (
     <div
