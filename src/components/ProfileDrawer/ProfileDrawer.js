@@ -29,8 +29,6 @@ export default function ProfileDrawer({ openState, setOpenState }) {
     router.refresh();
   };
 
-  console.log(showImage(profileData?.image));
-
   if (isLoading) return;
 
   return (
