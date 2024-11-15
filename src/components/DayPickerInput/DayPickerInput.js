@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/popover";
 import Image from "next/image";
 import moment from "moment";
+import { CalendarDays } from "lucide-react";
 
 export function DayPickerInput({ date, setDate, disabled, minDate, maxDate }) {
   const [error, setError] = React.useState(null);
@@ -45,13 +46,13 @@ export function DayPickerInput({ date, setDate, disabled, minDate, maxDate }) {
         <Button
           variant={"outline"}
           className={cn(
-            "w-full justify-start text-left font-normal",
+            "w-full justify-start border border-primary-secondary-1/35 !px-3 text-left font-normal",
             !date && "text-muted-foreground",
             disabled && "cursor-not-allowed opacity-50",
           )}
           disabled={disabled} // Disable button if disabled prop is true
         >
-          <Image src={calendarIcon} alt="calendar icon" className="mr-2" />
+          <CalendarDays size={20} className="mr-1.5 text-[#020817]" />
           {date ? (
             format(date, "yyyy-MM-dd")
           ) : (

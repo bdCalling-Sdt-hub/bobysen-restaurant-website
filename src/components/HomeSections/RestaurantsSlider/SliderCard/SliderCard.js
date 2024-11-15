@@ -10,9 +10,9 @@ import { MapPin } from "lucide-react";
 export default function SliderCard({ data }) {
   console.log(data);
   return (
-    <div className="flex flex-col justify-between gap-y-6 rounded-3xl border p-6 lg:flex-row lg:items-center lg:gap-x-8 lg:gap-y-0">
+    <div className="flex flex-col justify-between gap-y-6 rounded-3xl border p-5 lg:flex-row lg:items-center lg:gap-x-8 lg:gap-y-0 lg:p-6">
       {/* left */}
-      <div className="flex h-[160px] items-center justify-center overflow-hidden bg-slate-50 lg:w-[50%]">
+      <div className="flex h-[160px] w-full items-center justify-center overflow-hidden bg-slate-50 lg:w-[50%]">
         <Image
           width={2400}
           height={2400}
@@ -50,7 +50,7 @@ export default function SliderCard({ data }) {
           </p>
         </div>
 
-        <div className="mb-4 flex items-center gap-x-2">
+        <div className="mb-6 mt-3 flex items-center gap-x-2">
           <MapPin size={20} className="text-gray-400" />
 
           <span className="font-kumbh-sans text-base font-medium text-primary-black/75">

@@ -46,6 +46,8 @@ import { useGetSingleEventQuery } from "@/redux/api/eventApi";
 import moment from "moment";
 import SkeletonLoader from "@/components/SkeletonLoader/SkeletonLoader";
 import truncatedText from "@/utils/truncatedText";
+import { Users2Icon } from "lucide-react";
+import { Menu } from "lucide-react";
 
 const AnyReactComponent = ({ text }) => (
   <div className="">
@@ -144,6 +146,7 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                     <h1 className="text-3xl font-bold text-primary-secondary-3">
                       {name}
                     </h1>
+
                     <Separator className="mb-4 mt-2" />
 
                     <div className="mb-3 grid grid-cols-1 gap-x-5 font-kumbh-sans lg:grid-cols-2">
@@ -162,13 +165,6 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                           </p>
                         </div>
 
-                        <div className="mb-4 flex items-start gap-2">
-                          <Image src={eventIcon} alt="calendar icon" />
-                          <p className="text-primary-secondary-1">
-                            Every Friday restaurant are close
-                          </p>
-                        </div>
-
                         <div className="mb-4 flex items-start gap-x-3">
                           <PhoneOutgoing size={19} color="#8aba51" />
                           <div className="flex flex-col gap-y-2">
@@ -184,17 +180,20 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
 
                       {/* Inner Right */}
                       <div>
-                        <div className="flex items-start gap-1">
-                          <Image src={menuIcon} alt="hamburger menu icon" />
-                          <p>
+                        <div className="flex items-start gap-x-1">
+                          <Menu
+                            className="text-primary-secondary-3"
+                            size={24}
+                          />
+
+                          <p className="max-w-[85%]">
                             {descriptionExpanded
                               ? description
                               : truncatedText(description, 200)}
 
                             {description?.length > 200 && (
-                              <Button
-                                variant="link"
-                                className="text-primary-secondary-3"
+                              <button
+                                className="ml-1 text-sm font-medium text-primary-secondary-3/90 hover:underline"
                                 onClick={() =>
                                   setDescriptionExpanded(!descriptionExpanded)
                                 }
@@ -202,10 +201,11 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                                 {descriptionExpanded
                                   ? "show less"
                                   : "read more..."}
-                              </Button>
+                              </button>
                             )}
                           </p>
                         </div>
+
                         <div className="mt-4 flex items-start gap-2">
                           <Image src={bookIcon} alt="calendar icon" />
                           <Link href={`/menu/${id}?state=only-menu`}>
@@ -218,7 +218,7 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                     </div>
 
                     {/* Filters */}
-                    <div className="mb-24 xl:w-3/4">
+                    <div className="mb-24 mt-10 lg:mt-0 xl:w-3/4">
                       <h4 className="text-xl font-semibold text-primary-secondary-1">
                         Book a table
                       </h4>
@@ -236,8 +236,8 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                           />
                         </div>
 
-                        <div className="flex items-center gap-x-1 rounded-lg border px-4">
-                          <Clock />
+                        <div className="flex items-center rounded-lg border border-primary-secondary-1/35 px-3">
+                          <Clock size={20} />
                           <TimePicker
                             showHour={true}
                             showMinute={true}
@@ -257,9 +257,11 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                           <Select
                             onValueChange={(value) => setGuestCount(value)}
                           >
-                            <SelectTrigger className="flex max-w-full items-center justify-between">
-                              <Image src={usersIcon} alt="users icon" />
-                              <SelectValue placeholder="Guests" />
+                            <SelectTrigger className="border border-primary-secondary-1/35 pl-3">
+                              <div className="flex items-center gap-x-2">
+                                <Users2Icon size={20} />
+                                <SelectValue placeholder="Guests" />
+                              </div>
                             </SelectTrigger>
                             <SelectContent>
                               {numberOfGuests?.map((number) => (

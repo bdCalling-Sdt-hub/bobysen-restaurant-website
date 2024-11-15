@@ -18,7 +18,6 @@ const nextConfig = {
         port: "3000", // Add localhost with the port 3000
       },
     ],
-    domains: ["192.168.10.61"],
   },
 
   async redirects() {
