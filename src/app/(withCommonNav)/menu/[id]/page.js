@@ -47,7 +47,7 @@ export default function DynamicMenu({ params }) {
               <CarouselItem
                 key={index}
                 className={cn(
-                  "basis-1/1 flex cursor-pointer items-center justify-center whitespace-nowrap pl-10 text-center text-xl font-medium lg:basis-[15%]",
+                  "basis-1/1 ml-8 flex cursor-pointer items-center justify-center whitespace-nowrap text-center text-xl font-medium lg:basis-[15%]",
                 )}
                 onClick={() => setSelectedCategory(category?._id)}
               >
