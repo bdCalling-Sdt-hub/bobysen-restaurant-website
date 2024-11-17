@@ -87,7 +87,7 @@ export default function Cart() {
                 Total Cost
               </h1>
               <h1 className="text-3xl font-bold text-primary-secondary-3">
-                $ {cart?.totalAmount}
+                Rs {cart?.totalAmount}
               </h1>
             </div>
             <div className="mt-2 flex items-center justify-between">
