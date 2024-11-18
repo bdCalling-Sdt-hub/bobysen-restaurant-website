@@ -59,7 +59,7 @@ export default function ProfileDrawer({ openState, setOpenState }) {
               alt="profile picture"
               width={900}
               height={700}
-              className="mx-auto w-[80%]"
+              className="mx-auto size-32 rounded-full"
             />
           ) : (
             <div className="group relative mx-auto flex h-36 w-36 items-center justify-center rounded-full bg-primary-secondary-1">

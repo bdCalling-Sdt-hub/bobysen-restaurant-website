@@ -37,8 +37,6 @@ export default function OrdersTable({ status, data }) {
     },
   );
 
-  console.log(Cdata);
-
   const handlePayment = async () => {
     const data = {
       cart: Cdata?.data?._id,

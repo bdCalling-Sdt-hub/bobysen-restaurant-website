@@ -11,11 +11,11 @@ export default function FeedbackCard({ data }) {
       <div className="flex items-center gap-x-4">
         {/* left */}
         <Image
-          src={process.env.NEXT_PUBLIC_IMAGE_BASEURL + data?.user?.image}
+          src={data?.user?.image || "/nonUser.png"}
           alt="user's profile picture"
           width={70}
           height={70}
-          className="rounded-full"
+          className="size-16 rounded-full"
         />
 
         {/* right */}

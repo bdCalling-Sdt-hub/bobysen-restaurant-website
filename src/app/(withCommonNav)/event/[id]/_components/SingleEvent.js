@@ -14,8 +14,6 @@ import moment from "moment";
 const SingleEvent = ({ paramsId }) => {
   const { data: event, isLoading } = useGetSingleEventQuery(paramsId);
 
-  console.log(event);
-
   return (
     <>
       {isLoading ? (

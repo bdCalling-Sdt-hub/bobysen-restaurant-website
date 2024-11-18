@@ -88,6 +88,7 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
     lat: location?.coordinates[1] ? location?.coordinates[1] : 0,
     lng: location?.coordinates[0] ? location?.coordinates[0] : 0,
   };
+
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyDhzY2k-tIrpnoBut75TTDJTuE1kURA_fU",
@@ -403,7 +404,7 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                 </div>
                 <div className="flex items-center gap-x-16">
                   <div className="flex items-center gap-x-2">
-                    <h4 className="text-xl font-bold text-[#F8B84E]">5</h4>
+                    <h4 className="text-xl font-bold text-[#F8B84E]">3</h4>
                     <Image src={goldStarIcon} alt="gold star icon" />
                   </div>
                   <Progress

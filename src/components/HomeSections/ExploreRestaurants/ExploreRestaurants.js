@@ -8,7 +8,7 @@ import ExploreRestaurantSliderCard from "./_components/ExploreRestaurantSliderCa
 export default function ExploreRestaurants() {
   const query = {};
   const { data: Rdata, isLoading } = useGetAllTopRestaurntsQuery(query);
-  console.log(Rdata);
+
   return (
     <section className="container my-[60px]">
       <div className="flex items-center justify-between">

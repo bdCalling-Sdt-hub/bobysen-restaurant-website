@@ -17,8 +17,6 @@ export default function UserOrders() {
     status: selectedStatus,
   });
 
-  console.log(Rdata?.data);
-
   return (
     <div className="pt-[160px]">
       {/* header */}
