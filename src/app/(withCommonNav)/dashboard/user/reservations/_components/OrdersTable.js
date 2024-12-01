@@ -22,13 +22,13 @@ import {
 } from "@/components/ui/table";
 import { useGetMenuByReservationIdQuery } from "@/redux/api/cartApi.js";
 import { useLoadPaymentZoneMutation } from "@/redux/api/orderApi";
+import { Error_Modal } from "@/utils/modalHook";
 import { EyeIcon, MessageSquareText } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import OrderCard from "./OrderCard";
 import OrderSkeleton from "./OrderSkeleton.js";
-import { Error_Modal } from "@/utils/modalHook";
 export default function OrdersTable({ status, data }) {
   const [makePayment] = useLoadPaymentZoneMutation();
   const [reservationId, setReservationId] = useState();
@@ -169,7 +169,10 @@ export default function OrdersTable({ status, data }) {
                         )} */}
                           <div className="mb-2 mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
                             <h4>Total Cost</h4>
-                            <h4>${Cdata?.data?.totalAmount}</h4>
+                            <h4>
+                              Rs.
+                              {Cdata?.data?.totalAmount}
+                            </h4>
                           </div>
                           <div className="mb-2 mt-4 flex items-center justify-between font-kumbh-sans text-xl font-medium capitalize text-primary-secondary-3">
                             <h4>Status</h4>
