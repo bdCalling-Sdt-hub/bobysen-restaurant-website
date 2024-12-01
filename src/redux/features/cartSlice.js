@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // Initial state
 const initialState = {
-  items: [], // Initialize with empty array
+  items: [],
   totalAmount: 0,
   bookingId: null,
 };
@@ -18,18 +18,18 @@ const cartSlice = createSlice({
         (item) => item.bookingId === bookingId,
       );
 
-      // Clear existing cart items if a new bookingId is added
+      // If the bookingId changes, reset the cart
       if (state.bookingId !== bookingId) {
         state.items = [];
         state.totalAmount = 0;
         state.bookingId = bookingId;
       }
+
       if (existingItemIndex !== -1) {
         const existingItem = state.items[existingItemIndex];
         existingItem.quantity += Number(quantity);
         existingItem.amount += amount;
       } else {
-        // If bookingId does not exist, add new item
         const newItem = {
           ...otherPayload,
           quantity: Number(quantity),
@@ -39,42 +39,52 @@ const cartSlice = createSlice({
         state.items.push(newItem);
       }
 
-      // Update total amount
       state.totalAmount += amount;
       state.bookingId = bookingId;
 
-      // Update localStorage with updated cart data (only on client side)
+      // Update localStorage
       if (typeof window !== "undefined") {
         localStorage.setItem("cart", JSON.stringify(state));
       }
     },
 
-    getItemByBookingId: (state, action) => {
-      const { bookingId } = action.payload;
-      const item = state.items.find((item) => item.bookingId === bookingId);
-      return item;
+    // To directly set the cart data from API and clear old data
+    setCartItems: (state, action) => {
+      const { items, totalAmount, bookingId } = action.payload;
+
+      // Clear previous cart data
+      state.items = items || [];
+      state.totalAmount = totalAmount || 0;
+      state.bookingId = bookingId || null;
+
+      // Update localStorage
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cart", JSON.stringify(state));
+      }
     },
 
-    rehydrateCart: (state, action) => {
-      const { items, totalAmount, bookingId } = action.payload;
-      state.items = items;
-      state.totalAmount = totalAmount;
-      state.bookingId = bookingId;
+    // Action to reset the cart
+    resetCart: (state) => {
+      state.items = [];
+      state.totalAmount = 0;
+      state.bookingId = null;
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("cart");
+      }
     },
   },
 });
 
-export const { addToCart, getItemByBookingId, rehydrateCart } =
-  cartSlice.actions;
+export const { addToCart, setCartItems, resetCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
 
-// Client-side rehydration
+// Rehydrate cart from localStorage
 export const rehydrateCartFromLocalStorage = () => (dispatch) => {
   if (typeof window !== "undefined") {
     const storedCart = JSON.parse(localStorage.getItem("cart"));
     if (storedCart) {
-      dispatch(rehydrateCart(storedCart));
+      dispatch(setCartItems(storedCart)); // Dispatch the rehydrated data
     }
   }
 };
