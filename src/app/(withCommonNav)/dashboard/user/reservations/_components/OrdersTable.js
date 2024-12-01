@@ -1,5 +1,6 @@
 import {
   AlertDialog,
+  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -27,6 +28,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import OrderCard from "./OrderCard";
 import OrderSkeleton from "./OrderSkeleton.js";
+import { Error_Modal } from "@/utils/modalHook";
 export default function OrdersTable({ status, data }) {
   const [makePayment] = useLoadPaymentZoneMutation();
   const [reservationId, setReservationId] = useState();
@@ -133,8 +135,17 @@ export default function OrdersTable({ status, data }) {
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle className="font-kumbh-sans text-2xl">
+                        <AlertDialogTitle className="flex justify-between font-kumbh-sans text-2xl">
                           Order History
+                          {Cdata?.data?.status !== "paid" && (
+                            <Link
+                              href={`/cart?booking=${data?._id}&restaurant=${data?.restaurant?._id}`}
+                            >
+                              <Button className="bg-primary-secondary-3">
+                                Add More
+                              </Button>
+                            </Link>
+                          )}
                         </AlertDialogTitle>
                         <AlertDialogDescription>
                           {/* Use Dynamic data for the cards */}
@@ -160,22 +171,54 @@ export default function OrdersTable({ status, data }) {
                             <h4>Total Cost</h4>
                             <h4>${Cdata?.data?.totalAmount}</h4>
                           </div>
-                          <div className="mb-2 mt-4 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
+                          <div className="mb-2 mt-4 flex items-center justify-between font-kumbh-sans text-xl font-medium capitalize text-primary-secondary-3">
                             <h4>Status</h4>
-                            <h4>{Cdata?.data?.status}</h4>
+                            <h4>
+                              {Cdata?.data?.status === "paid"
+                                ? "paid"
+                                : "unpaid"}
+                            </h4>
                           </div>
                         </AlertDialogDescription>
                       </AlertDialogHeader>
 
                       <AlertDialogFooter className="flex">
                         {Cdata?.data?.status !== "paid" ? (
-                          <Button
-                            disabled={Cdata?.data?.totalAmount ? false : true}
-                            className="bg-primary-secondary-3"
-                            onClick={handlePayment}
-                          >
-                            Pay
-                          </Button>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                disabled={
+                                  Cdata?.data?.totalAmount ? false : true
+                                }
+                                className="bg-primary-secondary-3"
+                              >
+                                Pay
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  Do you want to proceed?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  If you have successfully paid, you will no
+                                  longer be able to modify the cart items.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                  disabled={
+                                    Cdata?.data?.totalAmount ? false : true
+                                  }
+                                  className="bg-primary-secondary-3"
+                                  onClick={handlePayment}
+                                >
+                                  Payment
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         ) : null}
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                       </AlertDialogFooter>
@@ -203,3 +246,5 @@ export default function OrdersTable({ status, data }) {
     </div>
   );
 }
+
+// cart?booking=674c21f28a0778485fa70580&restaurant=672dc3df40099d93f58cbede

@@ -13,6 +13,17 @@ import { rehydrateCartFromLocalStorage } from "@/redux/features/cartSlice";
 import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import CartCard from "./_components/CartCard";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 // export const metadata = {
 //   title: "Cart | Bookatable",
 //   description: "The cart of bookatable platform",
@@ -107,13 +118,35 @@ export default function Cart() {
                 {cart?.status}
               </h1>
             </div> */}
-            <Button
-              disabled={Cdata?.data?.status === "paid"}
-              onClick={handlePayment}
-              className="mt-8 w-full rounded-lg bg-primary-secondary-3 font-medium text-primary-white"
-            >
-              Payment
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  disabled={Cdata?.data?.status === "paid"}
+                  className="mt-8 w-full rounded-lg bg-primary-secondary-3 font-medium text-primary-white"
+                >
+                  Payment
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Do you want to proceed?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    If you have successfully paid, you will no longer be able to
+                    modify the cart items.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    disabled={Cdata?.data?.status === "paid"}
+                    onClick={handlePayment}
+                    className="rounded-lg bg-primary-secondary-3 font-medium text-primary-white"
+                  >
+                    Payment
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </>
       ) : (

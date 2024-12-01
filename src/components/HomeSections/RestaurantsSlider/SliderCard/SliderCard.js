@@ -9,7 +9,7 @@ import { MapPin } from "lucide-react";
 // get dynamic card data
 export default function SliderCard({ data }) {
   return (
-    <div className="flex flex-col justify-between gap-y-6 rounded-3xl border p-5 lg:flex-row lg:items-center lg:gap-x-8 lg:gap-y-0 lg:p-6">
+    <div className="flex min-h-[250px] flex-col justify-between gap-y-6 rounded-3xl border p-5 lg:flex-row lg:items-center lg:gap-x-8 lg:gap-y-0 lg:p-6">
       {/* left */}
       <div className="flex h-[160px] w-full items-center justify-center overflow-hidden bg-slate-50 lg:w-[50%]">
         <Image
