@@ -201,8 +201,11 @@ export default function OrdersTable({ status, data }) {
                                   Do you want to proceed?
                                 </AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  If you have successfully paid, you will no
-                                  longer be able to modify the cart items.
+                                  Please be advised that once payment has been
+                                  successfully processed, modifications or
+                                  cancellations of orders are not permitted. Any
+                                  requests for modifications or cancellations
+                                  must be directed to the restaurant directly.
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
