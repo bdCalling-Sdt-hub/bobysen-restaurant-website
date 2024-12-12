@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "./CartCard.module.css";
 
 export default function CartCard({ data, bookingId, totalAmount }) {
+  console.log(data);
   return (
     <div className="flex items-center gap-x-5 rounded bg-primary-secondary-2 px-10 py-6">
       {/* left */}
@@ -10,7 +11,7 @@ export default function CartCard({ data, bookingId, totalAmount }) {
         <Image
           height={200}
           width={200}
-          src={showImage(data?.menuImage)}
+          src={showImage(data?.menuImage ?? data?.menu?.image)}
           alt="cart food item pic"
           className="mb-2 block w-full rounded-lg"
         />

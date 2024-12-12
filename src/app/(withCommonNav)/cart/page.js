@@ -9,10 +9,6 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
-import { rehydrateCartFromLocalStorage } from "@/redux/features/cartSlice";
-import { useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import CartCard from "./_components/CartCard";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,10 +20,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-// export const metadata = {
-//   title: "Cart | Bookatable",
-//   description: "The cart of bookatable platform",
-// };
+import {
+  rehydrateCartFromLocalStorage,
+  setCartItems,
+} from "@/redux/features/cartSlice";
+import { useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+import CartCard from "./_components/CartCard";
 
 export default function Cart() {
   const searchParams = useSearchParams();
@@ -35,11 +34,25 @@ export default function Cart() {
   const restaurantId = searchParams.get("restaurant");
   const cart = useSelector((state) => state.cart);
   const { data: Cdata } = useGetMenuByReservationIdQuery(booking);
+  console.log(Cdata);
+
   const dispatch = useDispatch();
   const [makePayment] = useLoadPaymentZoneMutation();
+
   useEffect(() => {
-    dispatch(rehydrateCartFromLocalStorage());
-  }, [dispatch]);
+    dispatch(rehydrateCartFromLocalStorage()); // Rehydrate cart from local storage
+
+    // Always update the Redux store with the API data when it is available
+    if (Cdata?.data) {
+      dispatch(
+        setCartItems({
+          items: Cdata.data.items,
+          totalAmount: Cdata.data.totalAmount,
+          bookingId: booking,
+        }),
+      );
+    }
+  }, [dispatch, booking, Cdata?.data]); // Run when booking or Cdata changes
 
   const handlePayment = async () => {
     const data = {
@@ -59,14 +72,14 @@ export default function Cart() {
     try {
       const res = await makePayment(data).unwrap();
       window.open(res?.data?.payment_zone_data);
-      Success_model("Payment successfull.");
+      Success_model("Payment successful.");
     } catch (error) {
       Error_Modal("error");
     }
   };
+
   return (
     <div className="mx-auto pb-24 pt-[180px] lg:w-[68%]">
-      {/* title */}
       <div className="mb-10 flex items-center justify-between">
         <h1>Cart Details</h1>
         <Link href={`/menu/${restaurantId}?booking=${booking}`}>
@@ -79,7 +92,6 @@ export default function Cart() {
 
       {cart?.items?.length ? (
         <>
-          {/* cart cards */}
           <div className="space-y-10">
             {cart?.items?.map((data, idx) => (
               <CartCard
@@ -91,7 +103,6 @@ export default function Cart() {
             ))}
           </div>
 
-          {/* total */}
           <div className="mt-20">
             <div className="flex items-center justify-between">
               <h1 className="text-3xl font-normal text-primary-secondary-3">
@@ -110,14 +121,6 @@ export default function Cart() {
               </h1>
             </div>
 
-            {/* <div className="mt-4 flex items-center justify-between">
-              <h1 className="text-3xl font-normal text-primary-secondary-3">
-                Status
-              </h1>
-              <h1 className="text-3xl font-bold text-primary-secondary-3">
-                {cart?.status}
-              </h1>
-            </div> */}
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button
