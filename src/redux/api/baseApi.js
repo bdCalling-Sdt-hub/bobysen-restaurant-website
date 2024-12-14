@@ -31,7 +31,7 @@ const baseQueryWithRefreshToken = async (args, api, extraOptions) => {
       `${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/auth/refresh-token`,
       {
         method: "POST",
-        credentials: "include",
+        // credentials: "include",
       },
     );
 
