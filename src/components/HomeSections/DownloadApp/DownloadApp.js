@@ -6,7 +6,10 @@ import "./DownloadApp.css";
 
 export default function DownloadApp() {
   return (
-    <section className="container relative mt-[160px] flex flex-col-reverse items-center gap-x-8 gap-y-12 lg:flex-row lg:gap-y-0">
+    <section
+      id="download-mobile-app"
+      className="container relative mt-[160px] flex flex-col-reverse items-center gap-x-8 gap-y-12 lg:flex-row lg:gap-y-0"
+    >
       {/* left */}
       <div className="lg:w-1/2">
         <h1 className="text-5xl font-bold text-primary-secondary-1 lg:leading-snug">
@@ -19,11 +22,19 @@ export default function DownloadApp() {
         </p>
 
         <div className="flex items-center gap-x-4">
-          {/* TODO: Add relevant links */}
-          <Link href={"#"}>
+          <Link
+            href={
+              "https://play.google.com/store/apps/details?id=com.bookatable.app.mu"
+            }
+            target="_blank"
+          >
             <Image src={appStore} alt="app store icon" />
           </Link>
-          <Link href="#">
+
+          <Link
+            href="https://apps.apple.com/us/app/bookatable-mu/id6443644221"
+            target="_blank"
+          >
             <Image src={playStore} alt="play store icon" />
           </Link>
         </div>

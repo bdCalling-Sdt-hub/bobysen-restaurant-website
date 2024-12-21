@@ -25,11 +25,13 @@ export default function HomePageNav() {
               <Link href="/event">Event</Link>
             </Button>
           </div>
+
           <Button
             className="hover:bg-secondary-1 h-[40px] w-[90px] text-balance rounded-xl border border-primary-secondary-3 bg-transparent text-xs font-semibold hover:bg-primary-secondary-1 hover:text-primary-white lg:h-[40px] lg:w-[140px] lg:px-0 lg:text-base"
             style={{ boxShadow: "0px 3px 0px #8aba51" }}
+            asChild
           >
-            Download App
+            <Link href="/#download-mobile-app">Download App</Link>
           </Button>
 
           {/* Auth Based Button */}

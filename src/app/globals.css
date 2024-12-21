@@ -83,6 +83,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth !important;
+}
+
 /* sweet-alert modal custom styles */
 .swal * {
   font-family: var(--font-kumbh-sans) !important;

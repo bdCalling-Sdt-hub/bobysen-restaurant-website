@@ -106,7 +106,6 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
   // reviews data
   const { ratingOverview, reviews } = reviewsData?.data || {};
 
-  // todo: get book a table data
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDate, setSelectedDate] = useState(eventId ? eventDate : null);
   const [guestCount, setGuestCount] = useState(null);
@@ -126,6 +125,8 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
         seats: guestCount,
         restaurant: id,
       };
+
+  console.log(Rdata?.data);
 
   return (
     <>
@@ -337,12 +338,25 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {/* TODO: Use data from database */}
                     {days?.map((day) => (
                       <TableRow key={day.id} className="border-0">
-                        <TableCell>{day?.day}</TableCell>
-                        <TableCell>{day?.openingTime}</TableCell>
-                        <TableCell>{day?.closingTime}</TableCell>
+                        <TableCell className="capitalize">{day?.day}</TableCell>
+
+                        {/* Show closed if opening and closing time are both 00:00 */}
+                        <TableCell>
+                          {day?.openingTime === "00:00" &&
+                          day?.closingTime === "00:00" ? (
+                            <span className="text-primary-danger">Closed</span>
+                          ) : (
+                            day?.openingTime
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {day?.openingTime === "00:00" &&
+                          day?.closingTime === "00:00"
+                            ? ""
+                            : day?.closingTime}
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

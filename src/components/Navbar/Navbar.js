@@ -30,8 +30,9 @@ export default function Navbar() {
           <Button
             className="hover:bg-secondary-1 h-[40px] w-[90px] text-balance rounded-xl border border-primary-secondary-1 bg-transparent text-xs font-semibold text-primary-secondary-1 hover:bg-primary-secondary-1 hover:text-primary-white lg:h-[40px] lg:w-[140px] lg:px-0 lg:text-base"
             style={{ boxShadow: "0px 3px 0px #334A55" }}
+            asChild
           >
-            Download App
+            <Link href="/#download-mobile-app">Download App</Link>
           </Button>
 
           {/* Auth Based Button */}
