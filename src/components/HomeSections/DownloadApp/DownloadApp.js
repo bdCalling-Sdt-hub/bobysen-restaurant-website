@@ -1,8 +1,8 @@
+import Image from "next/image";
+import Link from "next/link";
+import "./DownloadApp.css";
 import appStore from "/public/DownloadApp/Mobile app store badge (1).png";
 import playStore from "/public/DownloadApp/Mobile app store badge.png";
-import Link from "next/link";
-import Image from "next/image";
-import "./DownloadApp.css";
 
 export default function DownloadApp() {
   return (
@@ -23,16 +23,14 @@ export default function DownloadApp() {
 
         <div className="flex items-center gap-x-4">
           <Link
-            href={
-              "https://play.google.com/store/apps/details?id=com.bookatable.app.mu"
-            }
+            href={"https://apps.apple.com/us/app/bookatable-mu/id6443644221"}
             target="_blank"
           >
             <Image src={appStore} alt="app store icon" />
           </Link>
 
           <Link
-            href="https://apps.apple.com/us/app/bookatable-mu/id6443644221"
+            href="https://play.google.com/store/apps/details?id=com.bookatable.app.mu"
             target="_blank"
           >
             <Image src={playStore} alt="play store icon" />
