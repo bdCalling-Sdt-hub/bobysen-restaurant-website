@@ -47,7 +47,7 @@ export default function DynamicMenu({ params }) {
               <CarouselItem
                 key={index}
                 className={cn(
-                  "basis-1/1 ml-8 flex cursor-pointer items-center justify-center whitespace-nowrap text-center text-xl font-medium lg:basis-[15%]",
+                  "basis-1/1 ml-8 flex cursor-pointer items-center justify-center text-balance text-center text-xl font-medium lg:basis-[25%] 2xl:basis-[18%]",
                 )}
                 onClick={() => setSelectedCategory(category?._id)}
               >
@@ -73,7 +73,7 @@ export default function DynamicMenu({ params }) {
           <SkeletonLoader />
         </div>
       ) : Fdata?.data?.length > 0 ? (
-        <div className="mx-auto my-16 grid grid-cols-1 gap-8 px-5 md:grid-cols-2 lg:w-[80%] lg:grid-cols-4 lg:px-0">
+        <div className="mx-auto my-16 grid grid-cols-1 gap-8 px-5 md:grid-cols-2 lg:w-[90%] lg:grid-cols-3 lg:px-0 2xl:w-[85%] 2xl:grid-cols-4">
           {Fdata?.data?.map((data, idx) => (
             <FoodItemCard cardData={data} key={idx} booking={booking} />
           ))}
