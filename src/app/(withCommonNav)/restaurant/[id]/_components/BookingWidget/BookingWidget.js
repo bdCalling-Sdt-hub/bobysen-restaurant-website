@@ -49,7 +49,7 @@ export default function BookingWidget({
   const handleGuestChange = (direction) => {
     setGuests((prev) => {
       if (direction === "up") return prev + 1;
-      if (prev > 1) return prev - 1;
+      if (prev > 0) return prev - 1;
       return prev;
     });
   };

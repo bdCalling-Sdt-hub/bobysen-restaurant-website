@@ -85,7 +85,7 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
   const [selectedDate, setSelectedDate] = useState(
     eventId ? eventDate : new Date().getDay(),
   );
-  const [guests, setGuests] = useState(1);
+  const [guests, setGuests] = useState(0);
   const [time, setTime] = useState("21:15");
 
   const reservationData = eventId
