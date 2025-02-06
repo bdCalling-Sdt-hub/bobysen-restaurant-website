@@ -95,7 +95,8 @@ export default function BookingWidget({
             className={cn(
               "flex aspect-square items-center justify-center text-sm transition-colors duration-200",
               day && "cursor-pointer",
-              day !== selectedDate &&
+              day &&
+                day !== selectedDate &&
                 day !== currentDate &&
                 "hover:bg-gray-200",
               day === currentDate ? "bg-gray-900 text-white" : "",
