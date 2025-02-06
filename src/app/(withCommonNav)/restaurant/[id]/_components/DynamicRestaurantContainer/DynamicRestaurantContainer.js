@@ -1,15 +1,6 @@
 "use client";
 
-import { DayPickerInput } from "@/components/DayPickerInput/DayPickerInput";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import {
   Table,
@@ -25,11 +16,9 @@ import {
   useGetSingleRestaurantQuery,
 } from "@/redux/api/restaurantApi.js";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
-import { format } from "date-fns";
-import { Clock, PhoneOutgoing } from "lucide-react";
+import { PhoneOutgoing } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import TimePicker from "rc-time-picker-date-fns";
 import { useCallback, useState } from "react";
 import styles from "../../DynamicRestaurant.module.css";
 import BookNowBtn from "../BookNowBtn/BookNowBtn";
@@ -37,28 +26,14 @@ import FeedbackCard from "../FeedbackCard/FeedbackCard";
 import RestaurantImageSlider from "../RestaurantImageSlider/RestaurantImageSlider";
 import locationIcon from "/public/DynamicRestaurant/Location_icon_ic.png";
 import starIcon from "/public/DynamicRestaurant/Star 1.png";
-import menuIcon from "/public/DynamicRestaurant/charm_menu-hamburger.png";
-import eventIcon from "/public/DynamicRestaurant/event.png";
 import goldStarIcon from "/public/DynamicRestaurant/goldStar.png";
 import bookIcon from "/public/DynamicRestaurant/image 4.png";
-import usersIcon from "/public/DynamicRestaurant/users.png";
 import { useGetSingleEventQuery } from "@/redux/api/eventApi";
 import moment from "moment";
 import SkeletonLoader from "@/components/SkeletonLoader/SkeletonLoader";
 import truncatedText from "@/utils/truncatedText";
-import { Users2Icon } from "lucide-react";
 import { Menu } from "lucide-react";
-
-const AnyReactComponent = ({ text }) => (
-  <div className="">
-    <img
-      height={50}
-      width={50}
-      src="https://i.ibb.co/V9QYmtw/marker.png"
-      alt=""
-    />
-  </div>
-);
+import BookingWidget from "../BookingWidget/BookingWidget";
 
 export default function DynamicRestaurantContainer({ params, eventId }) {
   const [map, setMap] = useState(null);
@@ -106,27 +81,27 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
   // reviews data
   const { ratingOverview, reviews } = reviewsData?.data || {};
 
-  const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(eventId ? eventDate : null);
-  const [guestCount, setGuestCount] = useState(null);
-  const numberOfGuests = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  // Booking related states
+  const [selectedDate, setSelectedDate] = useState(
+    eventId ? eventDate : new Date().getDay(),
+  );
+  const [guests, setGuests] = useState(1);
+  const [time, setTime] = useState("21:15");
 
   const reservationData = eventId
     ? {
-        time: selectedTime,
+        time,
         date: selectedDate,
-        seats: guestCount,
+        seats: guests,
         restaurant: id,
         event: eventId,
       }
     : {
-        time: selectedTime,
+        time,
         date: selectedDate,
-        seats: guestCount,
+        seats: guests,
         restaurant: id,
       };
-
-  console.log(Rdata?.data);
 
   return (
     <>
@@ -220,74 +195,25 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
                     </div>
 
                     {/* Filters */}
-                    <div className="mb-24 mt-10 lg:mt-0 xl:w-3/4">
+                    <div className="mb-14 mt-10 space-y-3 lg:mt-0">
                       <h4 className="text-xl font-semibold text-primary-secondary-1">
                         Book a table
                       </h4>
 
-                      <div
-                        className={`mb-16 mt-3 grid grid-cols-1 gap-x-6 gap-y-4 lg:mb-0 lg:w-full xl:grid-cols-3 xl:gap-y-0`}
-                      >
-                        <div className="w-full">
-                          <DayPickerInput
-                            // disabled={eventData?.data ? true : false}
-                            minDate={eventData?.data?.startDate}
-                            maxDate={eventData?.data?.endDate}
-                            date={selectedDate}
-                            setDate={setSelectedDate}
-                          />
-                        </div>
-
-                        <div className="flex items-center rounded-lg border border-primary-secondary-1/35 px-3">
-                          <Clock size={20} />
-                          <TimePicker
-                            showHour={true}
-                            showMinute={true}
-                            showSecond={false}
-                            className="h-full w-full"
-                            placeholder="Time"
-                            minuteStep={15}
-                            onChange={(value) =>
-                              setSelectedTime(format(value, "HH:mm"))
-                            }
-                            defaultValue={selectedTime}
-                          />
-                        </div>
-
-                        {/* select users */}
-                        <div className="">
-                          <Select
-                            onValueChange={(value) => setGuestCount(value)}
-                          >
-                            <SelectTrigger className="border border-primary-secondary-1/35 pl-3">
-                              <div className="flex items-center gap-x-2">
-                                <Users2Icon size={20} />
-                                <SelectValue placeholder="Guests" />
-                              </div>
-                            </SelectTrigger>
-                            <SelectContent>
-                              {numberOfGuests?.map((number) => (
-                                <SelectItem value={number} key={number}>
-                                  {number}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-
-                      {showRequiredError && (
-                        <p className="mt-[2px] pl-1 font-kumbh-sans text-sm font-medium text-primary-danger">
-                          Please fill out the form completely to book now!
-                        </p>
-                      )}
+                      <BookingWidget
+                        selectedDate={selectedDate}
+                        setSelectedDate={setSelectedDate}
+                        guests={guests}
+                        setGuests={setGuests}
+                        time={time}
+                        setTime={setTime}
+                      />
                     </div>
                   </div>
 
                   {/* Book Now Button with Modal */}
-
                   <BookNowBtn
-                    guest={guestCount}
+                    guest={guests}
                     eventId={eventId}
                     reservation={reservationData}
                     setShowRequiredError={setShowRequiredError}
