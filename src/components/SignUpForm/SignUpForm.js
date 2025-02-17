@@ -5,17 +5,14 @@ import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useSignUpMutation } from "@/redux/api/authApi";
 import { Error_Modal, Success_model } from "@/utils/modalHook";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import LoadingButton from "../LoadingButton/LoadingButton";
-import { Button } from "../ui/button";
-import eyeIcon from "/public/signUp/eyeIcon.svg";
-import eyeOffIcon from "/public/signUp/eyeOffIcon.svg";
 import { useSelector } from "react-redux";
 import EyeIconInverse from "../EyeIconInverse/EyeIconInverse";
+import LoadingButton from "../LoadingButton/LoadingButton";
+import { Button } from "../ui/button";
 
 export default function SignUpForm() {
   const {
@@ -128,7 +125,7 @@ export default function SignUpForm() {
             htmlFor="phoneNumber"
             className="mb-1 block font-semibold text-primary-secondary-1"
           >
-            Phone Number *
+            Phone Number (please start with +230)*
           </Label>
           <Input
             type="tel"
