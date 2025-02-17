@@ -40,7 +40,6 @@
     "next": "14.2.3",
     "next-themes": "^0.3.0",
     "nextjs-toploader": "^3.7.15",
-    "rc-time-picker-date-fns": "^3.2.8",
     "react": "^18",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",

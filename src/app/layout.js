@@ -2,7 +2,6 @@ import { Kumbh_Sans, Poppins, Roboto } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer/Footer";
 import Providers from "@/lib/Providers";
-import "rc-time-picker-date-fns/assets/index.css";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
 
