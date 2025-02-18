@@ -125,7 +125,7 @@ export default function SignUpForm() {
             htmlFor="phoneNumber"
             className="mb-1 block font-semibold text-primary-secondary-1"
           >
-            Phone Number (please start with +230)*
+            Phone Number (please start with your country code)*
           </Label>
           <Input
             type="tel"
