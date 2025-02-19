@@ -8,8 +8,6 @@ import showImage from "@/utils/fileHelper.js";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import locationIcon from "/public/ExploreRestaurants/location.svg";
-import star from "/public/ExploreRestaurants/star.png";
 import { Star } from "lucide-react";
 import { MapPin } from "lucide-react";
 import truncatedText from "@/utils/truncatedText";
@@ -24,7 +22,7 @@ export default function RestaurantCard({ data }) {
             height={400}
             src={showImage(data?.restaurant?.images[0]?.url)}
             alt="restaurant 1"
-            className="mx-auto mb-2 block"
+            className="mx-auto mb-2 block object-cover object-center"
           />
           <div className="flex justify-between">
             <h3 className="max-w-3/4 text-2xl font-bold text-primary-secondary-1">

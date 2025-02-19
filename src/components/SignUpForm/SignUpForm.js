@@ -8,11 +8,12 @@ import { Error_Modal, Success_model } from "@/utils/modalHook";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import EyeIconInverse from "../EyeIconInverse/EyeIconInverse";
 import LoadingButton from "../LoadingButton/LoadingButton";
 import { Button } from "../ui/button";
+import { PhoneInput } from "../ui/phone-input";
 
 export default function SignUpForm() {
   const {
@@ -20,6 +21,7 @@ export default function SignUpForm() {
     handleSubmit,
     formState: { errors },
     watch,
+    control,
   } = useForm();
 
   const [showNewPass, setShowNewPass] = useState(false);
@@ -39,7 +41,12 @@ export default function SignUpForm() {
     delete data.confirmPassword;
 
     try {
-      const res = await signUp(data).unwrap();
+      const res = await signUp({
+        country: sessionStorage.getItem("sign-up-country")
+          ? JSON.parse(sessionStorage.getItem("sign-up-country"))
+          : { countryCode: "MU", countryName: "Republic of Mauritius" },
+        ...data,
+      }).unwrap();
       if (res?.data?.token) {
         Success_model({
           title: "Registration Successful!",
@@ -65,7 +72,7 @@ export default function SignUpForm() {
     if (user?.userId) {
       router.back();
     }
-  }, [user?.userId]);
+  }, [user?.userId, router]);
 
   // !----------------------------------------------------------
 
@@ -120,23 +127,35 @@ export default function SignUpForm() {
         </div>
 
         {/* contact number */}
+
         <div className="grid w-full items-center gap-1.5">
           <Label
             htmlFor="phoneNumber"
             className="mb-1 block font-semibold text-primary-secondary-1"
           >
-            Phone Number (please start with your country code)*
+            Phone Number *
           </Label>
-          <Input
-            type="tel"
-            id="phoneNumber"
-            placeholder="Enter phone number"
-            {...register("phoneNumber", {
-              required: true,
-              minLength: 10,
-              maxLength: 15,
-            })}
-            className="border border-primary-secondary-1 text-primary-black"
+
+          <Controller
+            name="phoneNumber"
+            control={control}
+            rules={{
+              required: {
+                value: true,
+                message: "Phone Number is required",
+              },
+            }}
+            render={({ field }) => {
+              return (
+                <PhoneInput
+                  value={field.value}
+                  onChange={field.onChange}
+                  defaultCountry="MU"
+                  international
+                  placeholder="Enter your phone"
+                />
+              );
+            }}
           />
           {errors.phoneNumber && (
             <p className={cn("font-kumbh-sans text-primary-danger")}>
