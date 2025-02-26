@@ -42,9 +42,9 @@ export default function SignUpForm() {
 
     try {
       const res = await signUp({
-        country: sessionStorage.getItem("sign-up-country")
-          ? JSON.parse(sessionStorage.getItem("sign-up-country"))
-          : { countryCode: "MU", countryName: "Republic of Mauritius" },
+        countryCode: sessionStorage.getItem("sign-up-country")
+          ? JSON.parse(sessionStorage.getItem("sign-up-country"))?.countryCode
+          : "MU",
         ...data,
       }).unwrap();
       if (res?.data?.token) {
