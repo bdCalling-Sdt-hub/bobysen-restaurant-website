@@ -11,7 +11,7 @@ export const metadata = {
     template: "%s | Bookatable",
   },
   description:
-    "The official webpage of the bookatable restaurant which enable diners to customize their booking by requesting a specific table location or view.",
+    "The official homepage of the bookatable restaurant which enable diners to customize their booking by requesting a specific table location or view.",
 };
 
 const kumbhSans = Kumbh_Sans({
