@@ -49,8 +49,8 @@ export default function OtpEnterForm() {
           Enter OTP here
         </h3>
         <p className="mt-2 font-medium text-primary-secondary-2">
-          Check your mail inbox and enter the code here. <br /> OTP expires in 3
-          minutes
+          Check your phone number and enter the code here. <br /> OTP expires in
+          5 minutes
         </p>
       </div>
 
