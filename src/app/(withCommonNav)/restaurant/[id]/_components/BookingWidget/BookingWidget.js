@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   format,
@@ -10,10 +10,11 @@ import {
   startOfMonth,
   getDay,
   getDaysInMonth,
+  isBefore,
 } from "date-fns";
 import { cn } from "@/lib/utils";
 
-export default function BookingWidget({
+export default function CalendarWidget({
   selectedDate,
   setSelectedDate,
   time,
@@ -26,16 +27,14 @@ export default function BookingWidget({
   // Get days in current month
   const daysInMonth = getDaysInMonth(currentDate);
   const startDay = getDay(startOfMonth(currentDate)); // Get day of week for first day
-  const padding = Array.from({ length: startDay }, (_, i) => null);
+  const padding = Array.from({ length: startDay }, () => null);
 
-  // direction : "prev" | "next"
   const handleMonthChange = (direction) => {
     setCurrentDate((prev) =>
       direction === "next" ? addMonths(prev, 1) : addMonths(prev, -1),
     );
   };
 
-  // direction: "up" | "down"
   const handleTimeChange = (direction) => {
     const currentTime = parse(time, "HH:mm", new Date());
     const newTime =
@@ -55,11 +54,13 @@ export default function BookingWidget({
   };
 
   const handleDateSelect = (day) => {
-    setSelectedDate(day);
+    setSelectedDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth(), day),
+    );
   };
 
   return (
-    <div className="w-full rounded-lg border bg-white p-6 pb-2 text-gray-900 shadow-sm">
+    <div className="w-full select-none rounded-lg border bg-white p-6 pb-2 text-gray-900 shadow-sm">
       {/* Calendar Header */}
       <div className="mb-8 flex items-center justify-between">
         <ChevronLeft
@@ -88,24 +89,51 @@ export default function BookingWidget({
         {[
           ...padding,
           ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
-        ].map((day, index) => (
-          <div
-            key={index}
-            onClick={() => day && handleDateSelect(day)}
-            className={cn(
-              "flex aspect-square items-center justify-center text-sm transition-colors duration-200",
-              day && "cursor-pointer",
-              day &&
-                day !== selectedDate &&
-                day !== currentDate &&
-                "hover:bg-gray-200",
-              day === currentDate ? "bg-gray-900 text-white" : "",
-              day === selectedDate ? "bg-primary-secondary-1 text-white" : "",
-            )}
-          >
-            {day}
-          </div>
-        ))}
+        ].map((day, index) => {
+          const today = new Date();
+
+          // Check if the date is today
+          const isToday =
+            today.getFullYear() === currentDate.getFullYear() &&
+            today.getMonth() === currentDate.getMonth() &&
+            day === today.getDate();
+
+          // Find out all the previous days for disabling
+          const date = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            day,
+          );
+          const isPast = isBefore(date, today.setHours(0, 0, 0, 0)); // Check if it's before today
+
+          return (
+            <button
+              key={index}
+              onClick={() => day && handleDateSelect(day)}
+              className={cn(
+                "flex aspect-square size-14 items-center justify-center rounded-full text-base transition-colors duration-200 disabled:text-gray-300",
+                day && "cursor-pointer",
+                day &&
+                  day !== selectedDate?.getDate() &&
+                  day !== currentDate.getDate() &&
+                  "hover:bg-gray-200",
+
+                isToday && selectedDate === undefined
+                  ? "bg-primary-secondary-3 text-white"
+                  : "",
+                selectedDate?.getDate() === day
+                  ? "text-white [&:not(:disabled)]:bg-primary-secondary-3"
+                  : "",
+                isToday && selectedDate?.getDate() !== day
+                  ? "bg-black/85 text-white"
+                  : "",
+              )}
+              disabled={isPast}
+            >
+              {day}
+            </button>
+          );
+        })}
       </div>
 
       {/* Guests Selector */}

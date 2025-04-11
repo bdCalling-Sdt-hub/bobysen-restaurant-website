@@ -81,12 +81,11 @@ export default function DynamicRestaurantContainer({ params, eventId }) {
   // reviews data
   const { ratingOverview, reviews } = reviewsData?.data || {};
 
-  // Booking related states
   const [selectedDate, setSelectedDate] = useState(
-    eventId ? eventDate : new Date().getDay(),
+    eventId ? new Date(eventDate) : new Date(),
   );
-  const [guests, setGuests] = useState(0);
-  const [time, setTime] = useState("21:15");
+  const [time, setTime] = useState("16:00");
+  const [guests, setGuests] = useState(1);
 
   const reservationData = eventId
     ? {

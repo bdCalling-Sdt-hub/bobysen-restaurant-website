@@ -49,8 +49,8 @@ export default function OtpEnterForm() {
           Enter OTP here
         </h3>
         <p className="mt-2 font-medium text-primary-secondary-2">
-          Check your phone number and enter the code here. <br /> OTP expires in
-          5 minutes
+          You have received an SMS. Check your mobile phone and enter the code
+          here. OTP expires in 3 mins.
         </p>
       </div>
 

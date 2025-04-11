@@ -28,6 +28,7 @@ import foodMenuIcon from "/public/DynamicRestaurant/menu.png";
 import successfulIcon from "/public/DynamicRestaurant/succesful.png";
 import { v4 as uuidv4 } from "uuid";
 import { useEventBookingPaymentMutation } from "@/redux/api/paymentApi";
+import { format } from "date-fns";
 
 export default function BookNowBtn({
   reservation,
@@ -77,6 +78,7 @@ export default function BookNowBtn({
   const handleReservation = async (e) => {
     e.preventDefault();
     setShowRequiredError(false);
+
     if (!reservation.time || !reservation.date || !reservation.seats) {
       setShowRequiredError(true);
       return;
@@ -90,7 +92,10 @@ export default function BookNowBtn({
     if (eventId) {
       try {
         setIsLoaderActive(true);
-        const res = await eventBookings(reservation).unwrap();
+        const res = await eventBookings({
+          ...reservation,
+          date: format(reservation?.date, "yyyy-MM-dd"),
+        }).unwrap();
 
         setModalOpen(true);
         sessionStorage.setItem("eventBookingId", res?.data?._id);
@@ -105,7 +110,10 @@ export default function BookNowBtn({
 
     try {
       setIsLoaderActive(true);
-      const res = await booking(reservation).unwrap();
+      await booking({
+        ...reservation,
+        date: format(reservation?.date, "yyyy-MM-dd"),
+      }).unwrap();
       setModalOpen(true);
       setIsLoaderActive(false);
     } catch (error) {

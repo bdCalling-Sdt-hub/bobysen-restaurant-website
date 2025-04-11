@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import man from "/public/DynamicRestaurant/Ellipse 12.png";
 import StarRatings from "react-star-ratings";
 
 export default function FeedbackCard({ data }) {
-  // TODO: use dynamic data
+  console.log(data);
+
   return (
     <div>
       <div className="flex items-center gap-x-4">
@@ -25,7 +25,7 @@ export default function FeedbackCard({ data }) {
               {data?.user?.name}
             </h5>
 
-            <p className="text-primary-secondary-2">Just Now</p>
+            {/* <p className="text-primary-secondary-2">Just Now</p> */}
           </div>
 
           <div className="mt-1 flex items-center gap-x-2">
