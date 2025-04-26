@@ -3,6 +3,7 @@ import { Facebook, Instagram, Linkedin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "/public/footer/Group 2.png";
+import { Button } from "../ui/button";
 
 export default function Footer() {
   return (
@@ -53,9 +54,19 @@ export default function Footer() {
               </Link>
             </div>
           </div>
+
           <div className="space-y-3">
             <h4 className="font-bold">Support</h4>
             <p className="font-kumbh-sans text-xl">info@bookatable.mu</p>
+
+            <Button
+              className="!mt-10 w-full rounded-xl border-2 border-primary-secondary-3 bg-transparent py-7 text-base font-semibold text-primary-secondary-3 hover:bg-primary-secondary-3 hover:text-white"
+              asChild
+            >
+              <Link href="https://forms.gle/vNXdzbjBJFUwDj7PA" target="_blank">
+                Register you restaurant
+              </Link>
+            </Button>
           </div>
         </div>
       </div>
@@ -70,7 +81,6 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center gap-x-5">
-          {/* TODO: Add relevant links */}
           <Link href={"/about-us"} className="font-kumbh-sans">
             About Us
           </Link>
