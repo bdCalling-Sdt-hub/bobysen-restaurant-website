@@ -4,6 +4,7 @@ import Footer from "@/components/Footer/Footer";
 import Providers from "@/lib/Providers";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
+import Script from "next/script";
 
 export const metadata = {
   title: {
@@ -29,6 +30,22 @@ const poppins = Poppins({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-CQB7P96T7Y`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-CQB7P96T7Y', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+      </head>
       <body
         className={`${poppins.className} ${kumbhSans.variable} max-w-8xl flex min-h-screen flex-col`}
       >
