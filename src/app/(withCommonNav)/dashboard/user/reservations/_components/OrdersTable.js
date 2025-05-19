@@ -29,9 +29,14 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import OrderCard from "./OrderCard";
 import OrderSkeleton from "./OrderSkeleton.js";
+import { Edit } from "lucide-react";
+import ModifyOrderModal from "./ModifyOrderModal";
 export default function OrdersTable({ status, data }) {
   const [makePayment] = useLoadPaymentZoneMutation();
   const [reservationId, setReservationId] = useState();
+  const [selectedReservation, setSelectedReservation] = useState(null);
+  const [showModifyOrderModal, setShowModifyOrderModal] = useState(false);
+
   const { data: Cdata, isLoading } = useGetMenuByReservationIdQuery(
     reservationId,
     {
@@ -62,6 +67,7 @@ export default function OrdersTable({ status, data }) {
       Error_Modal("error");
     }
   };
+
   return (
     <div className="container mt-12">
       <Table className="border">
@@ -124,113 +130,126 @@ export default function OrdersTable({ status, data }) {
               </TableCell>
 
               {!data?.event && (
-                <TableCell className="font-kumbh-sans text-primary-black">
-                  {/* Show Order History Modal on Eye button click */}
-                  <AlertDialog>
-                    <AlertDialogTrigger>
-                      <EyeIcon
-                        role="button"
-                        onClick={() => setReservationId(data?._id)}
-                      />
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle className="flex justify-between font-kumbh-sans text-2xl">
-                          Order History
-                          {Cdata?.data?.status !== "paid" && (
-                            <Link
-                              href={`/cart?booking=${data?._id}&restaurant=${data?.restaurant?._id}`}
-                            >
-                              <Button className="bg-primary-secondary-3">
-                                Add More
-                              </Button>
-                            </Link>
-                          )}
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          {/* Use Dynamic data for the cards */}
-                          <div className="mt-4 max-h-[50vh] space-y-4 overflow-auto">
-                            {isLoading ? (
-                              <OrderSkeleton />
-                            ) : Cdata?.data?.items?.length > 0 ? (
-                              Cdata.data.items.map((data, index) => (
-                                <OrderCard key={index} data={data} />
-                              ))
-                            ) : (
-                              <EmptyData />
+                <>
+                  <TableCell className="flex items-center gap-3 font-kumbh-sans text-primary-black">
+                    {/* Show Order History Modal on Eye button click */}
+                    <AlertDialog>
+                      <AlertDialogTrigger>
+                        <EyeIcon
+                          role="button"
+                          onClick={() => setReservationId(data?._id)}
+                        />
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle className="flex justify-between font-kumbh-sans text-2xl">
+                            Order History
+                            {Cdata?.data?.status !== "paid" && (
+                              <Link
+                                href={`/cart?booking=${data?._id}&restaurant=${data?.restaurant?._id}`}
+                              >
+                                <Button className="bg-primary-secondary-3">
+                                  Add More
+                                </Button>
+                              </Link>
                             )}
-                          </div>
-                          {/* 
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            {/* Use Dynamic data for the cards */}
+                            <div className="mt-4 max-h-[50vh] space-y-4 overflow-auto">
+                              {isLoading ? (
+                                <OrderSkeleton />
+                              ) : Cdata?.data?.items?.length > 0 ? (
+                                Cdata.data.items.map((data, index) => (
+                                  <OrderCard key={index} data={data} />
+                                ))
+                              ) : (
+                                <EmptyData />
+                              )}
+                            </div>
+                            {/* 
                         {Cdata?.data?.status !== "unpaid" && (
                           <div className="mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
                             <h4>Transaction Id</h4>
                             <h4>#30400e0349540340</h4>
                           </div>
                         )} */}
-                          <div className="mb-2 mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
-                            <h4>Total Cost</h4>
-                            <h4>
-                              Rs.
-                              {Cdata?.data?.totalAmount}
-                            </h4>
-                          </div>
-                          <div className="mb-2 mt-4 flex items-center justify-between font-kumbh-sans text-xl font-medium capitalize text-primary-secondary-3">
-                            <h4>Status</h4>
-                            <h4>
-                              {Cdata?.data?.status === "paid"
-                                ? "paid"
-                                : "unpaid"}
-                            </h4>
-                          </div>
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
+                            <div className="mb-2 mt-10 flex items-center justify-between font-kumbh-sans text-xl font-medium text-primary-secondary-3">
+                              <h4>Total Cost</h4>
+                              <h4>
+                                Rs.
+                                {Cdata?.data?.totalAmount}
+                              </h4>
+                            </div>
+                            <div className="mb-2 mt-4 flex items-center justify-between font-kumbh-sans text-xl font-medium capitalize text-primary-secondary-3">
+                              <h4>Status</h4>
+                              <h4>
+                                {Cdata?.data?.status === "paid"
+                                  ? "paid"
+                                  : "unpaid"}
+                              </h4>
+                            </div>
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
 
-                      <AlertDialogFooter className="flex">
-                        {Cdata?.data?.status !== "paid" ? (
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button
-                                disabled={
-                                  Cdata?.data?.totalAmount ? false : true
-                                }
-                                className="bg-primary-secondary-3"
-                              >
-                                Pay
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>
-                                  Do you want to proceed?
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  Please be advised that once payment has been
-                                  successfully processed, modifications or
-                                  cancellations of orders are not permitted. Any
-                                  requests for modifications or cancellations
-                                  must be directed to the restaurant directly.
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction
+                        <AlertDialogFooter className="flex">
+                          {Cdata?.data?.status !== "paid" ? (
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button
                                   disabled={
                                     Cdata?.data?.totalAmount ? false : true
                                   }
                                   className="bg-primary-secondary-3"
-                                  onClick={handlePayment}
                                 >
-                                  Payment
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        ) : null}
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </TableCell>
+                                  Pay
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>
+                                    Do you want to proceed?
+                                  </AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Please be advised that once payment has been
+                                    successfully processed, modifications or
+                                    cancellations of orders are not permitted.
+                                    Any requests for modifications or
+                                    cancellations must be directed to the
+                                    restaurant directly.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction
+                                    disabled={
+                                      Cdata?.data?.totalAmount ? false : true
+                                    }
+                                    className="bg-primary-secondary-3"
+                                    onClick={handlePayment}
+                                  >
+                                    Payment
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          ) : null}
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+
+                    <button
+                      onClick={() => {
+                        setShowModifyOrderModal(true);
+                        setSelectedReservation(data);
+                      }}
+                    >
+                      <Edit size={22} />
+                      <div className="sr-only">Modify order</div>
+                    </button>
+                  </TableCell>
+                </>
               )}
 
               {!data?.isReviewed && status === "completed" && (
@@ -249,6 +268,15 @@ export default function OrdersTable({ status, data }) {
           ))}
         </TableBody>
       </Table>
+
+      {/* Modals */}
+      {showModifyOrderModal && selectedReservation && (
+        <ModifyOrderModal
+          open={showModifyOrderModal}
+          setOpen={setShowModifyOrderModal}
+          reservation={selectedReservation}
+        />
+      )}
     </div>
   );
 }
