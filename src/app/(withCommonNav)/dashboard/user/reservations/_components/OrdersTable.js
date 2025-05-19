@@ -74,6 +74,7 @@ export default function OrdersTable({ status, data }) {
         <TableCaption>
           A list of your {status?.toLowerCase()} orders.
         </TableCaption>
+
         <TableHeader>
           <TableRow>
             <TableHead className="font-kumbh-sans text-xl text-primary-secondary-1">
