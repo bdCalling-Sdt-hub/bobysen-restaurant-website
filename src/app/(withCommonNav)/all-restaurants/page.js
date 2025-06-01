@@ -1,5 +1,7 @@
 import HeroSearchBar from "@/components/HeroSearchBar/HeroSearchBar";
 import AllRestaurants from "./_components/AllRestaurants";
+import FilterOptions from "@/components/shared/FilterOptions";
+
 
 export const metadata = {
   title: {
@@ -10,7 +12,7 @@ export const metadata = {
 export default function AllRestaurantsPage() {
   return (
     <div className="container pt-[160px]">
-      <div className="flex flex-col items-center justify-between space-y-5 lg:flex-row lg:space-y-0">
+      <div className=" flex flex-col items-center justify-between space-y-5 lg:flex-row lg:space-y-0">
         {/* left */}
         <div className="lg:w-1/2">
           <h1 className="font-bold text-primary-secondary-1">
@@ -27,7 +29,7 @@ export default function AllRestaurantsPage() {
           <HeroSearchBar />
         </div>
       </div>
-
+        <FilterOptions  />
       <AllRestaurants />
     </div>
   );

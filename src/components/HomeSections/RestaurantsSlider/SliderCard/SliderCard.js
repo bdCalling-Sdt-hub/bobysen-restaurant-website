@@ -24,8 +24,8 @@ export default function SliderCard({ data }) {
       {/* right */}
       <div className="lg:w-[70%]">
         {/* card title */}
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl text-primary-secondary-1">{data?.name}</h1>
+        <div className="flex items-center justify-between gap-x-2">
+          <h1 className="text-2xl text-primary-secondary-1 truncate">{data?.name} </h1>
 
           <div className="flex items-center gap-x-1">
             <Star fill="#fec60a" stroke="#fec60a" size={22} className="mb-1" />

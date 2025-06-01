@@ -1,6 +1,7 @@
 "use client";
 import HeroSearchBar from "@/components/HeroSearchBar/HeroSearchBar";
 import RestaurantCard from "@/components/RestaurantCard/RestaurantCard";
+import FilterOptions from "@/components/shared/FilterOptions";
 import SkeletonLoader from "@/components/SkeletonLoader/SkeletonLoader";
 import { useGetAllTopRestaurntsQuery } from "@/redux/api/topRestaurantApi.js";
 
@@ -26,11 +27,12 @@ export default function TopRestaurants() {
           <HeroSearchBar />
         </div>
       </div>
+       <FilterOptions  />
 
       {isLoading ? (
         <SkeletonLoader />
       ) : (
-        <div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
           {Rdata?.data?.map((data, idx) => (
             <RestaurantCard key={idx} data={data} />
           ))}

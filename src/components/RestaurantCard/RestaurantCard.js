@@ -22,10 +22,10 @@ export default function RestaurantCard({ data }) {
             height={400}
             src={showImage(data?.restaurant?.images[0]?.url)}
             alt="restaurant 1"
-            className="mx-auto mb-2 block object-cover object-center"
+            className="mx-auto mb-2 block object-contain h-[300px] origin-center "
           />
           <div className="flex justify-between">
-            <h3 className="max-w-3/4 text-2xl font-bold text-primary-secondary-1">
+            <h3 className="max-w-3/4 text-2xl font-bold text-primary-secondary-1 truncate">
               {data?.restaurant?.name}
             </h3>
 
